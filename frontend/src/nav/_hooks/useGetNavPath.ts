@@ -8,15 +8,9 @@ export interface GetNavPathProps {
 export function useGetNavPath(props: GetNavPathProps): string {
   const { path, index } = props;
   const items = useGetNavItems();
-  const paths = (
-    index !== undefined
-      ? Object.values(items).filter((obj) => obj.index <= index)
-      : Object.values(items)
-  )
-    .sort((a, b) => (a?.index ?? 0) - (b?.index ?? 0))
-    .map((obj) => obj.path);
-  if (path) {
-    paths.push(path);
+  if (index === 0){
+    return path ?? '';
   }
-  return paths.join("/");
+  const item = items[(index ?? items.length) - 1];
+  return (`${item?.href ?? ''}/${path ?? ''}`);
 }

@@ -7,5 +7,5 @@ import { NavItem } from "../_types/navItem";
 export function useGetNavItems(): Array<NavItem> {
   const { state } = useContext(NavContext);
   const items = state?.items ?? {};
-  return Object.values(items).sort((a, b) => (a?.index ?? 0) - (b?.index ?? 0));
+  return Object.values(items).sort((a, b) => (a.index - b.index));
 }

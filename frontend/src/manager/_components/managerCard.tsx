@@ -17,10 +17,7 @@ export function ManagerCard({ item }: { item: Manager }) {
             </Typography>
         </CardContent>
         <CardActions>
-            <NavItemLink
-                type={NavItemTypeEnum.MANAGER}
-                path={`manager/${item.id}`}
-                object={item}>
+            <NavItemLink path={item.id}>
                 <Button size="small">Abrir</Button>
             </NavItemLink>
         </CardActions>

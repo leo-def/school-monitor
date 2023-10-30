@@ -323,7 +323,7 @@ const api = {
 } as Api;
 
 export default function apiFetch(
-  fullPath: string,
+  href: string,
   prev?: Array<{ path: string; id?: string }>
 ):
   | Array<Parent>
@@ -352,10 +352,10 @@ export default function apiFetch(
   | Notification
   | Array<Subject>
   | Subject {
-  if (fullPath.startsWith("/")) {
-    fullPath = fullPath.substring(1);
+  if (href.startsWith("/")) {
+    href = href.substring(1);
   }
-  const [path, id, ...other] = fullPath.split("/");
+  const [path, id, ...other] = href.split("/");
   if (other && other.length > 0) {
     return apiFetch(other.join("/"), [...(prev ?? []), { path, id }]);
   }

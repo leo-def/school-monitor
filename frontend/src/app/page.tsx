@@ -13,7 +13,7 @@ export default function Home() {
               </Typography>
             </CardContent>
             <CardActions>
-              <NavItemLink path="manager" >
+              <NavItemLink index={0} path="manager" >
                 <Button size="small">Abrir</Button>
               </NavItemLink>
             </CardActions>
@@ -28,7 +28,7 @@ export default function Home() {
               </Typography>
             </CardContent>
             <CardActions>
-              <NavItemLink path="parent" >
+              <NavItemLink index={0} path="parent" >
                 <Button size="small">Abrir</Button>
               </NavItemLink>
             </CardActions>
@@ -43,7 +43,7 @@ export default function Home() {
               </Typography>
             </CardContent>
             <CardActions>
-              <NavItemLink path="student" >
+              <NavItemLink index={0} path="student" >
                 <Button size="small">Abrir</Button>
               </NavItemLink>
             </CardActions>
@@ -58,7 +58,7 @@ export default function Home() {
               </Typography>
             </CardContent>
             <CardActions>
-              <NavItemLink path="teacher" >
+              <NavItemLink index={0} path="teacher" >
                 <Button size="small">Abrir</Button>
               </NavItemLink>
             </CardActions>

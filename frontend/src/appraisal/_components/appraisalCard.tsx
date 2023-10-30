@@ -11,7 +11,7 @@ export function AppraisalCard({ item }: { item: Appraisal }) {
                 {item.title}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                {item.date ? ' - ' + format(item.date, 'dd//MM/yyyy') : ''}
+                {item.date ? (' - ' + format(item.date, 'dd//MM/yyyy')) : ''}
             </Typography>
             <Typography variant="body2">
                 {item.desc}

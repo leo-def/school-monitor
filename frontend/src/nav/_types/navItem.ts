@@ -7,4 +7,5 @@ export interface NavItem {
   label?: string | ReactNode | React.JSX.Element;
   path?: string;
   object?: any;
+  href?: string;
 }
