@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, CardContent, Typography, Chip } from "@mui/material"
 import { Homework } from "../_types/homework"
-import { format } from "date-fns"
+import { format, isBefore } from "date-fns"
 import { GradeCard } from "@/grade/_components/gradeCard"
 
 export function HomeworkCard({ item }: { item: Homework }) {
@@ -9,10 +9,15 @@ export function HomeworkCard({ item }: { item: Homework }) {
     
     const dateStr = item.date ? `Data: ${format(item.date, 'dd/MM/yyyy')}` : ''
     const deadlineStr = item.deadline ? `Prazo: ${format(item.deadline, 'dd/MM/yyyy')}`: ''
-    return (<Card sx={{ maxWidth: 345 }}>
+    const color = (
+        (!item.deliveryDate && isBefore(item.deadline, new Date())) ||
+        (item.deliveryDate && isBefore(item.deadline, item.deliveryDate))
+    )? "error" : (item.deliveryDate ? "success": "warning")
+    return (<Card sx={{ maxWidth: 500, minWidth: 200 }}>
         <CardContent>
+        <Chip label={`${item.status}${deliveryDateStr}`} color={color} />
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                {item.title} <Chip label={`${item.status}${deliveryDateStr}`} color="primary" />
+                {item.title} 
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
                 {dateStr} <br/>

@@ -208,7 +208,15 @@ const homework = [
     date: subBusinessDays(new Date(), 6),
     deadline: subBusinessDays(new Date(), 4),
     deliveryDate: subBusinessDays(new Date(), 2),
-    grade: null,
+    grade: {
+      id: uuidv4(),
+      title: null,
+      desc: "Presisa melhorar",
+      value: 3,
+      max: 10,
+      min: 0,
+      passingScore: 7,
+    },
   },
 ] as Array<Homework>;
 

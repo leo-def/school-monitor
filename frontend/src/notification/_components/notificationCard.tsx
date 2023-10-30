@@ -4,7 +4,7 @@ import { format } from "date-fns"
 import { Notification } from "../_types/notification"
 
 export function NotificationCard({ item }: { item: Notification }) {
-    return (<Card sx={{ maxWidth: 345 }}>
+    return (<Card sx={{ maxWidth: 500, minWidth: 200 }}>
         <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                 {item.title}

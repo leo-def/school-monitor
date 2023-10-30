@@ -4,27 +4,19 @@ import { Grade } from "../_types/grade"
 
 export function GradeCard({ item }: { item: Grade }) {
     function valuetext(value: number) {
-        return `Nota: ${value}`;
+        return `Nota: ${value} / ${item.max}`;
     }
     const marks = [
         {
-            value: item.max,
-            label: `Min: ${item.min}`,
-        },
-        {
-            value: 100,
+            value: item.passingScore,
             label: `Média: ${item.passingScore}`,
-        },
-        {
-            value: item.max,
-            label: `Max: ${item.max}`,
         },
     ];
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 500, minWidth: 200 }}>
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    {item.title}
+                    {item.title} - Nota: {`${item.value} / ${item.max}`}
                 </Typography>
                 <Slider
                     aria-label="Grade"
@@ -33,6 +25,9 @@ export function GradeCard({ item }: { item: Grade }) {
                     valueLabelDisplay="auto"
                     marks={marks}
                     value={item.value}
+                    max={item.max}
+                    min={item.min}
+                    color={item.value >= item.passingScore ? "success" : "error"}
                 />
                 <Typography variant="body2">
                     {item.desc}
