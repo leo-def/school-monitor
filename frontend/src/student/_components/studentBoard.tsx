@@ -6,6 +6,7 @@ import { SchoolClassList } from "@/schoolClass/_components/schoolClassList";
 import { useGetNavByType } from "@/nav/_hooks/useGetNavByType";
 import { TabPanel } from "@/app/_components/nav/tabPanel";
 import { SchoolClassBoard } from "@/schoolClass/_components/schoolClassBoard";
+import { TabBar } from "@/app/_components/nav/tabBar";
 
 export function StudentBoard() {
     const [page, setPage] = useState(0)
@@ -19,17 +20,9 @@ export function StudentBoard() {
     }
 
     return (<React.Fragment>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2, maxWidth: '100vw' }}>
-            <Tabs
-                value={page}
-                onChange={handleChange}
-                aria-label="tabs"
-                variant="scrollable"
-                scrollButtons
-                allowScrollButtonsMobile>
-                <Tab label="Turmas" />
-            </Tabs>
-        </Box>
+        <TabBar page={page} onChange={handleChange}>
+            <Tab label="Turmas" />
+        </TabBar>
         <TabPanel value={page} index={0}>
             <SchoolClassList />
         </TabPanel >

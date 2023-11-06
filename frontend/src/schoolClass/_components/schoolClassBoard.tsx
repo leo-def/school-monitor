@@ -13,6 +13,7 @@ import { MealTable } from "@/meal/_components/mealTable";
 import { useGetNavByType } from "@/nav/_hooks/useGetNavByType";
 import { AbsenceList } from "@/absence/_components/absenceList";
 import { SchoolClassCalendar } from "./schoolClassCalendar";
+import { TabBar } from "@/app/_components/nav/tabBar";
 
 
 export function SchoolClassBoard() {
@@ -24,27 +25,19 @@ export function SchoolClassBoard() {
         setPage(newValue);
     };
     return (<React.Fragment>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2, maxWidth: '100vw' }}>
-            <Tabs
-                value={page}
-                onChange={handleChange}
-                aria-label="tabs"
-                variant="scrollable"
-                scrollButtons
-                allowScrollButtonsMobile>
-                <Tab label="Calendário" />
-                <Tab label="Notificações" />
-                <Tab label="Trabalhos" />
-                <Tab label="Provas" />
-                <Tab label="Grade" />
-                <Tab label="Eventos" />
-                <Tab label="Cardápio" />
-                {hasStudentNavItem
-                    ? <Tab label="Faltas" />
-                    : <Tab label="Alunos" />
-                }
-            </Tabs>
-        </Box>
+        <TabBar page={page} onChange={handleChange}>
+            <Tab label="Calendário" />
+            <Tab label="Notificações" />
+            <Tab label="Trabalhos" />
+            <Tab label="Provas" />
+            <Tab label="Grade" />
+            <Tab label="Eventos" />
+            <Tab label="Cardápio" />
+            {hasStudentNavItem
+                ? <Tab label="Faltas" />
+                : <Tab label="Alunos" />
+            }
+        </TabBar>
         <TabPanel value={page} index={0}>
             <SchoolClassCalendar />
         </TabPanel >

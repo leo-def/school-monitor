@@ -1,5 +1,5 @@
 import React from "react";
-import { Visibility } from "@mui/icons-material";
+import { Search as SearchIcon } from "@mui/icons-material";
 import { FormControl, InputLabel, InputAdornment, Input, Pagination, Grid } from "@mui/material";
 
 export function ListHeader() {
@@ -9,14 +9,14 @@ export function ListHeader() {
                 <Pagination count={10} color="primary" />
             </Grid>
             <Grid item>
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
-                    <InputLabel htmlFor="standard-adornment-password">Pesquisa</InputLabel>
+                <FormControl sx={{ width: '25ch' }} variant="standard">
+                    <InputLabel htmlFor="standard-adornment-password">Pesquisar</InputLabel>
                     <Input
                         id="standard-adornment-password"
                         type="text"
                         endAdornment={
                             <InputAdornment position="end">
-                                <Visibility />
+                                <SearchIcon />
                             </InputAdornment>
                         }
                     />

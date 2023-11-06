@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 import { SchoolClassList } from "@/schoolClass/_components/schoolClassList";
 import { TabPanel } from "@/app/_components/nav/tabPanel";
+import { TabBar } from "@/app/_components/nav/tabBar";
 
 export function TeacherBoard() {
     const [page, setPage] = useState(0)
@@ -13,17 +14,9 @@ export function TeacherBoard() {
     };
 
     return (<React.Fragment>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2, maxWidth: '100vw' }}>
-            <Tabs
-                value={page}
-                onChange={handleChange}
-                aria-label="tabs"
-                variant="scrollable"
-                scrollButtons
-                allowScrollButtonsMobile>
-                <Tab label="Turmas" />
-            </Tabs>
-        </Box>
+        <TabBar page={page} onChange={handleChange}>
+            <Tab label="Turmas" />
+        </TabBar>
         <TabPanel value={page} index={0}>
             <SchoolClassList />
         </TabPanel >

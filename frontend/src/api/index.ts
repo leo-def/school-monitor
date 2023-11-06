@@ -368,7 +368,7 @@ const notification = [
   },
   {
     id: "3250ac62-f2b6-4c93-89c9-b0f6c0a53b16",
-    title: "A note de cortes vai ser 6.0 a partir de  proximo mês ",
+    title: "A nota de cortes vai ser 6.0 a partir de  proximo mês ",
     desc: "As tarefas anteriores continuaram a ser avaliadas pelo corte padrão anterior.",
     date: subBusinessDays(new Date(), 4),
   },
