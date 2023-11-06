@@ -1,17 +1,11 @@
 
 import React from "react"
 import apiFetch from "@/api"
-import { Grid } from "@mui/material"
 import { Subject } from "../_types/subject"
 import { SubjectCard } from "./subjectCard"
+import { ItemList } from "@/app/_components/list/itemList"
 
 export function SubjectList() {
     const subjects = apiFetch('/subject') as Array<Subject>
-    return (<React.Fragment>
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
-            {subjects.map((item) => (<Grid item key={item.id}>
-                <SubjectCard item={item} />
-            </Grid>))}
-        </Grid>
-    </React.Fragment>)
+    return (<ItemList items={subjects.map((item) => ({ key: item.id, children: (<SubjectCard item={item} />) }))} />)
 }

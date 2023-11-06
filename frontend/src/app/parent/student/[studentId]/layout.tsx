@@ -1,25 +1,20 @@
 'use client'
 
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren, useMemo } from "react";
 import { NavItemTypeEnum } from "@/nav/_enums/navItemType.enum";
-import { usePushNavItem } from "@/nav/_hooks/usePushNavItem";
 import apiFetch from "@/api";
 import { Student } from "@/student/_types/student";
+import NavPageLoader from "@/nav/_components/navPageLoader";
 
 export default function ParentStudentItemLayout({ children, params: { studentId } }: { params: { studentId: string } } & PropsWithChildren) {
-
-    const pushNav = usePushNavItem()
-    useEffect(() => {
-        const student = apiFetch(`student/${studentId}`) as Student
-        if(!!student) {
-            pushNav({
-                type: NavItemTypeEnum.STUDENT,
-                label: student.name,
-                path: studentId,
-                object: student,
-                index: 2
-            })
-        }
-    }, [pushNav, studentId])
-    return (<React.Fragment>{children}</React.Fragment >)
+    const student = apiFetch(`student/${studentId}`) as Student
+    const item = useMemo(() => student
+        ? ({
+            type: NavItemTypeEnum.STUDENT,
+            label: student.name,
+            path: studentId,
+            object: student,
+            index: 2
+        }) : undefined, [student, studentId])
+    return (item ? <NavPageLoader item={item}>{children}</NavPageLoader> : <React.Fragment>{children}</React.Fragment>)
 }

@@ -5,7 +5,7 @@ import { NavItemLink } from "@/nav/_components/navItemLink"
 import { NavItemTypeEnum } from "@/nav/_enums/navItemType.enum"
 
 export function TeacherCard({ item }: { item: Teacher }) {
-    return (<Card sx={{ maxWidth: 500, minWidth: 200 }}>
+    return (<Card sx={{ width: 260 }}>
         <CardMedia
             sx={{ height: 140 }}
             image={item.img}
@@ -17,10 +17,7 @@ export function TeacherCard({ item }: { item: Teacher }) {
             </Typography>
         </CardContent>
         <CardActions>
-            <NavItemLink
-                type={NavItemTypeEnum.TEACHER}
-                path={`teacher/${item.id}`}
-                object={item}>
+            <NavItemLink path={`teacher/${item.id}`}>
                 <Button size="small">Abrir</Button>
             </NavItemLink>
         </CardActions>

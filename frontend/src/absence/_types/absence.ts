@@ -4,6 +4,6 @@ export interface Absence {
   hasJustification: boolean;
   justification: string;
   start: Date;
-  date: Date;
+  end: Date;
   fullDay: boolean;
 }

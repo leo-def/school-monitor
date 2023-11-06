@@ -1,16 +1,10 @@
 import React from "react"
 import apiFetch from "@/api"
-import { Grid } from "@mui/material"
 import { SchoolClass } from "../_types/schoolClass"
 import { SchoolClassCard } from "./schoolClassCard"
+import { ItemList } from "@/app/_components/list/itemList"
 
 export function SchoolClassList() {
     const schoolClasses = apiFetch('/schoolClass') as Array<SchoolClass>
-    return (<React.Fragment>
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
-            {schoolClasses.map((item) => (<Grid item key={item.id}>
-                <SchoolClassCard item={item} />
-            </Grid>))}
-        </Grid>
-    </React.Fragment>)
+    return (<ItemList items={schoolClasses.map((item) => ({ key: item.id, children: (<SchoolClassCard item={item} />) }))} />)
 }

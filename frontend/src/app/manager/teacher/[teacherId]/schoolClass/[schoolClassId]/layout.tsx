@@ -1,25 +1,21 @@
 'use client'
 
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren, useMemo } from "react";
 import { NavItemTypeEnum } from "@/nav/_enums/navItemType.enum";
-import { usePushNavItem } from "@/nav/_hooks/usePushNavItem";
+
 import apiFetch from "@/api";
 import { SchoolClass } from "@/schoolClass/_types/schoolClass";
+import NavPageLoader from "@/nav/_components/navPageLoader";
 
 export default function ManagerTeacherSchoolClassItemLayout({ children, params: { schoolClassId } }: { params: { schoolClassId: string } } & PropsWithChildren) {
-
-    const pushNav = usePushNavItem()
-    useEffect(() => {
-        const schoolClass = apiFetch(`schoolClass/${schoolClassId}`) as SchoolClass
-        if(!!schoolClass) {
-            pushNav({
-                type: NavItemTypeEnum.SCHOOL_CLASS,
-                label: schoolClass.title,
-                path: schoolClassId,
-                object: schoolClass,
-                index: 4
-            })
-        }
-    }, [pushNav, schoolClassId])
-    return (<React.Fragment>{children}</React.Fragment >)
+    const schoolClass = apiFetch(`schoolClass/${schoolClassId}`) as SchoolClass
+    const item = useMemo(() => schoolClass
+        ? ({
+            type: NavItemTypeEnum.SCHOOL_CLASS,
+            label: schoolClass.title,
+            path: schoolClassId,
+            object: schoolClass,
+            index: 4
+        }) : undefined, [schoolClass, schoolClassId])
+    return (item ? <NavPageLoader item={item}>{children}</NavPageLoader> : <React.Fragment>{children}</React.Fragment>)
 }

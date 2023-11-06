@@ -5,7 +5,7 @@ import { NavItemLink } from "@/nav/_components/navItemLink"
 import { NavItemTypeEnum } from "@/nav/_enums/navItemType.enum"
 
 export function ManagerCard({ item }: { item: Manager }) {
-    return (<Card sx={{ maxWidth: 500, minWidth: 200 }}>
+    return (<Card sx={{ width: 260 }}>
         <CardMedia
             sx={{ height: 140 }}
             image={item.img}

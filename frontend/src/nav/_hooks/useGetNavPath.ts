@@ -1,16 +1,18 @@
 "use client";
 
-import { useGetNavItems } from "./useGetNavItems";
+import { useContext } from "react";
+import { NavContext } from "../_contexts/navContext";
+
 export interface GetNavPathProps {
   path?: string;
   index?: number;
 }
 export function useGetNavPath(props: GetNavPathProps): string {
   const { path, index } = props;
-  const items = useGetNavItems();
-  if (index === 0){
-    return path ?? '';
-  }
-  const item = items[(index ?? items.length) - 1];
-  return (`${item?.href ?? ''}/${path ?? ''}`);
+  const { state } = useContext(NavContext);
+  const { items, href } = state;
+  const curhref = index
+    ? Object.values(items).find((val) => val.index === index - 1)?.href
+    : href;
+  return `${curhref ?? ""}/${path ?? ""}`;
 }

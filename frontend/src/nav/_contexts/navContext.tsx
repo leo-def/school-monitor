@@ -6,7 +6,9 @@ import { NavState } from "../_types/navState";
 import { NavAction } from "../_types/navAction";
 
 export const initialState = {
-  items: {}
+  items: {},
+  index: null,
+  href: '',
 } as NavState;
 
 export const NavContext = createContext({

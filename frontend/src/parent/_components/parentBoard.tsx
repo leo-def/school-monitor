@@ -12,7 +12,7 @@ export function ParentBoard() {
         setPage(newValue);
     };
     return (<React.Fragment>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2 }}>
             <Tabs value={page} onChange={handleChange} aria-label="tabs">
                 <Tab label="Alunos" />
             </Tabs>
