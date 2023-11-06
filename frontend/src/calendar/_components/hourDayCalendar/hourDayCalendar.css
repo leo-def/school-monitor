@@ -1,0 +1,47 @@
+
+.calendar {
+    min-width: 600px;
+    flex-grow: 1;
+}
+
+.wrapper {
+    position: relative;
+}
+
+.content {
+    position: relative;
+    z-index: 100;
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -100;
+}
+
+.day-view-wrapper {
+    position: relative;
+}
+
+.day-view-content {
+    position: relative;
+    z-index: 100;
+}
+
+.day-view-background {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -100;
+}
+
+.hour-view-time-label {
+    position: relative;
+    top: -8px;
+    text-align: right;
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
