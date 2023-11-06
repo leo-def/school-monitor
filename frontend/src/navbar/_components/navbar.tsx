@@ -41,7 +41,7 @@ export function Navbar({ children }: PropsWithChildren) {
         <React.Fragment>
             <NavbarWrapper>
                 <Link href="/" passHref>
-                    <Typography variant="h6" color="inherit" component="div">ECard </Typography>
+                    <Typography variant="h6" color="inherit" component="div">Monitor Escolar </Typography>
                 </Link>
                 <Box sx={{ flexGrow: 1 }} />
                 {children}

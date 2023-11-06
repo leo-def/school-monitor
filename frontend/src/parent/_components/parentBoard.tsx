@@ -12,8 +12,14 @@ export function ParentBoard() {
         setPage(newValue);
     };
     return (<React.Fragment>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2 }}>
-            <Tabs value={page} onChange={handleChange} aria-label="tabs">
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: 2, maxWidth: '100vw' }}>
+            <Tabs
+                value={page}
+                onChange={handleChange}
+                aria-label="tabs"
+                variant="scrollable"
+                scrollButtons
+                allowScrollButtonsMobile>
                 <Tab label="Alunos" />
             </Tabs>
         </Box>

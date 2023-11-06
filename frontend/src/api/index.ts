@@ -12,6 +12,7 @@ import { Teacher } from "@/teacher/_types/teacher";
 import { Notification } from "@/notification/_types/notification";
 import { Event } from "@/event/_types/event";
 import { addBusinessDays, subBusinessDays } from "date-fns";
+
 const parent = [
   {
     id: "58aee737-6258-4e2d-ba24-ed10cb68282b",
@@ -48,7 +49,7 @@ const student = [
   {
     id: "d20bcb40-7b3d-4338-b073-f48587549013",
     name: "José Elias Silva",
-    img: "https://static-hotsites.edufindme.com/tsw-event/f26a7d9d8f33888b6f766d133e1e56538199d252/static/img/hub/img/img-student-6.png",
+    img: "https://marista.edu.br/wp-content/uploads/2022/07/EF1.png",
   },
   {
     id: "708f2625-ca68-42ba-894c-907f9d5de76d",
@@ -66,7 +67,7 @@ const teacher = [
   {
     id: "0ea70bd1-ed2c-495f-a1bf-6ba3abebe6bc",
     name: "Maria Nascimento",
-    img: "https://tdah.org.br/wp-content/uploads/jovem-professora-sorridente-usando-oculos-parada-na-frente-do-quadro-negro-segurando-encalhado-para-a-prancha-colocando-a-mao-no-quadril-na-sala-de-aula_141793-105324.jpg",
+    img: "https://www.escoladireta.com.br/wp-content/uploads/2017/09/Fotolia_52571231_Subscription_Monthly_M.jpg",
   },
 ] as Array<Teacher>;
 
@@ -86,7 +87,7 @@ const absence = [
     justification: "Consulta médica",
     start: subBusinessDays(new Date(), 3),
     end: subBusinessDays(new Date(), 3),
-    fullDay: true,
+    fullDay: false,
   },
   {
     id: "1d6a9e8c-a887-453f-80fc-64027af1c6c2",
@@ -95,6 +96,15 @@ const absence = [
     justification: "",
     start: subBusinessDays(new Date(), 5),
     end: subBusinessDays(new Date(), 35),
+    fullDay: true,
+  },
+  {
+    id: "ca743492c-24e5-455b-a0ab-a8252911f9f6",
+    desc: "Feriado",
+    hasJustification: true,
+    justification: "Feriado nacional",
+    start: subBusinessDays(new Date(), 13),
+    end: subBusinessDays(new Date(), 13),
     fullDay: true,
   },
 ] as Array<Absence>;
@@ -368,14 +378,29 @@ const subject = [
   {
     id: "ca743492c-24e5-455b-a0ab-a82e2911f9f6",
     title: "Artes",
+    teacher: {
+      id: "9418a579-7c55-4814-87a2-7a505811627d",
+      name: "José Alves Santos",
+      img: "https://www.frontiersin.org/image/researchtopic/40688",
+    },
   },
   {
     id: "2b30110e-a6fc-4e1b-8dcf-11433dc1fc84",
     title: "Português",
+    teacher: {
+      id: "0ea70bd1-ed2c-495f-a1bf-6ba3abebe6bc",
+      name: "Maria Nascimento",
+      img: "https://www.escoladireta.com.br/wp-content/uploads/2017/09/Fotolia_52571231_Subscription_Monthly_M.jpg",
+    },
   },
   {
     id: "9b23c69f-d8d8-4d17-b789-77d02553f4a9",
     title: "Matemática",
+    teacher: {
+      id: "0ea70bd1-ed2c-495f-a1bf-6ba3abebe6bc",
+      name: "Maria Nascimento",
+      img: "https://www.escoladireta.com.br/wp-content/uploads/2017/09/Fotolia_52571231_Subscription_Monthly_M.jpg",
+    },
   },
 ] as Array<Subject>;
 

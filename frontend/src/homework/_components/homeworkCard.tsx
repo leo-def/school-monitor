@@ -24,10 +24,11 @@ export function HomeworkCard({ item }: { item: Homework }) {
     return (<Card sx={{ width: 260, minHeight: 260 }}>
         <CardContent>
             <Grid container rowSpacing={0.5}>
-                <Grid item xs={12}>
-                    <Grid item>  <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                        {item.title}
-                    </Typography>
+                <Grid container item xs={12} justifyContent="space-between">
+                    <Grid item xs="auto">
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary">
+                            {item.title}
+                        </Typography>
                     </Grid>
                     <Grid item> <Chip label={`${statusLables[item.status]} ${deliveryDateStr}`} color={color} size="small" />   </Grid>
                 </Grid>

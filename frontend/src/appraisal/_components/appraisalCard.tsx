@@ -9,7 +9,7 @@ export function AppraisalCard({ item }: { item: Appraisal }) {
         <CardContent>
             <Grid container rowSpacing={0.5}>
                 <Grid item xs={12}>
-                    <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary">
                         {item.title}
                     </Typography>
                 </Grid>

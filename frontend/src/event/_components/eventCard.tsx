@@ -10,11 +10,15 @@ export function EventCard({ item }: { item: Event }) {
     return (<Card sx={{ width: 260, minHeight: 150 }}>
         <CardContent>
             <Grid container rowSpacing={0.5}>
-                <Grid item xs={12}>
-                    {item.recess ? <Chip label="Recesso" color="primary" size="small" /> : undefined}
-                    <Typography sx={{ fontSize: 12 }} color="text.secondary">
-                        {item.title}
-                    </Typography>
+                <Grid container item xs={12} justifyContent="space-between">
+                    <Grid item xs="auto">
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary">
+                            {item.title}
+                        </Typography>
+                    </Grid>
+                    {item.recess ? <Grid item xs={4}>
+                        <Chip label="Recesso" color="primary" size="small" />
+                    </Grid> : undefined}
                 </Grid>
                 <Grid item xs={12}>
                     <Typography sx={{ fontSize: 12 }} color="text.secondary">
