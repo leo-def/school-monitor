@@ -4,7 +4,7 @@ import { Meal } from "../_types/meal"
 
 export function MealDetails({ item }: { item?: Meal }) {
     return (
-        <Paper elevation={3} sx={{ minWidth: 200, padding: 1 }}>
+        <Paper elevation={3} sx={{ fontSize: 12, minWidth: 150, maxWidth: 350, width: '100%', padding: 1, margin: 0 }}>
             {item ? <MealCardContet item={item} /> : "Refeição não informada"}
         </Paper>)
 }

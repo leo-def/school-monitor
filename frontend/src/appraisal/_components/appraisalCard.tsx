@@ -5,13 +5,16 @@ import { Appraisal } from "../_types/appraisal"
 import { GradeDetails } from "@/grade/_components/gradeDetails"
 
 export function AppraisalCard({ item }: { item: Appraisal }) {
-    return (<Card sx={{ width: 260, minHeight: 200 }}>
+    return (<Card sx={{ maxWidth: 345, minHeight: 200 }}>
         <CardContent>
             <Grid container rowSpacing={0.5}>
                 <Grid item xs={12}>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary">
+                    <Typography sx={{ fontSize: 14, fontWeight: 600 }} color="text.secondary">
                         {item.title}
                     </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <hr />
                 </Grid>
                 <Grid item xs={12}>
                     <Typography sx={{ fontSize: 12 }} color="text.secondary">

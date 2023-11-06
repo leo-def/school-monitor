@@ -45,8 +45,10 @@ export function MealTable() {
         return meals.find((item) => item.weekDays === weekDays && item.type === type)
     }
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper} style={{
+            marginLeft: 2, minWidth: 650, maxWidth: '99vw'
+        }}>
+            <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <StyledTableCell>Dia da semana</StyledTableCell>
@@ -65,6 +67,6 @@ export function MealTable() {
                     }
                 </TableBody>
             </Table>
-        </TableContainer>
+        </TableContainer >
     )
 }

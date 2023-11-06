@@ -14,13 +14,16 @@ export function AbsenceCard({ item }: { item: Absence }) {
             <Grid container rowSpacing={0.5}>
                 <Grid container item xs={12} justifyContent="space-between">
                     <Grid item xs="auto">
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        <Typography sx={{ fontSize: 14, fontWeight: 600 }} color="text.secondary">
                             {item.desc || 'Falta'}
                         </Typography>
                     </Grid>
                     {item.hasJustification ? <Grid item xs={4}>
                         <Chip label="Abonado" color="success" size="small" />
                     </Grid> : <Chip label="Não abonado" color="error" size="small" />}
+                </Grid>
+                <Grid item xs={12}>
+                    <hr />
                 </Grid>
                 <Grid item xs={12}>
                     <Typography sx={{ fontSize: 12 }} color="text.secondary">
@@ -31,17 +34,19 @@ export function AbsenceCard({ item }: { item: Absence }) {
                     </Typography>
                 </Grid>
                 {item.hasJustification ?
-                    <Grid container item xs={12} justifyContent="center">
-                        <Grid item xs={12}>
-                            Justificativa:
-                        </Grid>
-                        <Grid item>
-                            <Paper elevation={3} sx={{ minWidth: 200, padding: 1, margin: 0 }}>{item.justification}</Paper>
-                        </Grid>
+                    <Grid item xs={12}>
+                        <Paper elevation={3} sx={{ fontSize: 10, minWidth: 200, width: '100%', padding: 1, margin: 0, }}>
+
+                            <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                                Justificativa:
+                            </Typography>
+                            <hr />
+                            <span style={{ paddingLeft: 6 }}>
+                                {item.justification}
+                            </span>
+                        </Paper>
                     </Grid>
                     : undefined}
-
-
             </Grid>
         </CardContent>
     </Card>)

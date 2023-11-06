@@ -4,7 +4,7 @@ import { Grade } from "../_types/grade"
 
 export function GradeDetails({ item }: { item?: Grade }) {
     return (
-        <Paper elevation={3} sx={{ minWidth: 200, padding: 2, margin: 0 }}>
+        <Paper elevation={3} sx={{ fontSize: 12, minWidth: 200, width: '100%', padding: 1, margin: 0 }}>
             {item ? <GradeContent item={item} /> : "Nota não informada."}
         </Paper>)
 }
@@ -49,6 +49,7 @@ function GradeContent({ item }: { item: Grade }) {
                 {item.desc}
             </Typography>
         </Typography>
+        <hr />
         <AppSlider
             size="small"
             aria-label="Grade"

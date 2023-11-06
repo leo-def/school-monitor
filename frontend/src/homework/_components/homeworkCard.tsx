@@ -21,16 +21,19 @@ export function HomeworkCard({ item }: { item: Homework }) {
         LATE: "Atrasado",
     } as { [x: string]: string }
 
-    return (<Card sx={{ width: 260, minHeight: 260 }}>
+    return (<Card sx={{ maxWidth: 345, minHeight: 260 }}>
         <CardContent>
             <Grid container rowSpacing={0.5}>
                 <Grid container item xs={12} justifyContent="space-between">
                     <Grid item xs="auto">
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary">
+                        <Typography sx={{ fontSize: 14, fontWeight: 600 }} color="text.secondary">
                             {item.title}
                         </Typography>
                     </Grid>
                     <Grid item> <Chip label={`${statusLables[item.status]} ${deliveryDateStr}`} color={color} size="small" />   </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                    <hr />
                 </Grid>
                 <Grid item xs={12}>
                     <Typography sx={{ fontSize: 12 }} color="text.secondary">
@@ -43,8 +46,8 @@ export function HomeworkCard({ item }: { item: Homework }) {
                         {item.desc}
                     </Typography>
                 </Grid>
-                <Grid container item xs={12} justifyContent="center">
-                    <Grid item><GradeDetails item={item.grade} /></Grid>
+                <Grid item xs={12}>
+                    <GradeDetails item={item.grade} />
                 </Grid>
             </Grid>
         </CardContent>

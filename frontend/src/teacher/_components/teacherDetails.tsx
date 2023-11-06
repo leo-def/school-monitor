@@ -4,7 +4,7 @@ import { Teacher } from "../_types/teacher"
 
 export function TeacherDetails({ item }: { item?: Teacher }) {
     return (
-        <Paper elevation={3} sx={{ minWidth: 200, padding: 1 }}>
+        <Paper elevation={3} sx={{ fontSize: 12, minWidth: 200, width: '100%', padding: 1, margin: 0 }}>
             {item ? <TeacherContet item={item} /> : "Refeição não informada"}
         </Paper>)
 }

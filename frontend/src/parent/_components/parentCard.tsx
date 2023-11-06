@@ -10,7 +10,7 @@ export function ParentCard({ item }: { item: Parent }) {
             title={item.name}
         />
         <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            <Typography sx={{ fontSize: 14, fontWeight: 600 }} color="text.secondary">
                 {item.name}
             </Typography>
         </CardContent>

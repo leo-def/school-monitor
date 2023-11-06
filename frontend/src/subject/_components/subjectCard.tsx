@@ -9,13 +9,15 @@ export function SubjectCard({ item }: { item: Subject }) {
         <CardContent>
             <Grid container rowSpacing={0.5}>
                 <Grid item xs={12}>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    <Typography sx={{ fontSize: 14, fontWeight: 600 }} color="text.secondary">
                         {item.title}
                     </Typography>
                 </Grid>
-
+                <Grid item xs={12}>
+                    <hr />
+                </Grid>
                 <Grid container item xs={12} justifyContent="center">
-                    <Grid item> <TeacherDetails item={item.teacher} /></Grid>
+                    <TeacherDetails item={item.teacher} />
                 </Grid>
             </Grid>
         </CardContent>
