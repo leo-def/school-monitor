@@ -39,11 +39,11 @@ export function SchoolClassCalendar() {
         initialDate,
         endDate
     ])
-    const handleCreateNewEvent = useCallback((origin: Event, calendarEvent: Partial<CalendarEvent>) => {
+    const handleCreateNewEvent = useCallback((origin: React.UIEvent, calendarEvent: Partial<CalendarEvent>) => {
         console.log('handleCreateNewEvent', origin, calendarEvent)
     }, [])
-    const handleOpenEvent = useCallback((calendarEvent: CalendarEvent) => {
-        console.log('handleOpenEvent', calendarEvent)
+    const handleOpenEvent = useCallback((origin: React.UIEvent, calendarEvent: CalendarEvent) => {
+        console.log('handleOpenEvent', origin, calendarEvent)
     }, [])
     const eventProps = useMemo(() => ({ events, handleCreateNewEvent, handleOpenEvent }), [events, handleCreateNewEvent, handleOpenEvent])
 
