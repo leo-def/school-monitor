@@ -6,7 +6,7 @@ import { NavContext } from "../_contexts/navContext"
 import { NavActionTypeEnum } from "../_enums/navActionType.enum"
 
 export interface NavPageLoaderProps extends PropsWithChildren {
-    item: NavItem
+    readonly item: NavItem
 }
 export default function NavPageLoader({ children, item }: NavPageLoaderProps) {
     const pathName = usePathname()
@@ -42,7 +42,6 @@ export default function NavPageLoader({ children, item }: NavPageLoaderProps) {
 
 
     useEffect(() => {
-        console.log(`item.index(${item.index}) <-> (${index})index   currItem: ${currItem?.index}`)
         if (!currItem && index === item.index - 1) {
             push(item);
         }

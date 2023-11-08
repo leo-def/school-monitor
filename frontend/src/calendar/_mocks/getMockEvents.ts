@@ -55,10 +55,6 @@ export function getMockEvents(
       color: "#8e24aa",
     },
   ] as Array<{ label: string; color: string }>;
-  console.log({
-    initDate: format(initDate, "dd/MM hh:mm"),
-    endDate: format(endDate, "dd/MM hh:mm"),
-  });
   const dayEvents = Array(getRandomInt(1, limit ?? 10))
     .fill(0)
     .map((_, index) => getEvent(index, false, initDate, endDate, colors));

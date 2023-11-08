@@ -4,8 +4,8 @@ import { Calendar, CalendarProps } from "@/calendar/_components/calendar";
 import { CalendarDateFnsUtilsProvider } from "@/calendar/_components/providers/calendarDateFnsUtilsProvider";
 import { CalendarEventsContextProvider } from "@/calendar/_components/providers/calendarEventsContextProvider";
 import { CalendarEvent } from "@/calendar/_types/calendarEvent";
-import { CalendarTypeProps, CalendarTypeSelect } from "./calendarTypeSelect";
 import { getMockEvents } from "@/calendar/_mocks/getMockEvents";
+import { CalendarTypeProps, CalendarTypeSelect } from "./calendarTypeSelect";
 
 export function SchoolClassCalendar() {
     const [initialDate, setInitialDate] = useState(null as null | Date)
@@ -13,11 +13,9 @@ export function SchoolClassCalendar() {
     const [calendarProps, setCalendarProps] = useState(null as null | CalendarProps)
 
     const handleLoadInitialDate = useCallback((date: Date) => {
-        console.log('handleLoadInitialDate', date)
         setInitialDate(date)
     }, [setInitialDate])
     const handleLoadEndDate = useCallback((date: Date) => {
-        console.log('handleLoadEndDate', date)
         setEndDate(date)
     }, [setEndDate])
 

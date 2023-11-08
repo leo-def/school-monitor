@@ -12,7 +12,6 @@ export const navReducer = (state: NavState, action: NavAction): NavState => {
       const prevItem = state.items[item.index - 1];
       item.href = `${prevItem?.href ?? ""}/${item.path}`;
       const items = { ...state.items, [item.index]: item };
-      console.log("PUSH", { items, href: item.href, index: item.index });
       return { items, href: item.href, index: item.index };
     }
     case NavActionTypeEnum.BACK: {
