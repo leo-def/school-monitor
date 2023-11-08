@@ -20,50 +20,5 @@ export default function Home() {
           </CardActions>
         </Card>
       </Grid>
-
-      <Grid item>
-        <Card sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Painel dos pais
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <NavItemLink index={0} path="parent" >
-              <Button size="small">Abrir</Button>
-            </NavItemLink>
-          </CardActions>
-        </Card>
-      </Grid>
-
-      <Grid item>
-        <Card sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Painel do aluno
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <NavItemLink index={0} path="student" >
-              <Button size="small">Abrir</Button>
-            </NavItemLink>
-          </CardActions>
-        </Card>
-      </Grid>
-
-      <Grid item>
-        <Card sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Painel do professor
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <NavItemLink index={0} path="teacher" >
-              <Button size="small">Abrir</Button>
-            </NavItemLink>
-          </CardActions>
-        </Card>
-      </Grid>
     </Grid >)
 }
