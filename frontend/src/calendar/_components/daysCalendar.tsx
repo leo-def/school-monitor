@@ -3,31 +3,33 @@ import { CalendarDataContextProvider } from "./providers/calendarDataContextProv
 import { DayCalendarDisplay } from "./dayCalendar/dayCalendarDisplay";
 import { useGetCalendarDateUtils } from "../_hooks/useGetCalendarDateUtils";
 import "../_styles/dayCalendar.css";
-import { NUMBER_OF_WEEK_DAYS } from "../_commons/constants";
 
-export interface WeekCalendarProps {
+export interface DaysCalendarProps {
+    readonly numberOfDays?: number;
     readonly referenceDate: Date;
     readonly handleLoadEndDate?: (date: Date) => void;
     readonly handleLoadInitialDate?: (date: Date) => void;
 }
-export function WeekCalendar({ handleLoadEndDate, handleLoadInitialDate, ...props }: WeekCalendarProps) {
-    const numberOfDays = NUMBER_OF_WEEK_DAYS
-    const { addDays, startOfWeek, startOfDay, endOfDay } = useGetCalendarDateUtils()
+export function DaysCalendar({ numberOfDays, handleLoadEndDate, handleLoadInitialDate, ...props }: DaysCalendarProps) {
+    const { addDays, startOfDay, endOfDay } = useGetCalendarDateUtils()
     const referenceDate = useMemo(() => props.referenceDate ?? new Date(), [props.referenceDate])
-    const initDate = useMemo(() => startOfDay(startOfWeek(referenceDate ?? new Date())), [referenceDate, startOfDay, startOfWeek])
+    const initDate = useMemo(() => startOfDay(referenceDate), [referenceDate, startOfDay])
     const endDate = useMemo(() => endOfDay(addDays(initDate, (numberOfDays ?? 1) - 1)), [addDays, endOfDay, initDate, numberOfDays])
 
-    const calendarData = useMemo(() => initDate && endDate ? ({
-        numberOfDays: numberOfDays ?? 1,
-        referenceDate,
-        initDate,
-        endDate
-    }) : undefined, [
-        numberOfDays,
-        referenceDate,
-        initDate,
-        endDate
-    ])
+    const calendarData = useMemo(() => initDate && endDate
+        ? ({
+            numberOfDays: numberOfDays ?? 1,
+            referenceDate,
+            initDate,
+            endDate
+        })
+        : undefined
+        , [
+            numberOfDays,
+            referenceDate,
+            initDate,
+            endDate
+        ])
 
     useEffect(() => {
         if (handleLoadEndDate) {
@@ -43,3 +45,4 @@ export function WeekCalendar({ handleLoadEndDate, handleLoadInitialDate, ...prop
 
     return calendarData ? (<CalendarDataContextProvider defaultValues={calendarData}> <DayCalendarDisplay /></CalendarDataContextProvider>) : undefined
 }
+

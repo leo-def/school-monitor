@@ -3,8 +3,7 @@ export interface CalendarEvent {
   title: string;
   desc?: string;
   start: Date;
-  end?: Date;
-  fullDay?: boolean;
+  end: Date;
   color: string;
   backgroundColor: string;
 }

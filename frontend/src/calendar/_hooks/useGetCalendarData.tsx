@@ -1,8 +1,7 @@
 import { useContext } from "react";
-import { CalendarDataContext } from "../_context/calendarDataCotext";
-import { CalendarDataState } from "../_types/caledarDataContext";
+import { CalendarDataContext, CalendarDataContextValue } from "../_context/calendarDataContext";
 
-export function useGetCalendarData(): CalendarDataState {
-    const { state } = useContext(CalendarDataContext);
+export function useGetCalendarData(): CalendarDataContextValue {
+    const state = useContext(CalendarDataContext);
     return state;
 }
