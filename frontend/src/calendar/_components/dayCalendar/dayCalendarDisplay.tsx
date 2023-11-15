@@ -7,6 +7,8 @@ import { Header } from './header'
 import { DayView } from './dayView'
 import { TimeView } from './timeView'
 import '../../_styles/dayCalendar.css'
+import { CalendarModalContainer } from '../modal/calendarModalContainer'
+import { CalendarModalProvider } from '../providers/calendarModalProvider'
 
 
 export function DayCalendarDisplay() {
@@ -23,13 +25,16 @@ export function DayCalendarDisplay() {
         numberOfCols,
         days
     }
-    return (<DayCalendarDisplayContextProvider defaultValues={defaultValues}>
-        <div className="calendar">
-            <Header />
-            <DayView />
-            <TimeView />
-        </div>
-    </DayCalendarDisplayContextProvider>)
+    return (<CalendarModalProvider>
+        <CalendarModalContainer />
+        <DayCalendarDisplayContextProvider defaultValues={defaultValues}>
+            <div className="calendar">
+                <Header />
+                <DayView />
+                <TimeView />
+            </div>
+        </DayCalendarDisplayContextProvider>
+    </CalendarModalProvider>)
 }
 
 

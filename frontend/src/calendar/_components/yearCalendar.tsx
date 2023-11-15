@@ -1,6 +1,8 @@
 
 import { useMemo } from "react"
 import { useGetCalendarDateUtils } from "../_hooks/useGetCalendarDateUtils"
+import { CalendarModalContainer } from "./modal/calendarModalContainer"
+import { CalendarModalProvider } from "./providers/calendarModalProvider"
 
 const NUMBER_OF_WEEk_DAYS = 7
 const NUMBER_OF_MONTHS = 12
@@ -16,34 +18,37 @@ export function YearCalendar({ referenceDate }: MonthYearCalendarProps) {
         const date = addMonths(initDate, index)
         return ({ index, date })
     })
-    return (<div className="calendar-wrapper" style={{
-        flex: '1 1 auto',
-        overflow: 'hidden',
-        position: 'relative',
-        height: "100%"
-    }}>
-        <main className="calendar-container" role="main" style={{
+    return (<CalendarModalProvider>
+        <CalendarModalContainer />
+        <div className="calendar-wrapper" style={{
+            flex: '1 1 auto',
             overflow: 'hidden',
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            outline: 'none'
+            position: 'relative',
+            height: "100%"
         }}>
-            <div className="calendar-grid" style={{
-                paddingRight: '32px',
-                paddingTop: '8px',
-                display: 'flex',
-                flexWrap: 'wrap',
-                WebkitBoxPack: 'justify',
-                justifyContent: 'space-between',
-                alignContent: 'flex-start',
+            <main className="calendar-container" role="main" style={{
+                overflow: 'hidden',
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+                outline: 'none'
             }}>
-                {months.map(month => <Month key={month.index} referenceDate={month.date} />)}
-            </div>
-        </main>
-    </div>)
+                <div className="calendar-grid" style={{
+                    paddingRight: '32px',
+                    paddingTop: '8px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    WebkitBoxPack: 'justify',
+                    justifyContent: 'space-between',
+                    alignContent: 'flex-start',
+                }}>
+                    {months.map(month => <Month key={month.index} referenceDate={month.date} />)}
+                </div>
+            </main>
+        </div>
+    </CalendarModalProvider>)
 }
 
 export interface MonthProps {
@@ -150,7 +155,7 @@ export function MonthContent({ initDate, referenceDate }: MonthContentProps) {
 }
 
 export interface MonthContentHeaderProps {
-    weekDays: Array<HeaderDay>
+    readonly weekDays: Array<HeaderDay>
 }
 export function MonthContentHeader({ weekDays }: MonthContentHeaderProps) {
     return (<div
@@ -243,34 +248,35 @@ export function MonthContentBodyWeekRow({
     const date = useMemo(() => addDays(initDate, ((weekDaysLength * row) + weekDay.index)), [addDays, initDate, row, weekDay.index, weekDaysLength])
     const day = useMemo(() => date.getDate(), [date])
     const backgroundColor = useMemo(() => isSameMonth(referenceDate, date) ? '#FFFFFF' : '#F5F5F5', [date, isSameMonth, referenceDate])
-    return (<span
-        key={weekDay.index}
-        className="calendar-item-content-header-item"
-        style={{
-            cursor: 'pointer',
-            outline: 'none',
-            position: 'relative',
-            display: 'table-cell',
-            fontSize: '10px',
-            fontWeight: '500',
-            verticalAlign: 'middle',
-            textAlign: 'center',
-            backgroundColor,
-        }}>
-        <div
-            className="calendar-item-content-body-row-item-label"
+    return (
+        <span
+            key={weekDay.index}
+            className="calendar-item-content-header-item"
             style={{
-                width: '24px',
-                height: '24px',
-                lineHeight: '24px',
-                margin: 'auto',
-                borderRadius: '50%',
+                cursor: 'pointer',
+                outline: 'none',
                 position: 'relative',
-                transition: 'background-color .1s linear',
-                fontSize: '12px',
-                fontWeight: '400',
-            }}>{day}</div>
-    </span>)
+                display: 'table-cell',
+                fontSize: '10px',
+                fontWeight: '500',
+                verticalAlign: 'middle',
+                textAlign: 'center',
+                backgroundColor,
+            }}>
+            <div
+                className="calendar-item-content-body-row-item-label"
+                style={{
+                    width: '24px',
+                    height: '24px',
+                    lineHeight: '24px',
+                    margin: 'auto',
+                    borderRadius: '50%',
+                    position: 'relative',
+                    transition: 'background-color .1s linear',
+                    fontSize: '12px',
+                    fontWeight: '400',
+                }}>{day}</div>
+        </span>)
 }
 /*
 

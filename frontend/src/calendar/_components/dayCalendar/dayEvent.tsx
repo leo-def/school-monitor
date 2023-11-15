@@ -1,8 +1,9 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import { CalendarEvent } from '@/calendar/_types/calendarEvent'
 import { useGetCalendarDateUtils } from '@/calendar/_hooks/useGetCalendarDateUtils'
 import '../../_styles/dayCalendar.css'
 import { useGetCalendarEvents } from '@/calendar/_hooks/useGetCalendarEvents'
+import { useOpenCalendarModal } from '@/calendar/_hooks/useOpenCalendarModal'
 
 export interface DayEventProps {
     date: Date,
@@ -15,18 +16,43 @@ export function calculateTopPosition(differenceInMinutes: number) {
 }
 
 export function DayEvent({ date, calendarEvent, slot }: DayEventProps) {
+    const buttonRef = useRef<HTMLDivElement>(null);
+    const openCalendarModal = useOpenCalendarModal()
     const { handleOpenEvent } = useGetCalendarEvents()
     const { differenceInMinutes } = useGetCalendarDateUtils()
     const top = useMemo(() => calculateTopPosition(differenceInMinutes(calendarEvent.start, date)), [date, differenceInMinutes, calendarEvent.start])
     const height = useMemo(() => calculateTopPosition(differenceInMinutes(calendarEvent.end, date)) - top, [date, differenceInMinutes, calendarEvent.end, top])
 
-    const handleOnClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handleOnKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
+        const rect = buttonRef.current?.getBoundingClientRect()
+        if (openCalendarModal) {
+            openCalendarModal({
+                top: rect?.top ?? 0,
+                left: rect?.left ?? 0,
+                events: [calendarEvent]
+            })
+        }
         if (handleOpenEvent) {
             handleOpenEvent(event, calendarEvent)
         }
-    }, [calendarEvent, handleOpenEvent])
+    }, [calendarEvent, handleOpenEvent, openCalendarModal])
+
+    const handleOnClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (openCalendarModal) {
+            openCalendarModal({
+                top: event.clientY,
+                left: event.clientX,
+                events: [calendarEvent]
+            })
+        }
+        if (handleOpenEvent) {
+            handleOpenEvent(event, calendarEvent)
+        }
+    }, [calendarEvent, handleOpenEvent, openCalendarModal])
 
     return (height ? <div
+        ref={buttonRef}
+        onKeyDown={handleOnKeyDown}
         onClick={handleOnClick}
         style={{
             backgroundColor: calendarEvent.color,

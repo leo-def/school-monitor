@@ -7,7 +7,6 @@ export type CalendarDataContextProviderProps = { defaultValues: Partial<Calendar
 
 export const CalendarDataContextProvider = ({ children, defaultValues }: CalendarDataContextProviderProps) => {
 
-
     const value = useMemo(() => ({
         ...initialCalendarDataContextValue,
         ...defaultValues

@@ -1,5 +1,4 @@
 import { useGetMonthCalendarDisplay } from "@/calendar/_hooks/useGetMonthCalendarDisplay";
-import { HeaderDay } from "@/calendar/_types/headerDay";
 
 export function BodyRowBackground() {
     const { weekDays } = useGetMonthCalendarDisplay()

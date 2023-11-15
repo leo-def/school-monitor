@@ -8,6 +8,8 @@ import { HeaderDay } from "@/calendar/_types/headerDay";
 import { MonthCalendarDisplayContextProvider } from "../providers/monthCalendarDisplayProvider";
 import { Body } from "./body";
 import { Header } from "./header";
+import { CalendarModalProvider } from "../providers/calendarModalProvider";
+import { CalendarModalContainer } from "../modal/calendarModalContainer";
 
 
 export function MonthCalendarDisplay() {
@@ -26,34 +28,38 @@ export function MonthCalendarDisplay() {
         rows,
         weekDays,
     }), [eventSlots, rows, weekDays])
-    return (<MonthCalendarDisplayContextProvider defaultValues={defaultValues}><div className="calendar-wrapper" style={{
-        flex: '1 1 auto',
-        overflow: 'hidden',
-        position: 'relative',
-        height: "100%"
-    }}>
-        <main className="calendar-container" role="main" style={{
-            overflow: 'hidden',
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            outline: 'none'
-        }}>
-            <div className="calendar-content" role="grid" style={{
-                borderLeft: 'rgb(218,220,224) 1px solid',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                marginLeft: '8px',
+    return (<CalendarModalProvider>
+        <CalendarModalContainer />
+        <MonthCalendarDisplayContextProvider defaultValues={defaultValues}>
+            <div className="calendar-wrapper" style={{
+                flex: '1 1 auto',
+                overflow: 'hidden',
+                position: 'relative',
+                height: "100%"
             }}>
-                <Header />
-                <Body />
+                <main className="calendar-container" role="main" style={{
+                    overflow: 'hidden',
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    outline: 'none'
+                }}>
+                    <div className="calendar-content" role="grid" style={{
+                        borderLeft: 'rgb(218,220,224) 1px solid',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        marginLeft: '8px',
+                    }}>
+                        <Header />
+                        <Body />
+                    </div>
+                </main>
             </div>
-        </main>
-    </div>
-    </MonthCalendarDisplayContextProvider>)
+        </MonthCalendarDisplayContextProvider>
+    </CalendarModalProvider>)
 }
 
 
