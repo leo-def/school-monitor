@@ -1,0 +1,496 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+// Origem de uma ação, se é do sistema ou de um usuário
+enum Source {
+  SYSTEM
+  USER
+}
+
+// Permissions - Papeis desempenhados no sistema, para controle de acesso
+enum SystemRole {
+  ADMIN // Administrador faz tudo no sistema
+  OPS // Operacional, auxilia na configuração do sistema
+  CUSTOMER // Usuário comun
+}
+
+// Permissions - Ações a serem executadas no sistema, para configuração de permissões
+enum Action {
+  MANAGE
+  CREATE
+  UPDATE
+  READ
+  DELETE
+}
+
+// Permissions - Recursos alvo de ações, para configuração de permissões
+enum Subject {
+  ACCOUNT
+}
+
+// AccountToken - Tipo de tokens usados no sistema
+enum AccountTokenType {
+  CONFIRM_ACCOUNT // Token para confirmar conta
+  RESET_PASSWORD // Token para resetar senha
+  REFERENCE_TOKEN // Token de indicação no sistema
+}
+
+// Status indicando se algo está ativo ou não
+enum ActiveStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// Notification - Tipo de noificação do sistema
+enum NotificationType {
+  CONFIRM_ACCOUNT // Confirmar conta
+  ACCOUNT_CONFIRMED // Conta confirmada
+  RESET_PASSWORD // Resetar senha
+  PASSWORD_CHANGED // Senha alterada
+  PASSWORD_RESET // Senha resetada
+}
+
+// Notification - Status da notificação do sistema
+enum NotificationStatus {
+  CREATED
+  COMPLETED
+  CANCELLED
+  ERROR
+}
+
+// Papel do colaborador no sistema
+enum CollaboratorRole {
+  STUDENT
+  PREOFESSOR
+  MANAGER
+  OWNER
+}
+
+enum SchoolProjectStatusEum {
+  DELIVERED
+  PENDING
+  LATE
+  PENDING_LATE
+}
+
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
+}
+
+enum WeekDay {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model Asset {
+  id        String    @id @default(cuid())
+  key       String
+  url       String
+  alt       String
+  createdAt DateTime  @default(now())
+  createdBy String?
+  updatedAt DateTime? @updatedAt
+  updatedBy String?
+  accounts  Account[] @relation("accountImgAsset")
+}
+
+// Token temporário para acesso ao sistema
+model AccountToken {
+  id        String           @id @default(cuid())
+  account   Account          @relation("tokens", fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  accountId String
+  token     String
+  type      AccountTokenType
+  status    ActiveStatus     @default(ACTIVE)
+  createdAt DateTime         @default(now())
+  createdBy String?
+  updatedAt DateTime?        @updatedAt
+  updatedBy String?
+
+  @@index(accountId)
+}
+
+model Account {
+  id             String         @id @default(cuid())
+  img            Asset?         @relation("accountImgAsset", fields: [imgId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  imgId          String?
+  username       String         @unique
+  phone          String         @unique
+  email          String         @unique
+  name           String
+  password       String
+  role           SystemRole
+  source         Source         @default(USER)
+  createdAt      DateTime       @default(now())
+  createdBy      String?
+  updatedAt      DateTime?      @updatedAt
+  updatedBy      String?
+  active         Boolean?       @default(false)
+  // Usuário que indicou o sistema para a conta, 
+  referenceToken String?
+  reference      Account?       @relation("references", fields: [referenceId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  referenceId    String?
+  tokens         AccountToken[] @relation("tokens")
+  ubacs          Ubac[]         @relation("ubacs")
+  references     Account[]      @relation("references")
+  notifications  Notification[] @relation("notifications")
+  collaboratos   Collaborator[] @relation("accountCollaboratos")
+
+  @@index(referenceId)
+  @@index(imgId)
+}
+
+// Permissão de uma ação sobre um recurso no sistema
+model Permission {
+  id           String    @id @default(cuid())
+  action       Action
+  subject      Subject
+  title        String?
+  key          String?
+  collaborator Boolean
+  createdAt    DateTime  @default(now())
+  createdBy    String?
+  updatedAt    DateTime? @updatedAt
+  updatedBy    String?
+
+  ubacs Ubac[] @relation("permissionsUbac")
+  rbacs Rbac[] @relation("permissionsRbac")
+}
+
+// Controle de acesso por usuário.
+model Ubac {
+  id           String     @id @default(cuid())
+  account      Account    @relation("ubacs", fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  accountId    String
+  permission   Permission @relation("permissionsUbac", fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId String
+  title        String?
+  createdAt    DateTime   @default(now())
+  createdBy    String?
+  updatedAt    DateTime?  @updatedAt
+  updatedBy    String?
+
+  @@index(accountId)
+  @@index(permissionId)
+}
+
+// Controle de acesso por papel dentro do sistema.
+model Rbac {
+  id           String     @id @default(cuid())
+  systemRole   SystemRole
+  permission   Permission @relation("permissionsRbac", fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId String
+  title        String?
+  createdAt    DateTime   @default(now())
+  createdBy    String?
+  updatedAt    DateTime?  @updatedAt
+  updatedBy    String?
+
+  @@index(permissionId)
+}
+
+// Notification - Notificações do sistema
+model Notification {
+  id        String             @id @default(cuid())
+  account   Account            @relation("notifications", fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  accountId String
+  type      NotificationType
+  status    NotificationStatus @default(CREATED)
+  params    String?            @db.Text
+  createdAt DateTime           @default(now())
+  createdBy String?
+  updatedAt DateTime?          @updatedAt
+  updatedBy String?
+
+  @@index(accountId)
+}
+
+model Company {
+  id        String    @id @default(cuid())
+  title     String?
+  createdAt DateTime  @default(now())
+  createdBy String?
+  updatedAt DateTime? @updatedAt
+  updatedBy String?
+
+  branchs       Branch[]       @relation("branchs")
+  collaborators Collaborator[] @relation("companyCollaborators")
+}
+
+model Branch {
+  id        String    @id @default(cuid())
+  title     String?
+  company   Company   @relation("branchs", fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId String
+  createdAt DateTime  @default(now())
+  createdBy String?
+  updatedAt DateTime? @updatedAt
+  updatedBy String?
+
+  subjects       SchoolSubject[] @relation("branchSubjects")
+  schoolClasses  SchoolClass[]   @relation("branchSchoolClasses")
+  terms          SchoolTerm[]    @relation("branchTerms")
+  collaborators  Collaborator[]  @relation("branchCollaborators")
+  gradeTemplates GradeTemplate[] @relation("branchGradeTemplates")
+
+  @@index(companyId)
+}
+
+model Collaborator {
+  id        String           @id @default(cuid())
+  account   Account          @relation("accountCollaboratos", fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  accountId String
+  company   Company          @relation("companyCollaborators", fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId String
+  branch    Branch?          @relation("branchCollaborators", fields: [branchId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  branchId  String?
+  role      CollaboratorRole
+  createdAt DateTime         @default(now())
+  createdBy String?
+  updatedAt DateTime?        @updatedAt
+  updatedBy String?
+
+  schoolSections  SchoolSection[]      @relation("professorSections")
+  appraiserGrades SchoolGrade[]        @relation("appraiser")
+  assessedGrades  SchoolGrade[]        @relation("assessed")
+  receivers       SchoolNotification[] @relation("receivers")
+
+  @@index(accountId)
+  @@index(companyId)
+  @@index(branchId)
+}
+
+model SchoolSubject {
+  id             String          @id @default(cuid())
+  title          String
+  branch         Branch          @relation("branchSubjects", fields: [branchId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  branchId       String
+  createdAt      DateTime        @default(now())
+  createdBy      String?
+  updatedAt      DateTime?       @updatedAt
+  updatedBy      String?
+  schoolSections SchoolSection[] @relation("schoolSubjectSections")
+
+  @@index(branchId)
+}
+
+model SchoolClass {
+  id             String          @id @default(cuid())
+  branch         Branch          @relation("branchSchoolClasses", fields: [branchId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  branchId       String
+  createdAt      DateTime        @default(now())
+  createdBy      String?
+  updatedAt      DateTime?       @updatedAt
+  updatedBy      String?
+  schoolSections SchoolSection[] @relation("schoolClassSections")
+
+  @@index(branchId)
+}
+
+model SchoolTerm {
+  id             String          @id @default(cuid())
+  branch         Branch?         @relation("branchTerms", fields: [branchId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  branchId       String
+  createdAt      DateTime        @default(now())
+  createdBy      String?
+  updatedAt      DateTime?       @updatedAt
+  updatedBy      String?
+  schoolSections SchoolSection[] @relation("schoolTermSections")
+
+  @@index(branchId)
+}
+
+model SchoolSection {
+  id              String               @id @default(cuid())
+  schoolSubject   SchoolSubject        @relation("schoolSubjectSections", fields: [schoolSubjectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolSubjectId String
+  schoolClass     SchoolClass          @relation("schoolClassSections", fields: [schoolClassId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolClassId   String
+  schoolTerm      SchoolTerm           @relation("schoolTermSections", fields: [schoolTermId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolTermId    String
+  professor       Collaborator         @relation("professorSections", fields: [professorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  professorId     String
+  grade           SchoolGrade?         @relation("sectionGrade", fields: [gradeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  gradeId         String?
+  createdAt       DateTime             @default(now())
+  createdBy       String?
+  updatedAt       DateTime?            @updatedAt
+  updatedBy       String?
+  meals           SchoolMeal[]         @relation("meals")
+  events          SchoolEvent[]        @relation("events")
+  notifications   SchoolNotification[] @relation("notifications")
+  appraisals      SchoolAppraisal[]    @relation("appraisals")
+  projects        SchoolProject[]      @relation("projects")
+  absences        SchoolAbsence[]      @relation("absences")
+
+  @@index(schoolSubjectId)
+  @@index(schoolClassId)
+  @@index(schoolTermId)
+  @@index(professorId)
+  @@index(gradeId)
+}
+
+model SchoolMeal {
+  id              String        @id @default(cuid())
+  title           String
+  desc            String
+  type            MealType
+  weekDays        WeekDay
+  schoolSection   SchoolSection @relation("meals", fields: [schoolSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolSectionId String
+  createdAt       DateTime      @default(now())
+  createdBy       String?
+  updatedAt       DateTime?     @updatedAt
+  updatedBy       String?
+
+  @@index(schoolSectionId)
+}
+
+model SchoolEvent {
+  id              String        @id @default(cuid())
+  title           String
+  desc            String
+  recess          Boolean
+  start           DateTime
+  end             DateTime
+  schoolSection   SchoolSection @relation("events", fields: [schoolSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolSectionId String
+  createdAt       DateTime      @default(now())
+  createdBy       String?
+  updatedAt       DateTime?     @updatedAt
+  updatedBy       String?
+
+  @@index(schoolSectionId)
+}
+
+model SchoolNotification {
+  id              String        @id @default(cuid())
+  title           String
+  desc            String
+  date            DateTime
+  schoolSection   SchoolSection @relation("notifications", fields: [schoolSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolSectionId String
+  receiver        Collaborator  @relation("receivers", fields: [receiverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  receiverId      String
+  createdAt       DateTime      @default(now())
+  createdBy       String?
+  updatedAt       DateTime?     @updatedAt
+  updatedBy       String?
+
+  @@index(schoolSectionId)
+  @@index(receiverId)
+}
+
+model SchoolAppraisal {
+  id              String        @id @default(cuid())
+  title           String
+  desc            String
+  date            DateTime
+  schoolSection   SchoolSection @relation("appraisals", fields: [schoolSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolSectionId String
+  grade           SchoolGrade?  @relation("appraisalGrade", fields: [gradeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  gradeId         String?
+  createdAt       DateTime      @default(now())
+  createdBy       String?
+  updatedAt       DateTime?     @updatedAt
+  updatedBy       String?
+
+  @@index(schoolSectionId)
+  @@index(gradeId)
+}
+
+model SchoolProject {
+  id              String                 @id @default(cuid())
+  title           String
+  desc            String
+  status          SchoolProjectStatusEum
+  date            DateTime
+  deadline        DateTime
+  deliveryDate    DateTime
+  schoolSection   SchoolSection          @relation("projects", fields: [schoolSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolSectionId String
+  grade           SchoolGrade?           @relation("projectGrade", fields: [gradeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  gradeId         String?
+  createdAt       DateTime               @default(now())
+  createdBy       String?
+  updatedAt       DateTime?              @updatedAt
+  updatedBy       String?
+
+  @@index(schoolSectionId)
+  @@index(gradeId)
+}
+
+model GradeTemplate {
+  id           String        @id @default(cuid())
+  title        String
+  max          Float
+  min          Float
+  passingScore Float
+  branch       Branch?       @relation("branchGradeTemplates", fields: [branchId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  branchId     String?
+  grades       SchoolGrade[] @relation("template")
+  createdAt    DateTime      @default(now())
+  createdBy    String?
+  updatedAt    DateTime?     @updatedAt
+  updatedBy    String?
+
+  @@index(branchId)
+}
+
+model SchoolGrade {
+  id          String            @id @default(cuid())
+  title       String
+  desc        String
+  value       Float
+  template    GradeTemplate?    @relation("template", fields: [templateId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  templateId  String?
+  appraiser   Collaborator?     @relation("appraiser", fields: [appraiserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  appraiserId String?
+  assessed    Collaborator?     @relation("assessed", fields: [assessedId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  assessedId  String?
+  createdAt   DateTime          @default(now())
+  createdBy   String?
+  updatedAt   DateTime?         @updatedAt
+  updatedBy   String?
+  sections    SchoolSection[]   @relation("sectionGrade")
+  appraisals  SchoolAppraisal[] @relation("appraisalGrade")
+  projects    SchoolProject[]   @relation("projectGrade")
+
+  @@index(templateId)
+  @@index(appraiserId)
+  @@index(assessedId)
+}
+
+model SchoolAbsence {
+  id               String        @id @default(cuid())
+  schoolSection    SchoolSection @relation("absences", fields: [schoolSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolSectionId  String
+  desc             String
+  hasJustification Boolean
+  justification    String
+  start            DateTime
+  end              DateTime
+  createdAt        DateTime      @default(now())
+  createdBy        String?
+  updatedAt        DateTime?     @updatedAt
+  updatedBy        String?
+
+  @@index(schoolSectionId)
+}
