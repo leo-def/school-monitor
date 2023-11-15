@@ -12,7 +12,7 @@ import { EventList } from "@/event/_components/eventList";
 import { MealTable } from "@/meal/_components/mealTable";
 import { useGetNavByType } from "@/nav/_hooks/useGetNavByType";
 import { AbsenceList } from "@/absence/_components/absenceList";
-import { SchoolClassCalendar } from "./schoolClassCalendar";
+import { SchoolClassCalendar } from "../../schoolClass/_components/schoolClassCalendar";
 import { TabBar } from "@/app/_components/nav/tabBar";
 
 
@@ -20,7 +20,6 @@ export function SchoolClassBoard() {
     const studentNavItem = useGetNavByType("student")
     const hasStudentNavItem = useMemo(() => !!studentNavItem, [studentNavItem])
     const [page, setPage] = useState(0)
-
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setPage(newValue);
     };

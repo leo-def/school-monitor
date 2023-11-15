@@ -5,7 +5,7 @@ import { Box, Tabs, Tab } from "@mui/material";
 import { SchoolClassList } from "@/schoolClass/_components/schoolClassList";
 import { useGetNavByType } from "@/nav/_hooks/useGetNavByType";
 import { TabPanel } from "@/app/_components/nav/tabPanel";
-import { SchoolClassBoard } from "@/schoolClass/_components/schoolClassBoard";
+import { SchoolClassBoard } from "@/section/_components/schoolClassBoard";
 import { TabBar } from "@/app/_components/nav/tabBar";
 
 export function StudentBoard() {

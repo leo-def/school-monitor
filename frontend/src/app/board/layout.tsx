@@ -5,11 +5,11 @@ import { Home as HomeIcon } from "@mui/icons-material";
 import { NavItemTypeEnum } from "@/nav/_enums/navItemType.enum";
 import NavPageLoader from "@/nav/_components/navPageLoader";
 
-export default function ParentLayout({ children }: PropsWithChildren) {
+export default function ManagerLayout({ children }: PropsWithChildren) {
     const item = useMemo(() => ({
-        type: NavItemTypeEnum.PARENT,
+        type: NavItemTypeEnum.PATH,
         label: <HomeIcon />,
-        path: 'parent',
+        path: 'board',
         index: 0,
     }), [])
     return (<NavPageLoader item={item}>{children}</NavPageLoader>)
