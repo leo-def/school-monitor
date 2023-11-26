@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { SchoolMealModule } from './school-meal/school-meal.module';
-import { SchoolEventModule } from './school-event/school-event.module';
-import { SchoolNotificationModule } from './school-notification/school-notification.module';
-
+import { SchoolSectionService } from './school-section.service';
+import { SchoolSectionController } from './school-section.controller';
+import { PrismaModule } from 'src/prisma/prisma.module';
 @Module({
-  imports: [SchoolMealModule, SchoolEventModule, SchoolNotificationModule],
+  imports: [PrismaModule],
+  providers: [SchoolSectionService],
+  controllers: [SchoolSectionController],
 })
 export class SchoolSectionModule {}

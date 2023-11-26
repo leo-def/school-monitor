@@ -5,6 +5,7 @@ import {
   AccountTokenType,
   NotificationType,
 } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt';
 import { AccountService } from 'src/account/_services/account/account.service';
 import { ChangePasswordDto } from 'src/auth/_dtos/change-password/change-password.dto';
 import { ForgotPasswordDto } from 'src/auth/_dtos/forgot-password/forgot-password.dto';
@@ -13,10 +14,7 @@ import { SignInDto } from 'src/auth/_dtos/sign-in/sign-in.dto';
 import { SignUpDto } from 'src/auth/_dtos/sign-up/sign-up.dto';
 import { HashService } from '../hash/hash.service';
 import { NotificationService } from 'src/notification/notification.service';
-import { CardService } from 'src/card/card.service';
-import { JwtService } from '@nestjs/jwt';
 import { UserInfo } from 'src/auth/_types/user-info';
-import { GroupInfo } from 'src/auth/_types/group-info';
 import { ForgotPasswordParamTypeEnum } from 'src/auth/_enums/forgot-password-param-type.enum';
 import { ConfirmAccountDto } from 'src/auth/_dtos/confirm-account/confirm-account.dto';
 import { AccountTokenService } from 'src/account/_services/account-token/account-token.service';
@@ -27,7 +25,6 @@ export class AuthService {
     private readonly notificationService: NotificationService,
     private readonly accountTokenService: AccountTokenService,
     private readonly accountService: AccountService,
-    private readonly cardService: CardService,
     private readonly hashService: HashService,
     private jwtService: JwtService,
   ) {}
@@ -46,7 +43,6 @@ export class AuthService {
     }
     const password = await this.hashService.generateHash(dto.auth.password);
     const account: Partial<Account> = {
-      isGroup: dto.accountType.isGroup === 'true',
       name: dto.profile.name,
       phone: dto.profile.phone,
       email: dto.profile.email,
@@ -60,8 +56,6 @@ export class AuthService {
       customerAccount.id,
       AccountTokenType.CONFIRM_ACCOUNT,
     );
-
-    await this.cardService.createAccountMainFolder(customerAccount.id);
     await this.notificationService.notify(
       customerAccount.id,
       NotificationType.CONFIRM_ACCOUNT,
@@ -72,9 +66,8 @@ export class AuthService {
 
   async signIn(dto: SignInDto): Promise<string> {
     const { username, password } = dto;
-    const account = await this.accountService.findAccountGroupsByUsername(
-      username,
-    );
+    const account =
+      await this.accountService.findAccountInfoByUsername(username);
     if (!account?.active) {
       throw new HttpException('Invalid Credentials', HttpStatus.FORBIDDEN);
     }
@@ -87,18 +80,26 @@ export class AuthService {
       name: account.name,
       username: account.username,
       role: account.role,
-      isGroup: account.isGroup,
-      groups: account.groups
-        .filter((groupAccount) => !!groupAccount)
-        .map(
-          (groupAccount) =>
-            ({
-              role: groupAccount.role,
-              id: groupAccount.group?.id,
-              name: groupAccount.group?.name,
-              username: groupAccount.group?.username,
-            } as GroupInfo),
-        ),
+      collaboratorsList: account.collaboratorsList.map((collaborator) => ({
+        id: collaborator.id,
+        branch: collaborator.branch
+          ? {
+              id: collaborator.branch.id,
+              title: collaborator.branch.title,
+            }
+          : undefined,
+        company: collaborator.company
+          ? {
+              id: collaborator.company.id,
+              title: collaborator.company.title,
+              branchs: collaborator.company.branchs.map((branch) => ({
+                id: branch.id,
+                title: branch.title,
+              })),
+            }
+          : undefined,
+        role: collaborator.role,
+      })),
     } as UserInfo;
     const token = await this.jwtService.signAsync(payload);
     return token;

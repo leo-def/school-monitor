@@ -76,7 +76,7 @@ enum CollaboratorRole {
   OWNER
 }
 
-enum SchoolProjectStatusEum {
+enum SchoolProjectStatus {
   DELIVERED
   PENDING
   LATE
@@ -128,30 +128,30 @@ model AccountToken {
 }
 
 model Account {
-  id             String         @id @default(cuid())
-  img            Asset?         @relation("accountImgAsset", fields: [imgId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  imgId          String?
-  username       String         @unique
-  phone          String         @unique
-  email          String         @unique
-  name           String
-  password       String
-  role           SystemRole
-  source         Source         @default(USER)
-  createdAt      DateTime       @default(now())
-  createdBy      String?
-  updatedAt      DateTime?      @updatedAt
-  updatedBy      String?
-  active         Boolean?       @default(false)
+  id                String         @id @default(cuid())
+  img               Asset?         @relation("accountImgAsset", fields: [imgId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  imgId             String?
+  username          String         @unique
+  phone             String         @unique
+  email             String         @unique
+  name              String
+  password          String
+  role              SystemRole
+  source            Source         @default(USER)
+  createdAt         DateTime       @default(now())
+  createdBy         String?
+  updatedAt         DateTime?      @updatedAt
+  updatedBy         String?
+  active            Boolean?       @default(false)
   // Usuário que indicou o sistema para a conta, 
-  referenceToken String?
-  reference      Account?       @relation("references", fields: [referenceId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  referenceId    String?
-  tokens         AccountToken[] @relation("tokens")
-  ubacs          Ubac[]         @relation("ubacs")
-  references     Account[]      @relation("references")
-  notifications  Notification[] @relation("notifications")
-  collaboratos   Collaborator[] @relation("accountCollaboratos")
+  referenceToken    String?
+  reference         Account?       @relation("references", fields: [referenceId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  referenceId       String?
+  tokens            AccountToken[] @relation("tokens")
+  ubacs             Ubac[]         @relation("ubacs")
+  references        Account[]      @relation("references")
+  notifications     Notification[] @relation("notifications")
+  collaboratorsList Collaborator[] @relation("accountCollaboratos")
 
   @@index(referenceId)
   @@index(imgId)
@@ -417,20 +417,20 @@ model SchoolAppraisal {
 }
 
 model SchoolProject {
-  id              String                 @id @default(cuid())
+  id              String              @id @default(cuid())
   title           String
   desc            String
-  status          SchoolProjectStatusEum
+  status          SchoolProjectStatus
   date            DateTime
   deadline        DateTime
   deliveryDate    DateTime
-  schoolSection   SchoolSection          @relation("projects", fields: [schoolSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  schoolSection   SchoolSection       @relation("projects", fields: [schoolSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   schoolSectionId String
-  grade           SchoolGrade?           @relation("projectGrade", fields: [gradeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  grade           SchoolGrade?        @relation("projectGrade", fields: [gradeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   gradeId         String?
-  createdAt       DateTime               @default(now())
+  createdAt       DateTime            @default(now())
   createdBy       String?
-  updatedAt       DateTime?              @updatedAt
+  updatedAt       DateTime?           @updatedAt
   updatedBy       String?
 
   @@index(schoolSectionId)

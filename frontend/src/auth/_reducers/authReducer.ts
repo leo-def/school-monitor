@@ -8,7 +8,13 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case AuthActionTypeEnum.AUTH:
-      return { ...state, user: action.payload.user } as AuthState;
+      return { ...state, token: action.payload.token } as AuthState;
+    case AuthActionTypeEnum.LOAD_AUTH:
+      return {
+        ...state,
+        loaded: true,
+        token: action.payload.token,
+      } as AuthState;
     case AuthActionTypeEnum.LOGOUT:
       return { ...state, token: undefined } as AuthState;
     default:

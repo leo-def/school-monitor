@@ -8,14 +8,12 @@ import { HashService } from './_services/hash/hash.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AppAuthGuard } from './_guards/app-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { CardModule } from 'src/card/card.module';
 
 @Module({
   imports: [
     PrismaModule,
     NotificationModule,
     AccountModule,
-    CardModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,

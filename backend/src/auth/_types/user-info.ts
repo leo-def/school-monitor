@@ -1,7 +1,21 @@
-import { Account } from '@prisma/client';
-import { GroupInfo } from './group-info';
+import { Account, Branch, Collaborator, Company } from '@prisma/client';
+
+export type BranchInfo = Pick<Branch, 'id' | 'title'>;
+
+export type CompanyInfo = Pick<
+  Company & { branchs: Array<BranchInfo> },
+  'id' | 'title' | 'branchs'
+>;
+
+export type CollaboratorInfo = Pick<
+  Collaborator & {
+    company: CompanyInfo;
+    branch: BranchInfo;
+  },
+  'id' | 'branch' | 'company' | 'role'
+>;
 
 export type UserInfo = Pick<
-  Account & { groups: Array<GroupInfo> },
-  'id' | 'name' | 'username' | 'role' | 'isGroup' | 'groups'
+  Account & { collaboratorsList: Array<CollaboratorInfo> },
+  'id' | 'name' | 'username' | 'role' | 'collaboratorsList'
 >;

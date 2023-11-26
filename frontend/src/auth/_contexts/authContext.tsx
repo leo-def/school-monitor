@@ -4,7 +4,7 @@ import { AuthState } from "../_types/authState";
 import { AuthAction } from "../_types/authAction";
 
 export const initialState = {
-  user: undefined,
+  token: undefined,
   loaded: false,
   error: undefined,
 } as AuthState;

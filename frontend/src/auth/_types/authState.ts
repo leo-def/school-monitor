@@ -1,5 +1,5 @@
-import { UserInfo } from "./userInfo";
-
 export interface AuthState {
-  user: UserInfo | undefined;
+  token: string | undefined;
+  loaded: boolean | undefined;
+  error: string | undefined;
 }

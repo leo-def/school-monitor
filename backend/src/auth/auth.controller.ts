@@ -8,8 +8,6 @@ import { ResetPasswordDto } from './_dtos/reset-password/reset-password.dto';
 import { ResetPasswordResponseDto } from './_dtos/reset-password/reset-password-response.dto';
 import { SignInDto } from './_dtos/sign-in/sign-in.dto';
 import { SignInResponseDto } from './_dtos/sign-in/sign-in-response.dto';
-import { SignUpDto } from './_dtos/signup/sign-up.dto';
-import { SignUpResponseDto } from './_dtos/signup/sign-up-response.dto';
 import { User } from './_decorators/user.decorator';
 import { ConfirmAccountResponseDto } from './_dtos/confirm-account/confirm-account-response.dto';
 import { IsPublic } from './_decorators/is-public.decorator';
@@ -21,6 +19,8 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { ConfirmAccountDto } from './_dtos/confirm-account/confirm-account.dto';
+import { SignUpResponseDto } from './_dtos/sign-up/sign-up-response.dto';
+import { SignUpDto } from './_dtos/sign-up/sign-up.dto';
 
 @ApiTags('Auth')
 @Controller('auth')

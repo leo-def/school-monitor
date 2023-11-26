@@ -1,6 +1,6 @@
-import { AppAction } from "@/shared/_types/appAction";
+import { AppActionParam } from "@/shared/_types/appActionParam";
 import { AuthActionTypeEnum } from "../_enums/authActionType.enum";
-import { UserInfo } from "./userInfo";
+import { AuthActionPayload } from "./AuthActionPayload";
 
 export interface AuthAction
-  extends AppAction<AuthActionTypeEnum, { user?: UserInfo }> {}
+  extends AppActionParam<AuthActionTypeEnum, AuthActionPayload> {}
