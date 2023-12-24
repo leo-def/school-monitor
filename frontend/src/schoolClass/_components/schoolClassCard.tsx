@@ -1,10 +1,11 @@
 import React from "react"
 import { Card, CardContent, Typography, CardActions, Button } from "@mui/material"
-import { SchoolClass } from "../_types/schoolClass"
-import { NavItemLink } from "@/nav/_components/navItemLink"
-import { useGetNavByType } from "@/nav/_hooks/useGetNavByType"
+import { NavItemLink } from "@/commons/nav/_components/navItemLink"
+import { useGetNavByType } from "@/commons/nav/_hooks/useGetNavByType"
+import { SchoolClassDto } from "../_types/schoolClass.dto"
 
-export function SchoolClassCard({ item }: { item: SchoolClass }) {
+
+export function SchoolClassCard({ item }: { item: SchoolClassDto }) {
     const schoolClassNavItem = useGetNavByType("schoolClass")
     return (<Card sx={{ width: 260 }}>
         <CardContent>

@@ -1,25 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsBoolean } from 'class-validator';
 
 export abstract class ChangePasswordDto {
   @ApiProperty({
-    description: 'Old account password',
-    example: 'Pas@#1Adf3',
+    name: 'updated',
+    description: 'Account updated',
+    example: true,
   })
-  @IsString()
-  oldPassword: string;
-
-  @ApiProperty({
-    description: 'New account password',
-    example: 'Pas@#1Adf3',
-  })
-  @IsString()
-  password: string;
-
-  @ApiProperty({
-    description: 'New password confirmation',
-    example: 'Pas@#1Adf3',
-  })
-  @IsString()
-  confirmPassword: string;
+  @IsBoolean()
+  updated: boolean;
 }

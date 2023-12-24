@@ -6,11 +6,17 @@ import {
   ApiParam,
   ApiBody,
   ApiTags,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { CollaboratorService } from './collaborator.service';
 import { CollaboratorDto } from './_types/collaborator.dto';
 import { CollaboratorPaginationParamsDto } from './_types/collaborator-pagination-params.dto';
+import { CollaboratorArrayResponseDto } from './_types/collaborator-array-response.dto';
+import { CollaboratorResponseDto } from './_types/collaborator-response.dto';
+import { UpdateCollaboratorRequestDto } from './_types/update-collaborator-request.dto';
+import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { CreateCollaboratorRequestDto } from './_types/create-collaborator-request.dto';
 
 @ApiTags('School Monitor | Collaborator')
 @Controller('collaborator')
@@ -20,13 +26,15 @@ export class CollaboratorController {
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: Array<CollaboratorDto>,
+    type: CollaboratorArrayResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiBody({ description: 'Params', type: CollaboratorPaginationParamsDto })
+  @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: CollaboratorPaginationParamsDto,
@@ -38,15 +46,19 @@ export class CollaboratorController {
   @ApiOperation({ description: 'Create.', summary: 'Create.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: CollaboratorDto,
+    type: CollaboratorResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Data', type: CollaboratorDto })
+  @ApiBody({ description: 'Data', type: CreateCollaboratorRequestDto })
+  @ApiBearerAuth()
   @Post()
-  async create(@Body() data: CollaboratorDto): Promise<CollaboratorDto> {
+  async create(
+    @Body() data: CreateCollaboratorRequestDto,
+  ): Promise<CollaboratorDto> {
     const response = await this.service.create(data);
     return plainToInstance(CollaboratorDto, response);
   }
@@ -54,11 +66,12 @@ export class CollaboratorController {
   @ApiOperation({ description: 'Update.', summary: 'Update.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: CollaboratorDto,
+    type: CollaboratorResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -66,11 +79,12 @@ export class CollaboratorController {
     description: 'Id',
     type: 'string',
   })
-  @ApiBody({ description: 'Data', type: CollaboratorDto })
-  @Put()
+  @ApiBody({ description: 'Data', type: UpdateCollaboratorRequestDto })
+  @ApiBearerAuth()
+  @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() data: CollaboratorDto,
+    @Body() data: UpdateCollaboratorRequestDto,
   ): Promise<CollaboratorDto> {
     const response = await this.service.update(id, data);
     return plainToInstance(CollaboratorDto, response);
@@ -79,11 +93,12 @@ export class CollaboratorController {
   @ApiOperation({ description: 'Delete.', summary: 'Delete.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: CollaboratorDto,
+    type: CollaboratorResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -91,7 +106,8 @@ export class CollaboratorController {
     description: 'Id',
     type: 'string',
   })
-  @Delete()
+  @ApiBearerAuth()
+  @Delete(':id')
   async delete(@Param('id') id: string): Promise<CollaboratorDto> {
     const response = await this.service.delete(id);
     return plainToInstance(CollaboratorDto, response);

@@ -14,7 +14,6 @@ export const calendarModalReducer = (
         id: uuidV4(),
         ...(action.payload as Omit<CalendarModal, "id">),
       };
-      console.log({ modal });
       return {
         modals: [...state.modals, modal],
       } as CalendarModalStateValue;

@@ -1,32 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsObject } from 'class-validator';
-import { SignUpAccountTypeDto } from './sign-up-account-type.dto';
-import { SignUpAuthDto } from './sign-up-auth.dto';
-import { SignUpProfileDto } from './sign-up-profile.dto';
-import { SignUpReferenceDto } from './sign-up-reference.dto';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export abstract class SignUpDto {
   @ApiProperty({
-    description: 'Account type data',
+    name: 'id',
+    type: String,
+    description: 'Account id',
+    example: '3475cdbf-aaa3-4ed7-915e-373f1423afe4',
   })
-  @IsObject()
-  accountType: SignUpAccountTypeDto;
+  @IsOptional()
+  @IsString()
+  id?: string;
 
   @ApiProperty({
-    description: 'Profile data',
+    name: 'created',
+    type: Boolean,
+    description: 'Account created',
+    example: true,
   })
-  @IsObject()
-  profile: SignUpProfileDto;
-
-  @ApiProperty({
-    description: 'Authentication data',
-  })
-  @IsObject()
-  auth: SignUpAuthDto;
-
-  @ApiProperty({
-    description: 'Reference data',
-  })
-  @IsObject()
-  reference: SignUpReferenceDto;
+  @IsBoolean()
+  created: boolean;
 }

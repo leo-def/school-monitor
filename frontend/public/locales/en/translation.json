@@ -1,0 +1,62 @@
+{
+    "home": {
+        "public": {
+            "School Monitor": "School Monitor"
+        },
+        "private": {
+            "Welcome": "Welcome {{name}}"
+        }
+    },
+    "branch": {
+        "autocomplete": {
+            "Branch": "Branch",
+            "No Options": "No Options"
+        }
+    },
+    "collaborator": {
+        "autocomplete": {
+            "Person": "Person",
+            "Student": "Student",
+            "Employee": "Employee",
+            "No Options": "No Options"
+        }
+    },
+    "company": {
+        "autocomplete": {
+            "Company": "Company",
+            "No Options": "No Options"
+        },
+        "manage": {
+            "Title": "Title"
+        }
+    },
+    "schoolClass": {
+        "autocomplete": {
+            "Class": "Class",
+            "No Options": "No Options"
+        }
+    },
+    "schoolSection": {
+        "board": {
+            "Calendar": "Calendar",
+            "Meals": "Meals",
+            "Events": "Events",
+            "Notifications": "Notifications",
+            "Appraisals": "Appraisals",
+            "Projects": "Projects",
+            "Absences": "Absences"
+        }
+    },
+    "schoolSubject": {
+        "autocomplete": {
+            "Subject": "Subject",
+            "No Options": "No Options"
+        }
+    },
+    "schoolTerm": {
+        "autocomplete": {
+            "Term": "Term",
+            "No Options": "No Options"
+        }
+    }
+}

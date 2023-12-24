@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ApiService } from '../_services/api-service';
 
 export interface Response<T> {
   data: T;
@@ -22,13 +23,10 @@ export class TransformInterceptor<T>
     const ctx = context.switchToHttp();
     const request = ctx.getRequest();
     const response = ctx.getResponse();
-    return next.handle().pipe(
-      map((data) => ({
-        data,
-        statusCode: response.statusCode,
-        timestamp: new Date().toISOString(),
-        path: request.url,
-      })),
-    );
+    return next
+      .handle()
+      .pipe(
+        map((data) => ApiService.resolveApiResponse(data, request, response)),
+      );
   }
 }

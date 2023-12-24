@@ -7,17 +7,17 @@ import {
 } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { AccountService } from 'src/account/_services/account/account.service';
-import { ChangePasswordDto } from 'src/auth/_dtos/change-password/change-password.dto';
-import { ForgotPasswordDto } from 'src/auth/_dtos/forgot-password/forgot-password.dto';
-import { ResetPasswordDto } from 'src/auth/_dtos/reset-password/reset-password.dto';
-import { SignInDto } from 'src/auth/_dtos/sign-in/sign-in.dto';
-import { SignUpDto } from 'src/auth/_dtos/sign-up/sign-up.dto';
-import { HashService } from '../hash/hash.service';
+import { ChangePasswordRequestDto } from 'src/auth/_dtos/change-password/change-password-request.dto';
+import { ForgotPasswordRequestDto } from 'src/auth/_dtos/forgot-password/forgot-password-request.dto';
+import { ResetPasswordRequestDto } from 'src/auth/_dtos/reset-password/reset-password-request.dto';
+import { SignInRequestDto } from 'src/auth/_dtos/sign-in/sign-in-request.dto';
+import { SignUpRequestDto } from 'src/auth/_dtos/sign-up/sign-up-request.dto';
 import { NotificationService } from 'src/notification/notification.service';
 import { UserInfo } from 'src/auth/_types/user-info';
 import { ForgotPasswordParamTypeEnum } from 'src/auth/_enums/forgot-password-param-type.enum';
-import { ConfirmAccountDto } from 'src/auth/_dtos/confirm-account/confirm-account.dto';
+import { ConfirmAccountRequestDto } from 'src/auth/_dtos/confirm-account/confirm-account-request.dto';
 import { AccountTokenService } from 'src/account/_services/account-token/account-token.service';
+import { CreateCustomerAccountRequestDto } from 'src/account/_types/create-customer-account-request.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,29 +25,18 @@ export class AuthService {
     private readonly notificationService: NotificationService,
     private readonly accountTokenService: AccountTokenService,
     private readonly accountService: AccountService,
-    private readonly hashService: HashService,
     private jwtService: JwtService,
   ) {}
 
-  async signUp(dto: SignUpDto): Promise<Account> {
-    if (dto.auth.password !== dto.auth.confirmPassword) {
-      throw new HttpException('Passwords do not match', HttpStatus.FORBIDDEN);
-    }
-    const duplicate = await this.accountService.findDuplicate({
-      phone: dto.profile.phone,
-      email: dto.profile.email,
-      username: dto.auth.username,
-    });
-    if (duplicate) {
-      throw new HttpException('Duplicate account', HttpStatus.CONFLICT);
-    }
-    const password = await this.hashService.generateHash(dto.auth.password);
-    const account: Partial<Account> = {
+  async signUp(dto: SignUpRequestDto): Promise<Account> {
+    const account: CreateCustomerAccountRequestDto = {
+      imgId: dto.profile.imgId,
       name: dto.profile.name,
       phone: dto.profile.phone,
       email: dto.profile.email,
       username: dto.auth.username,
-      password,
+      password: dto.auth.password,
+      confirmPassword: dto.auth.confirmPassword,
       referenceToken: dto.reference.token,
       referenceId: dto.reference.id,
     };
@@ -64,17 +53,14 @@ export class AuthService {
     return customerAccount;
   }
 
-  async signIn(dto: SignInDto): Promise<string> {
+  async signIn(dto: SignInRequestDto): Promise<string> {
     const { username, password } = dto;
     const account =
-      await this.accountService.findAccountInfoByUsername(username);
+      await this.accountService.findAccountCollaboratorByUsername(username);
     if (!account?.active) {
       throw new HttpException('Invalid Credentials', HttpStatus.FORBIDDEN);
     }
-    const isMatch = await this.hashService.compare(password, account.password);
-    if (!isMatch) {
-      throw new HttpException('Invalid Credentials', HttpStatus.FORBIDDEN);
-    }
+    await this.accountService.checkPassword(password, account.password);
     const payload = {
       id: account.id,
       name: account.name,
@@ -107,34 +93,27 @@ export class AuthService {
 
   async changePassword(
     accountId: string,
-    dto: ChangePasswordDto,
+    dto: ChangePasswordRequestDto,
   ): Promise<Account> {
     const { oldPassword, password, confirmPassword } = dto;
-    if (password !== confirmPassword) {
-      throw new HttpException('Passwords do not match', HttpStatus.FORBIDDEN);
-    }
     const account = await this.accountService.findById(accountId);
     if (!account) {
       throw new HttpException('Invalid Credentials', HttpStatus.FORBIDDEN);
     }
-    const isMatch = await this.hashService.compare(
-      oldPassword,
-      account.password,
-    );
-    if (!isMatch) {
-      throw new HttpException('Invalid Credentials', HttpStatus.FORBIDDEN);
-    }
-    const hashPassword = await this.hashService.generateHash(password);
+    await this.accountService.checkPassword(oldPassword, account.password);
     await this.notificationService.notify(
       accountId,
       NotificationType.PASSWORD_CHANGED,
     );
-    return await this.accountService.update(accountId, {
-      password: hashPassword,
+    return await this.accountService.updatePassword(accountId, {
+      password,
+      confirmPassword,
     });
   }
 
-  async requestResetPassword(dto: ForgotPasswordDto): Promise<AccountToken> {
+  async requestResetPassword(
+    dto: ForgotPasswordRequestDto,
+  ): Promise<AccountToken> {
     const { email, phone, paramType } = dto;
     if (
       !paramType ||
@@ -174,7 +153,7 @@ export class AuthService {
     return token;
   }
 
-  async resetPassword(dto: ResetPasswordDto): Promise<Account> {
+  async resetPassword(dto: ResetPasswordRequestDto): Promise<Account> {
     const { token, password, confirmPassword } = dto;
     if (password !== confirmPassword) {
       throw new HttpException('Passwords do not match', HttpStatus.FORBIDDEN);
@@ -191,11 +170,10 @@ export class AuthService {
     }
     const tokenId = tokenEntity.id;
     const accountId = tokenEntity.accountId;
-    const hashPassword = await this.hashService.generateHash(password);
-    const account = await this.accountService.updatePassword(
-      accountId,
-      hashPassword,
-    );
+    const account = await this.accountService.updatePassword(accountId, {
+      password,
+      confirmPassword,
+    });
     if (!account) {
       throw new HttpException(
         'Account not found',
@@ -212,7 +190,7 @@ export class AuthService {
     return account;
   }
 
-  async confirmAccount(dto: ConfirmAccountDto): Promise<Account> {
+  async confirmAccount(dto: ConfirmAccountRequestDto): Promise<Account> {
     const { token } = dto;
     if (!token) {
       throw new Error('Invalid Request');

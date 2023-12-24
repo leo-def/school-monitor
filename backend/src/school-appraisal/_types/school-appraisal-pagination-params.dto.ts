@@ -8,5 +8,5 @@ export class SchoolAppraisalPaginationParamsDto extends PaginationParamsDto<
   | 'desc'
   | 'date'
   | 'schoolSectionId'
-  | 'gradeId'
+  | 'schoolGradeId'
 > {}

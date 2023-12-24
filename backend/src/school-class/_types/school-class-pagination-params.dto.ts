@@ -1,3 +1,5 @@
 import { PaginationParamsDto } from 'src/_types/pagination-params.dto';
 
-export class SchoolClassPaginationParamsDto extends PaginationParamsDto<'id'> {}
+export class SchoolClassPaginationParamsDto extends PaginationParamsDto<
+  'id' | 'createdAt' | 'updatedAt' | 'title' | 'desc'
+> {}

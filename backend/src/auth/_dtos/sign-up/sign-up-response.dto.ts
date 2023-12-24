@@ -1,18 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsString } from 'class-validator';
+import { IsObject } from 'class-validator';
+import { ApiResponseDto } from 'src/api/_dos/api-response.dto';
+import { SignUpDto } from './sign-up.dto';
 
-export abstract class SignUpResponseDto {
+export class SignUpResponseDto extends ApiResponseDto<SignUpDto> {
   @ApiProperty({
-    description: 'Account id',
-    example: '3475cdbf-aaa3-4ed7-915e-373f1423afe4',
+    name: 'data',
+    type: SignUpDto,
   })
-  @IsString()
-  id?: string;
-
-  @ApiProperty({
-    description: 'Account created',
-    example: true,
-  })
-  @IsBoolean()
-  created: boolean;
+  @IsObject()
+  data: SignUpDto;
 }

@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean } from 'class-validator';
+import { IsObject } from 'class-validator';
+import { ApiResponseDto } from 'src/api/_dos/api-response.dto';
+import { ConfirmAccountDto } from './confirm-account.dto';
 
-export abstract class ConfirmAccountResponseDto {
+export abstract class ConfirmAccountResponseDto extends ApiResponseDto<ConfirmAccountDto> {
   @ApiProperty({
-    description: 'Account updated',
-    example: true,
+    name: 'data',
+    type: ConfirmAccountDto,
   })
-  @IsBoolean()
-  updated: boolean;
+  @IsObject()
+  data: ConfirmAccountDto;
 }

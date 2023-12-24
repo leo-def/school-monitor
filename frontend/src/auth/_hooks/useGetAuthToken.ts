@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { AuthContext } from "../_contexts/authContext";
 
 export function useGetAuthToken(): string | undefined {
   const { state } = useContext(AuthContext);
-  return state?.token;
+  const token = useMemo(() => state?.token, [state]);
+  return token;
 }

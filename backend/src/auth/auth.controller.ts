@@ -1,12 +1,12 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './_services/auth/auth.service';
-import { ChangePasswordDto } from './_dtos/change-password/change-password.dto';
+import { ChangePasswordRequestDto } from './_dtos/change-password/change-password-request.dto';
 import { ChangePasswordResponseDto } from './_dtos/change-password/change-password-response.dto';
-import { ForgotPasswordDto } from './_dtos/forgot-password/forgot-password.dto';
+import { ForgotPasswordRequestDto } from './_dtos/forgot-password/forgot-password-request.dto';
 import { ForgotPasswordResponseDto } from './_dtos/forgot-password/forgot-password-response.dto';
-import { ResetPasswordDto } from './_dtos/reset-password/reset-password.dto';
+import { ResetPasswordRequestDto } from './_dtos/reset-password/reset-password-request.dto';
 import { ResetPasswordResponseDto } from './_dtos/reset-password/reset-password-response.dto';
-import { SignInDto } from './_dtos/sign-in/sign-in.dto';
+import { SignInRequestDto } from './_dtos/sign-in/sign-in-request.dto';
 import { SignInResponseDto } from './_dtos/sign-in/sign-in-response.dto';
 import { User } from './_decorators/user.decorator';
 import { ConfirmAccountResponseDto } from './_dtos/confirm-account/confirm-account-response.dto';
@@ -18,11 +18,17 @@ import {
   ApiTags,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { ConfirmAccountDto } from './_dtos/confirm-account/confirm-account.dto';
+import { ConfirmAccountRequestDto } from './_dtos/confirm-account/confirm-account-request.dto';
 import { SignUpResponseDto } from './_dtos/sign-up/sign-up-response.dto';
+import { SignUpRequestDto } from './_dtos/sign-up/sign-up-request.dto';
+import { SignInDto } from './_dtos/sign-in/sign-in.dto';
 import { SignUpDto } from './_dtos/sign-up/sign-up.dto';
+import { ConfirmAccountDto } from './_dtos/confirm-account/confirm-account.dto';
+import { ChangePasswordDto } from './_dtos/change-password/change-password.dto';
+import { ForgotPasswordDto } from './_dtos/forgot-password/forgot-password.dto';
+import { ResetPasswordDto } from './_dtos/reset-password/reset-password.dto';
 
-@ApiTags('Auth')
+@ApiTags('School Monitor | Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly service: AuthService) {}
@@ -38,9 +44,9 @@ export class AuthController {
   })
   @IsPublic()
   @Post('sign-in')
-  async signIn(@Body() dto: SignInDto): Promise<SignInResponseDto> {
+  async signIn(@Body() dto: SignInRequestDto): Promise<SignInDto> {
     const token = await this.service.signIn(dto);
-    const response: SignInResponseDto = { token };
+    const response: SignInDto = { token };
     return response;
   }
 
@@ -55,9 +61,9 @@ export class AuthController {
   })
   @IsPublic()
   @Post('sign-up')
-  async signUp(@Body() dto: SignUpDto): Promise<SignUpResponseDto> {
+  async signUp(@Body() dto: SignUpRequestDto): Promise<SignUpDto> {
     const account = await this.service.signUp(dto);
-    const response: SignUpResponseDto = {
+    const response: SignUpDto = {
       id: account?.id,
       created: !!account?.id,
     };
@@ -76,10 +82,10 @@ export class AuthController {
   @IsPublic()
   @Post('confirm-account')
   async confirmAccount(
-    @Body() dto: ConfirmAccountDto,
-  ): Promise<ConfirmAccountResponseDto> {
+    @Body() dto: ConfirmAccountRequestDto,
+  ): Promise<ConfirmAccountDto> {
     const account = await this.service.confirmAccount(dto);
-    const response: ConfirmAccountResponseDto = { updated: !!account?.id };
+    const response: ConfirmAccountDto = { updated: !!account?.id };
     return response;
   }
 
@@ -96,10 +102,10 @@ export class AuthController {
   @Post('change-password')
   async changePassword(
     @User() user,
-    @Body() dto: ChangePasswordDto,
-  ): Promise<ChangePasswordResponseDto> {
+    @Body() dto: ChangePasswordRequestDto,
+  ): Promise<ChangePasswordDto> {
     const account = await this.service.changePassword(user.id, dto);
-    const response: ChangePasswordResponseDto = { updated: !!account?.id };
+    const response: ChangePasswordDto = { updated: !!account?.id };
     return response;
   }
 
@@ -117,10 +123,10 @@ export class AuthController {
   @IsPublic()
   @Post('forgot-password')
   async forgotPassword(
-    @Body() dto: ForgotPasswordDto,
-  ): Promise<ForgotPasswordResponseDto> {
+    @Body() dto: ForgotPasswordRequestDto,
+  ): Promise<ForgotPasswordDto> {
     const token = await this.service.requestResetPassword(dto);
-    const response: ForgotPasswordResponseDto = { created: !!token?.id };
+    const response: ForgotPasswordDto = { created: !!token?.id };
     return response;
   }
 
@@ -136,10 +142,10 @@ export class AuthController {
   @IsPublic()
   @Post('reset-password')
   async resetPassword(
-    @Body() dto: ResetPasswordDto,
-  ): Promise<ResetPasswordResponseDto> {
+    @Body() dto: ResetPasswordRequestDto,
+  ): Promise<ResetPasswordDto> {
     const account = await this.service.resetPassword(dto);
-    const response: ResetPasswordResponseDto = { updated: !!account?.id };
+    const response: ResetPasswordDto = { updated: !!account?.id };
     return response;
   }
 }

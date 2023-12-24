@@ -5,7 +5,7 @@ import { CalendarDateFnsUtilsProvider } from "@/calendar/_components/providers/c
 import { CalendarEventsContextProvider } from "@/calendar/_components/providers/calendarEventsContextProvider";
 import { CalendarEvent } from "@/calendar/_types/calendarEvent";
 import { getMockEvents } from "@/calendar/_mocks/getMockEvents";
-import { CalendarTypeProps, CalendarTypeSelect } from "./calendarTypeSelect";
+//import { CalendarTypeProps, CalendarTypeSelect } from "./calendarTypeSelect";
 
 export function SchoolClassCalendar() {
     const [initialDate, setInitialDate] = useState(null as null | Date)
@@ -19,7 +19,7 @@ export function SchoolClassCalendar() {
         setEndDate(date)
     }, [setEndDate])
 
-    const handleChange = useCallback((value: CalendarTypeProps) => {
+    const handleChange = useCallback((value: any) => {
         const props = ({
             viewType: value.viewType,
             numberOfDays: value.numberOfDays,
@@ -48,7 +48,7 @@ export function SchoolClassCalendar() {
     return (<React.Fragment>
         <Grid container>
             <Grid item xs={4} padding={4}>
-                <CalendarTypeSelect onChange={handleChange} />
+                {/*  <CalendarTypeSelect onChange={handleChange} />*/}
             </Grid>
         </Grid>
         {calendarProps

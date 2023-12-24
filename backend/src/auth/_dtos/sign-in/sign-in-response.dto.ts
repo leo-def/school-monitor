@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsObject } from 'class-validator';
+import { ApiResponseDto } from 'src/api/_dos/api-response.dto';
+import { SignInDto } from './sign-in.dto';
 
-export abstract class SignInResponseDto {
+export class SignInResponseDto extends ApiResponseDto<SignInDto> {
   @ApiProperty({
-    description: 'Authentication token',
-    example: '3475cdbf-aaa3-4ed7-915e-373f1423afe4',
+    name: 'data',
+    type: SignInDto,
   })
-  @IsString()
-  token: string;
+  @IsObject()
+  data: SignInDto;
 }

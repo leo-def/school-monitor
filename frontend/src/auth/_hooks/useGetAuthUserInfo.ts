@@ -1,9 +1,14 @@
+"use client";
+import { useMemo } from "react";
+import { UserInfoDto } from "../_types/userInfo/userInfo.dto";
 import { JWTUtils } from "../_services/jwtUtils";
-import { UserInfo } from "../_types/userInfo";
 import { useGetAuthToken } from "./useGetAuthToken";
 
-export function useGetAuthUserInfo(): UserInfo | undefined {
+export function useGetAuthUserInfo(): UserInfoDto | undefined {
   const token = useGetAuthToken();
-  const jwtData = JWTUtils.resolveJWTToken<UserInfo>(token);
-  return jwtData?.payload;
+  const userInfo = useMemo(
+    () => JWTUtils.resolveJWTToken<UserInfoDto>(token)?.payload,
+    [token]
+  );
+  return userInfo;
 }

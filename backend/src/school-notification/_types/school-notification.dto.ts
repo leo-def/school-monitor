@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { SchoolNotification } from '@prisma/client';
-import { IsDate, IsString } from 'class-validator';
+import { IsDate, IsOptional, IsString } from 'class-validator';
 import { EntityDto } from 'src/_types/entity.dto';
 
 export class SchoolNotificationDto
@@ -16,6 +16,7 @@ export class SchoolNotificationDto
   @ApiProperty({
     type: String,
   })
+  @IsOptional()
   @IsString()
   desc: string;
 

@@ -7,6 +7,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { ApiService } from '../_services/api-service';
 
 @Catch(Error)
 export class GenericExceptionFilter<Error> implements ExceptionFilter {
@@ -19,18 +20,13 @@ export class GenericExceptionFilter<Error> implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
     const error = String((exception as any)?.message || exception);
-
-    const json = {
-      statusCode,
-      error,
-      timestamp: new Date().toISOString(),
-      path: request.url,
-    };
     if (statusCode === HttpStatus.INTERNAL_SERVER_ERROR) {
       Logger.error(exception);
     } else {
       Logger.warn(exception);
     }
-    response.status(statusCode).json(json);
+    response
+      .status(statusCode)
+      .json(ApiService.resolveApiResponse(null, request, response, error));
   }
 }

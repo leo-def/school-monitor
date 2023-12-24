@@ -6,11 +6,16 @@ import {
   ApiParam,
   ApiBody,
   ApiTags,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { CompanyService } from './company.service';
 import { CompanyDto } from './_types/company.dto';
 import { CompanyPaginationParamsDto } from './_types/company-pagination-params.dto';
+import { CompanyArrayResponseDto } from './_types/company-array-response.dto';
+import { UpdateCompanyRequestDto } from './_types/update-company-request.dto';
+import { CompanyResponseDto } from './_types/company-response.dto';
+import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
 
 @ApiTags('School Monitor | Company')
 @Controller('company')
@@ -20,13 +25,15 @@ export class CompanyController {
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: Array<CompanyDto>,
+    type: CompanyArrayResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiBody({ description: 'Params', type: CompanyPaginationParamsDto })
+  @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: CompanyPaginationParamsDto,
@@ -38,15 +45,17 @@ export class CompanyController {
   @ApiOperation({ description: 'Create.', summary: 'Create.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: CompanyDto,
+    type: CompanyResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Data', type: CompanyDto })
+  @ApiBody({ description: 'Data', type: UpdateCompanyRequestDto })
+  @ApiBearerAuth()
   @Post()
-  async create(@Body() data: CompanyDto): Promise<CompanyDto> {
+  async create(@Body() data: UpdateCompanyRequestDto): Promise<CompanyDto> {
     const response = await this.service.create(data);
     return plainToInstance(CompanyDto, response);
   }
@@ -54,11 +63,12 @@ export class CompanyController {
   @ApiOperation({ description: 'Update.', summary: 'Update.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: CompanyDto,
+    type: CompanyResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -66,11 +76,12 @@ export class CompanyController {
     description: 'Id',
     type: 'string',
   })
-  @ApiBody({ description: 'Data', type: CompanyDto })
-  @Put()
+  @ApiBody({ description: 'Data', type: UpdateCompanyRequestDto })
+  @ApiBearerAuth()
+  @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() data: CompanyDto,
+    @Body() data: UpdateCompanyRequestDto,
   ): Promise<CompanyDto> {
     const response = await this.service.update(id, data);
     return plainToInstance(CompanyDto, response);
@@ -79,11 +90,12 @@ export class CompanyController {
   @ApiOperation({ description: 'Delete.', summary: 'Delete.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: CompanyDto,
+    type: CompanyResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -91,7 +103,8 @@ export class CompanyController {
     description: 'Id',
     type: 'string',
   })
-  @Delete()
+  @ApiBearerAuth()
+  @Delete(':id')
   async delete(@Param('id') id: string): Promise<CompanyDto> {
     const response = await this.service.delete(id);
     return plainToInstance(CompanyDto, response);

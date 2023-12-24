@@ -1,14 +1,14 @@
-import React, { PropsWithChildren } from 'react'
-import { PublicNavbar } from '@/navbar/_components/public/publicNavbar'
+import React, { PropsWithChildren, ReactNode } from 'react'
 
-export interface PublicLayoutProps extends PropsWithChildren { }
+export interface PublicLayoutProps extends PropsWithChildren {
+    readonly children: ReactNode | undefined
+}
 
 export function PublicLayout({
     children,
 }: PublicLayoutProps) {
     return (
         <main className='container mx-auto'>
-            <PublicNavbar />
             {children}
         </main>
     )

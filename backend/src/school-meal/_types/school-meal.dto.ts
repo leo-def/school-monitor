@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { MealType, SchoolMeal, WeekDay } from '@prisma/client';
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { EntityDto } from 'src/_types/entity.dto';
 
 export class SchoolMealDto extends EntityDto implements SchoolMeal {
@@ -13,6 +13,7 @@ export class SchoolMealDto extends EntityDto implements SchoolMeal {
   @ApiProperty({
     type: String,
   })
+  @IsOptional()
   @IsString()
   desc: string;
 

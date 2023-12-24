@@ -10,7 +10,10 @@ import { IS_PUBLIC_KEY } from '../_decorators/is-public.decorator';
 
 @Injectable()
 export class AppAuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService, private reflector: Reflector) {}
+  constructor(
+    private jwtService: JwtService,
+    private reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -38,7 +41,11 @@ export class AppAuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers['authorization'].split(' ') ?? [];
+    const authorizationHeader = request.headers['authorization'];
+    if (!authorizationHeader) {
+      return undefined;
+    }
+    const [type, token] = authorizationHeader.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
 }

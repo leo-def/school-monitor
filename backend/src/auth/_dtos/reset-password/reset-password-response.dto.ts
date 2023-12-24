@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean } from 'class-validator';
+import { IsObject } from 'class-validator';
+import { ApiResponseDto } from 'src/api/_dos/api-response.dto';
+import { ResetPasswordDto } from './reset-password.dto';
 
-export abstract class ResetPasswordResponseDto {
+export abstract class ResetPasswordResponseDto extends ApiResponseDto<ResetPasswordDto> {
   @ApiProperty({
-    description: 'Account updated',
-    example: true,
+    name: 'data',
+    type: ResetPasswordDto,
   })
-  @IsBoolean()
-  updated: boolean;
+  @IsObject()
+  data: ResetPasswordDto;
 }

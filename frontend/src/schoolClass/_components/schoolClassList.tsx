@@ -1,5 +1,5 @@
 import React from "react"
-import apiFetch from "@/api"
+import apiFetch from "@/commons/api"
 import { SchoolClass } from "../_types/schoolClass"
 import { SchoolClassCard } from "./schoolClassCard"
 import { ItemList } from "@/app/_components/list/itemList"

@@ -3,6 +3,8 @@ import { SchoolTerm } from '@prisma/client';
 import { Pagination } from 'src/pagination/_services/pagination.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolTermPaginationParamsDto } from './_types/school-term-pagination-params.dto';
+import { UpdateSchoolTermRequestDto } from './_types/update-school-term-request.dto';
+import { CreateSchoolTermRequestDto } from './_types/create-school-term-request.dto';
 
 @Injectable()
 export class SchoolTermService {
@@ -11,7 +13,7 @@ export class SchoolTermService {
   async fetch(
     params: SchoolTermPaginationParamsDto,
   ): Promise<Array<SchoolTerm>> {
-    const query = Pagination.paramsToQuery(params);
+    const query = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolTerm.findMany(query);
   }
 
@@ -19,12 +21,43 @@ export class SchoolTermService {
     return await this.prisma.schoolTerm.findFirst({ where: { id } });
   }
 
-  async create(data: Partial<SchoolTerm>): Promise<SchoolTerm> {
-    return await this.prisma.schoolTerm.create({ data: data as any });
+  async create(data: CreateSchoolTermRequestDto): Promise<SchoolTerm> {
+    const { companyId, branchId, ...others } = data;
+    return await this.prisma.schoolTerm.create({
+      data: {
+        ...others,
+        company: {
+          connect: { id: companyId },
+        },
+        ...(branchId
+          ? {
+              branch: {
+                connect: { id: branchId },
+              },
+            }
+          : {}),
+      } as any,
+    });
   }
 
-  async update(id: string, data: Partial<SchoolTerm>): Promise<SchoolTerm> {
-    return await this.prisma.schoolTerm.update({ where: { id }, data });
+  async update(
+    id: string,
+    data: UpdateSchoolTermRequestDto,
+  ): Promise<SchoolTerm> {
+    const { branchId, ...others } = data;
+    return await this.prisma.schoolTerm.update({
+      where: { id },
+      data: {
+        ...others,
+        ...(branchId
+          ? {
+              branch: {
+                connect: { id: branchId },
+              },
+            }
+          : {}),
+      } as any,
+    });
   }
 
   async delete(id: string): Promise<SchoolTerm> {

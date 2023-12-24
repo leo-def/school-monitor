@@ -4,6 +4,7 @@ import { Pagination } from 'src/pagination/_services/pagination.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/school-section-pagination-params.dto';
 import { SchoolAppraisalPaginationParamsDto } from './_types/school-appraisal-pagination-params.dto';
+import { CreateSchoolAppraisalRequestDto } from './_types/create-school-appraisal-request.dto';
 
 @Injectable()
 export class SchoolAppraisalService {
@@ -12,7 +13,7 @@ export class SchoolAppraisalService {
   async fetch(
     params: SchoolAppraisalPaginationParamsDto,
   ): Promise<Array<SchoolAppraisal>> {
-    const query = Pagination.paramsToQuery(params);
+    const query = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolAppraisal.findMany(query);
   }
 
@@ -20,7 +21,9 @@ export class SchoolAppraisalService {
     return await this.prisma.schoolAppraisal.findFirst({ where: { id } });
   }
 
-  async create(data: Partial<SchoolAppraisal>): Promise<SchoolAppraisal> {
+  async create(
+    data: CreateSchoolAppraisalRequestDto,
+  ): Promise<SchoolAppraisal> {
     return await this.prisma.schoolAppraisal.create({ data: data as any });
   }
 
@@ -38,7 +41,7 @@ export class SchoolAppraisalService {
   async section(
     params: SchoolSectionPaginationParamsDto,
   ): Promise<Array<SchoolAppraisal & { schoolSection: SchoolSection }>> {
-    const { where, ...query } = Pagination.paramsToQuery(params) as any;
+    const { where, ...query } = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolAppraisal.findMany<{
       include: { schoolSection: true };
     }>({

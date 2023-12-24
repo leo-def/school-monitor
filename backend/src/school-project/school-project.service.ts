@@ -4,6 +4,7 @@ import { Pagination } from 'src/pagination/_services/pagination.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolProjectPaginationParamsDto } from './_types/school-project-pagination-params.dto';
 import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/school-section-pagination-params.dto';
+import { CreateSchoolProjectRequestDto } from './_types/create-school-project-request.dto';
 
 @Injectable()
 export class SchoolProjectService {
@@ -12,7 +13,7 @@ export class SchoolProjectService {
   async fetch(
     params: SchoolProjectPaginationParamsDto,
   ): Promise<Array<SchoolProject>> {
-    const query = Pagination.paramsToQuery(params);
+    const query = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolProject.findMany(query);
   }
 
@@ -20,7 +21,7 @@ export class SchoolProjectService {
     return await this.prisma.schoolProject.findFirst({ where: { id } });
   }
 
-  async create(data: Partial<SchoolProject>): Promise<SchoolProject> {
+  async create(data: CreateSchoolProjectRequestDto): Promise<SchoolProject> {
     return await this.prisma.schoolProject.create({ data: data as any });
   }
 
@@ -38,7 +39,7 @@ export class SchoolProjectService {
   async section(
     params: SchoolSectionPaginationParamsDto,
   ): Promise<Array<SchoolProject & { schoolSection: SchoolSection }>> {
-    const { where, ...query } = Pagination.paramsToQuery(params) as any;
+    const { where, ...query } = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolProject.findMany<{
       include: { schoolSection: true };
     }>({

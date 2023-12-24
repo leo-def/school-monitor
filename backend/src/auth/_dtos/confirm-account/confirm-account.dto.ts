@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsBoolean } from 'class-validator';
 
-export class ConfirmAccountDto {
+export abstract class ConfirmAccountDto {
   @ApiProperty({
-    description: 'Reset password token',
-    example: '3475cdbf-aaa3-4ed7-915e-373f1423afe4',
+    name: 'updated',
+    description: 'Account updated',
+    example: true,
   })
-  @IsString()
-  token: string;
+  @IsBoolean()
+  updated: boolean;
 }

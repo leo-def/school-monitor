@@ -14,9 +14,9 @@ export interface SignUpReferenceInputs {
 }
 
 export interface SignUpReferenceFormProps {
-    onComplete: (input: SignUpReferenceInputs) => Promise<void>;
+    readonly onComplete: (input: SignUpReferenceInputs) => Promise<void>;
     isFormActive?: boolean;
-    formId?: string;
+    readonly formId?: string;
 }
 
 export function SignUpReferenceForm({ onComplete, formId }: SignUpReferenceFormProps) {

@@ -6,10 +6,10 @@ import { SignUpAccountTypeForm, SignUpAccountTypeInputs } from "./_components/si
 import { SignUpAuthForm, SignUpAuthInputs } from "./_components/signUpAuthForm";
 import { SignUpProfileForm, SignUpProfileInputs } from "./_components/signUpProfileForm";
 import { SignUpReferenceForm, SignUpReferenceInputs } from "./_components/signUpReferenceForm";
-import { useApiFetch } from "@/api/_hooks/useApiFetch";
-import { useAddMessage } from "@/message/_hooks/useAddMessage";
+import { useApiFetch } from "@/commons/api/_hooks/useApiFetch";
+import { useAddMessage } from "@/commons/message/_hooks/useAddMessage";
 import { useRouter } from "next/navigation";
-import { MessageSeverityEnum } from "@/message/_enums/messageSeverity.enum";
+import { MessageSeverityEnum } from "@/commons/message/_enums/messageSeverity.enum";
 import Link from "next/link";
 
 export interface SignUpFormInputs {
@@ -56,25 +56,21 @@ export default function SignUpPage() {
 
 
     const handleSignUpAccountTypeFormSubmit = useCallback(async (accountType: SignUpAccountTypeInputs) => {
-        console.log('handleSignUpAccountTypeFormSubmit', { accountType })
         setInputs(inputs => ({ ...inputs, accountType }))
         handleNext()
     }, [setInputs, handleNext])
 
     const handleSignUpAuthFormSubmit = useCallback(async (auth: SignUpAuthInputs) => {
-        console.log('handleSignUpAuthFormSubmit', { auth })
         setInputs(inputs => ({ ...inputs, auth }))
         handleNext()
     }, [setInputs, handleNext])
 
     const handleSignUpProfileFormSubmit = useCallback(async (profile: SignUpProfileInputs) => {
-        console.log('handleSignUpProfileFormSubmit', { profile })
         setInputs(inputs => ({ ...inputs, profile }))
         handleNext()
     }, [setInputs, handleNext])
 
     const handleSignUpReferenceFormSubmit = useCallback(async (reference: SignUpReferenceInputs) => {
-        console.log('handleSignUpReferenceFormSubmit', { reference })
         signUp({ ...inputs, reference })
     }, [signUp, inputs])
 

@@ -6,11 +6,17 @@ import {
   ApiParam,
   ApiBody,
   ApiTags,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { SchoolSubjectPaginationParamsDto } from './_types/school-subject-pagination-params.dto';
 import { SchoolSubjectService } from './school-subject.service';
 import { SchoolSubjectDto } from './_types/school-subject.dto';
+import { SchoolSubjectArrayResponseDto } from './_types/school-subject-array-response.dto';
+import { SchoolSubjectResponseDto } from './_types/school-subject-response.dto';
+import { UpdateSchoolSubjectRequestDto } from './_types/update-school-subject-request.dto';
+import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { CreateSchoolSubjectRequestDto } from './_types/create-school-subject-request.dto';
 
 @ApiTags('School Monitor | SchoolSubject')
 @Controller('school-subject')
@@ -23,16 +29,18 @@ export class SchoolSubjectController {
   })
   @ApiOkResponse({
     description: 'OK.',
-    type: Array<SchoolSubjectDto>,
+    type: SchoolSubjectArrayResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiBody({
     description: 'Params',
     type: SchoolSubjectPaginationParamsDto,
   })
+  @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolSubjectPaginationParamsDto,
@@ -44,15 +52,19 @@ export class SchoolSubjectController {
   @ApiOperation({ description: 'Create.', summary: 'Create.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolSubjectDto,
+    type: SchoolSubjectResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Data', type: SchoolSubjectDto })
+  @ApiBody({ description: 'Data', type: CreateSchoolSubjectRequestDto })
+  @ApiBearerAuth()
   @Post()
-  async create(@Body() data: SchoolSubjectDto): Promise<SchoolSubjectDto> {
+  async create(
+    @Body() data: CreateSchoolSubjectRequestDto,
+  ): Promise<SchoolSubjectDto> {
     const response = await this.service.create(data);
     return plainToInstance(SchoolSubjectDto, response);
   }
@@ -60,11 +72,12 @@ export class SchoolSubjectController {
   @ApiOperation({ description: 'Update.', summary: 'Update.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolSubjectDto,
+    type: SchoolSubjectResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -72,11 +85,12 @@ export class SchoolSubjectController {
     description: 'Id',
     type: 'string',
   })
-  @ApiBody({ description: 'Data', type: SchoolSubjectDto })
-  @Put()
+  @ApiBody({ description: 'Data', type: UpdateSchoolSubjectRequestDto })
+  @ApiBearerAuth()
+  @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() data: SchoolSubjectDto,
+    @Body() data: UpdateSchoolSubjectRequestDto,
   ): Promise<SchoolSubjectDto> {
     const response = await this.service.update(id, data);
     return plainToInstance(SchoolSubjectDto, response);
@@ -85,11 +99,12 @@ export class SchoolSubjectController {
   @ApiOperation({ description: 'Delete.', summary: 'Delete.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolSubjectDto,
+    type: SchoolSubjectResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -97,7 +112,8 @@ export class SchoolSubjectController {
     description: 'Id',
     type: 'string',
   })
-  @Delete()
+  @ApiBearerAuth()
+  @Delete(':id')
   async delete(@Param('id') id: string): Promise<SchoolSubjectDto> {
     const response = await this.service.delete(id);
     return plainToInstance(SchoolSubjectDto, response);

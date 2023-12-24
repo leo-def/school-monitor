@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { SchoolAbsence } from '@prisma/client';
-import { IsBoolean, IsDate, IsString } from 'class-validator';
+import { IsBoolean, IsDate, IsOptional, IsString } from 'class-validator';
 import { EntityDto } from 'src/_types/entity.dto';
 
 export class SchoolAbsenceDto extends EntityDto implements SchoolAbsence {
@@ -13,6 +13,7 @@ export class SchoolAbsenceDto extends EntityDto implements SchoolAbsence {
   @ApiProperty({
     type: String,
   })
+  @IsOptional()
   @IsString()
   desc: string;
 

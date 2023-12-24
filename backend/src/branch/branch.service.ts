@@ -3,13 +3,15 @@ import { Branch } from '@prisma/client';
 import { Pagination } from 'src/pagination/_services/pagination.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { BranchPaginationParamsDto } from './_types/branch-pagination-params.dto';
+import { UpdateBranchRequestDto } from './_types/update-branch-request.dto';
+import { CreateBranchRequestDto } from './_types/create-branch-request.dto';
 
 @Injectable()
 export class BranchService {
   constructor(private readonly prisma: PrismaService) {}
 
   async fetch(params: BranchPaginationParamsDto): Promise<Array<Branch>> {
-    const query = Pagination.paramsToQuery(params);
+    const query = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.branch.findMany(query);
   }
 
@@ -17,11 +19,11 @@ export class BranchService {
     return await this.prisma.branch.findFirst({ where: { id } });
   }
 
-  async create(data: Partial<Branch>): Promise<Branch> {
+  async create(data: CreateBranchRequestDto): Promise<Branch> {
     return await this.prisma.branch.create({ data: data as any });
   }
 
-  async update(id: string, data: Partial<Branch>): Promise<Branch> {
+  async update(id: string, data: UpdateBranchRequestDto): Promise<Branch> {
     return await this.prisma.branch.update({ where: { id }, data });
   }
 

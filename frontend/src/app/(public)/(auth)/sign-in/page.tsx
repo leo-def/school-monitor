@@ -6,11 +6,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Card, CardContent, Typography, CardActions, TextField, Grid, Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
-import { useApiFetch } from "@/api/_hooks/useApiFetch";
-import { useAddMessage } from "@/message/_hooks/useAddMessage";
-import { MessageSeverityEnum } from "@/message/_enums/messageSeverity.enum";
-import { useSetAuthToken } from "@/auth/_hooks/useSetAuthToken";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useApiFetch } from "@/commons/api/_hooks/useApiFetch";
+import { useAddMessage } from "@/commons/message/_hooks/useAddMessage";
+import { MessageSeverityEnum } from "@/commons/message/_enums/messageSeverity.enum";
+import { useAuth } from "@/auth/_hooks/useAuth";
 
 type SignInFormInputs = {
     username: string
@@ -34,7 +34,7 @@ export default function SignInPage() {
 
     const router = useRouter()
     const apiFetch = useApiFetch()
-    const setAuthToken = useSetAuthToken()
+    const setAuth = useAuth()
     const addMessage = useAddMessage()
 
     const signIn = useCallback((data: SignInFormInputs) => {
@@ -44,12 +44,12 @@ export default function SignInPage() {
                 if (responseBody.error) {
                     addMessage({ title: responseBody.error, severity: MessageSeverityEnum.ERROR })
                 } else {
-                    setAuthToken(responseBody?.data?.token)
+                    setAuth(responseBody?.data?.token)
                     addMessage({ title: 'SignIn Success', severity: MessageSeverityEnum.SUCCESS })
-                    router.push('/')
+                    router.replace('/')
                 }
             })
-    }, [apiFetch, addMessage, setAuthToken, router])
+    }, [apiFetch, addMessage, setAuth, router])
 
     const { register, handleSubmit } = useForm<SignInFormInputs>({
         defaultValues,

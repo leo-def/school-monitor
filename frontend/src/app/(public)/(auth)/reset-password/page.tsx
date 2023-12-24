@@ -1,15 +1,14 @@
 'use client'
 
 import React, { useCallback } from 'react'
-import * as yup from "yup";
-import { useApiFetch } from '@/api/_hooks/useApiFetch'
-import { useSearchParams } from 'next/navigation';
-import { MessageSeverityEnum } from '@/message/_enums/messageSeverity.enum'
-import { useAddMessage } from '@/message/_hooks/useAddMessage'
-import { useRouter } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Grid, Card, CardContent, Typography, CardActions, TextField, Button } from '@mui/material';
+import * as yup from "yup"; import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, get, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useApiFetch } from '@/commons/api/_hooks/useApiFetch'
+import { MessageSeverityEnum } from '@/commons/message/_enums/messageSeverity.enum'
+import { useAddMessage } from '@/commons/message/_hooks/useAddMessage'
+
 
 export interface ResetPasswordInputs {
     token: string
@@ -46,7 +45,7 @@ export default function ResetPasswordPage() {
     const apiFetch = useApiFetch()
     const addMessage = useAddMessage()
 
-    const resetPassword = useCallback((data: ResetPasswordInputs) => {
+    const resetPassword = useCallback(async (data: ResetPasswordInputs) => {
         apiFetch('auth/reset-password', { method: 'POST', body: JSON.stringify(data) })
             .then(async (response) => {
                 const data = await response.json()

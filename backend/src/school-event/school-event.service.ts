@@ -4,6 +4,8 @@ import { Pagination } from 'src/pagination/_services/pagination.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/school-section-pagination-params.dto';
 import { SchoolEventPaginationParamsDto } from './_types/school-event-pagination-params.dto';
+import { UpdateSchoolEventRequestDto } from './_types/update-school-event-request.dto';
+import { CreateSchoolEventRequestDto } from './_types/create-school-event-request.dto';
 
 @Injectable()
 export class SchoolEventService {
@@ -12,7 +14,7 @@ export class SchoolEventService {
   async fetch(
     params: SchoolEventPaginationParamsDto,
   ): Promise<Array<SchoolEvent>> {
-    const query = Pagination.paramsToQuery(params);
+    const query = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolEvent.findMany(query);
   }
 
@@ -20,11 +22,14 @@ export class SchoolEventService {
     return await this.prisma.schoolEvent.findFirst({ where: { id } });
   }
 
-  async create(data: Partial<SchoolEvent>): Promise<SchoolEvent> {
+  async create(data: CreateSchoolEventRequestDto): Promise<SchoolEvent> {
     return await this.prisma.schoolEvent.create({ data: data as any });
   }
 
-  async update(id: string, data: Partial<SchoolEvent>): Promise<SchoolEvent> {
+  async update(
+    id: string,
+    data: UpdateSchoolEventRequestDto,
+  ): Promise<SchoolEvent> {
     return await this.prisma.schoolEvent.update({ where: { id }, data });
   }
 
@@ -35,7 +40,7 @@ export class SchoolEventService {
   async section(
     params: SchoolSectionPaginationParamsDto,
   ): Promise<Array<SchoolEvent & { schoolSection: SchoolSection }>> {
-    const { where, ...query } = Pagination.paramsToQuery(params) as any;
+    const { where, ...query } = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolEvent.findMany<{
       include: { schoolSection: true };
     }>({

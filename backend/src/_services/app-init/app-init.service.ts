@@ -6,7 +6,7 @@ import {
   Subject,
   SystemRole,
 } from '@prisma/client';
-import { HashService } from 'src/auth/_services/hash/hash.service';
+import { HashService } from 'src/hash/_services/hash.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()

@@ -6,11 +6,16 @@ import {
   ApiParam,
   ApiBody,
   ApiTags,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { BranchService } from './branch.service';
 import { BranchDto } from './_types/branch.dto';
 import { BranchPaginationParamsDto } from './_types/branch-pagination-params.dto';
+import { BranchArrayResponseDto } from './_types/branch-array-response.dto';
+import { BranchResponseDto } from './_types/branch-response.dto';
+import { UpdateBranchRequestDto } from './_types/update-branch-request.dto';
+import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
 
 @ApiTags('School Monitor | Branch')
 @Controller('branch')
@@ -20,13 +25,15 @@ export class BranchController {
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: Array<BranchDto>,
+    type: BranchArrayResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiBody({ description: 'Params', type: BranchPaginationParamsDto })
+  @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: BranchPaginationParamsDto,
@@ -38,15 +45,17 @@ export class BranchController {
   @ApiOperation({ description: 'Create.', summary: 'Create.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: BranchDto,
+    type: BranchResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Data', type: BranchDto })
+  @ApiBody({ description: 'Data', type: UpdateBranchRequestDto })
+  @ApiBearerAuth()
   @Post()
-  async create(@Body() data: BranchDto): Promise<BranchDto> {
+  async create(@Body() data: UpdateBranchRequestDto): Promise<BranchDto> {
     const response = await this.service.create(data);
     return plainToInstance(BranchDto, response);
   }
@@ -54,11 +63,12 @@ export class BranchController {
   @ApiOperation({ description: 'Update.', summary: 'Update.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: BranchDto,
+    type: BranchResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -66,11 +76,12 @@ export class BranchController {
     description: 'Id',
     type: 'string',
   })
-  @ApiBody({ description: 'Data', type: BranchDto })
-  @Put()
+  @ApiBody({ description: 'Data', type: UpdateBranchRequestDto })
+  @ApiBearerAuth()
+  @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() data: BranchDto,
+    @Body() data: UpdateBranchRequestDto,
   ): Promise<BranchDto> {
     const response = await this.service.update(id, data);
     return plainToInstance(BranchDto, response);
@@ -79,11 +90,12 @@ export class BranchController {
   @ApiOperation({ description: 'Delete.', summary: 'Delete.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: BranchDto,
+    type: BranchResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -91,7 +103,8 @@ export class BranchController {
     description: 'Id',
     type: 'string',
   })
-  @Delete()
+  @ApiBearerAuth()
+  @Delete(':id')
   async delete(@Param('id') id: string): Promise<BranchDto> {
     const response = await this.service.delete(id);
     return plainToInstance(BranchDto, response);

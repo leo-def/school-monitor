@@ -11,5 +11,5 @@ export class SchoolProjectPaginationParamsDto extends PaginationParamsDto<
   | 'deadline'
   | 'deliveryDate'
   | 'schoolSectionId'
-  | 'gradeId'
+  | 'schoolGradeId'
 > {}

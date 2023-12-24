@@ -5,10 +5,8 @@ export interface SignupFormData {
 }
 
 export function SignupForm() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = (data: SignupFormData) => console.log(data);
-
-    console.log(watch("example")); // watch input value by passing the name of it
 
     return (
         /* "handleSubmit" will validate your inputs before invoking "onSubmit" */

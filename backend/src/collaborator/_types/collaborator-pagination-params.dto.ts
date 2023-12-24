@@ -4,6 +4,7 @@ export class CollaboratorPaginationParamsDto extends PaginationParamsDto<
   | 'id'
   | 'createdAt'
   | 'updatedAt'
+  | 'title'
   | 'accountId'
   | 'companyId'
   | 'branchId'

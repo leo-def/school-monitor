@@ -4,6 +4,7 @@ import { Pagination } from 'src/pagination/_services/pagination.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/school-section-pagination-params.dto';
 import { SchoolNotificationPaginationParamsDto } from './_types/school-notification-pagination-params.dto';
+import { CreateSchoolNotificationRequestDto } from './_types/create-school-notification-request.dto';
 
 @Injectable()
 export class SchoolNotificationService {
@@ -12,7 +13,7 @@ export class SchoolNotificationService {
   async fetch(
     params: SchoolNotificationPaginationParamsDto,
   ): Promise<Array<SchoolNotification>> {
-    const query = Pagination.paramsToQuery(params);
+    const query = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolNotification.findMany(query);
   }
 
@@ -20,7 +21,9 @@ export class SchoolNotificationService {
     return await this.prisma.schoolNotification.findFirst({ where: { id } });
   }
 
-  async create(data: Partial<SchoolNotification>): Promise<SchoolNotification> {
+  async create(
+    data: CreateSchoolNotificationRequestDto,
+  ): Promise<SchoolNotification> {
     return await this.prisma.schoolNotification.create({ data: data as any });
   }
 
@@ -38,7 +41,7 @@ export class SchoolNotificationService {
   async section(
     params: SchoolSectionPaginationParamsDto,
   ): Promise<Array<SchoolNotification & { schoolSection: SchoolSection }>> {
-    const { where, ...query } = Pagination.paramsToQuery(params) as any;
+    const { where, ...query } = Pagination.paramsToQuery(params, undefined);
     return await this.prisma.schoolNotification.findMany<{
       include: { schoolSection: true };
     }>({

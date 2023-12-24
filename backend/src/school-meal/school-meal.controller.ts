@@ -6,12 +6,17 @@ import {
   ApiParam,
   ApiBody,
   ApiTags,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { SchoolMealService } from './school-meal.service';
 import { SchoolMealDto } from './_types/school-meal.dto';
 import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/school-section-pagination-params.dto';
 import { SchoolMealPaginationParamsDto } from './_types/school-meal-pagination-params.dto';
+import { SchoolMealArrayResponseDto } from './_types/school-meal-array-response.dto';
+import { SchoolMealResponseDto } from './_types/school-meal-response.dto';
+import { UpdateSchoolMealRequestDto } from './_types/update-school-meal-request.dto';
+import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
 
 @ApiTags('School Monitor | SchoolMeal')
 @Controller('school-meal')
@@ -24,13 +29,15 @@ export class SchoolMealController {
   })
   @ApiOkResponse({
     description: 'OK.',
-    type: Array<SchoolMealDto>,
+    type: SchoolMealArrayResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiBody({ description: 'Params', type: SchoolMealPaginationParamsDto })
+  @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolMealPaginationParamsDto,
@@ -42,13 +49,15 @@ export class SchoolMealController {
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: Array<SchoolMealDto>,
+    type: SchoolMealArrayResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiBody({ description: 'Params', type: SchoolSectionPaginationParamsDto })
+  @ApiBearerAuth()
   @Post('section')
   async section(
     @Body() params: SchoolSectionPaginationParamsDto,
@@ -60,15 +69,19 @@ export class SchoolMealController {
   @ApiOperation({ description: 'Create.', summary: 'Create.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolMealDto,
+    type: SchoolMealResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Data', type: SchoolMealDto })
+  @ApiBody({ description: 'Data', type: UpdateSchoolMealRequestDto })
+  @ApiBearerAuth()
   @Post()
-  async create(@Body() data: SchoolMealDto): Promise<SchoolMealDto> {
+  async create(
+    @Body() data: UpdateSchoolMealRequestDto,
+  ): Promise<SchoolMealDto> {
     const response = await this.service.create(data);
     return plainToInstance(SchoolMealDto, response);
   }
@@ -76,11 +89,12 @@ export class SchoolMealController {
   @ApiOperation({ description: 'Update.', summary: 'Update.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolMealDto,
+    type: SchoolMealResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -88,11 +102,12 @@ export class SchoolMealController {
     description: 'Id',
     type: 'string',
   })
-  @ApiBody({ description: 'Data', type: SchoolMealDto })
-  @Put()
+  @ApiBody({ description: 'Data', type: UpdateSchoolMealRequestDto })
+  @ApiBearerAuth()
+  @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() data: SchoolMealDto,
+    @Body() data: UpdateSchoolMealRequestDto,
   ): Promise<SchoolMealDto> {
     const response = await this.service.update(id, data);
     return plainToInstance(SchoolMealDto, response);
@@ -101,11 +116,12 @@ export class SchoolMealController {
   @ApiOperation({ description: 'Delete.', summary: 'Delete.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolMealDto,
+    type: SchoolMealResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
+    type: ApiErrorResponseDto,
   })
   @ApiParam({
     name: 'id',
@@ -113,7 +129,8 @@ export class SchoolMealController {
     description: 'Id',
     type: 'string',
   })
-  @Delete()
+  @ApiBearerAuth()
+  @Delete(':id')
   async delete(@Param('id') id: string): Promise<SchoolMealDto> {
     const response = await this.service.delete(id);
     return plainToInstance(SchoolMealDto, response);

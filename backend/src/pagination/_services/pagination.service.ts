@@ -5,28 +5,32 @@ import { PaginationResponse } from '../_types/response';
 export class Pagination {
   public static paramsToQuery<
     T extends PaginationParams<PaginationParamsField>,
-  >(params: T): PaginationQuery {
+    Extra = object,
+  >(params: T, extra: Extra): PaginationQuery & Extra {
     const { skip, take, select, orderBy, filter } = params;
     return {
-      ...(skip ? { skip } : {}),
-      ...(take ? { take } : {}),
-      ...(select
-        ? {
-            select: Pagination.expandObject(
-              select.reduce((prev, curr) => ({ ...prev, [curr]: true }), {}),
-            ),
-          }
-        : {}),
-      ...(orderBy
-        ? {
-            orderBy: Pagination.expandObject(orderBy),
-          }
-        : {}),
-      ...(filter
-        ? {
-            where: Pagination.expandObject(filter),
-          }
-        : {}),
+      ...({
+        ...(skip ? { skip } : {}),
+        ...(take ? { take } : {}),
+        ...(select
+          ? {
+              select: Pagination.expandObject(
+                select.reduce((prev, curr) => ({ ...prev, [curr]: true }), {}),
+              ),
+            }
+          : {}),
+        ...(orderBy
+          ? {
+              orderBy: Pagination.expandObject(orderBy),
+            }
+          : {}),
+        ...(filter
+          ? {
+              where: Pagination.expandObject(filter),
+            }
+          : {}),
+      } as PaginationQuery),
+      ...((extra ?? {}) as Extra),
     };
   }
 
@@ -44,6 +48,9 @@ export class Pagination {
     const expandedObject = {};
 
     for (const key in compactObject) {
+      if (!key) {
+        continue;
+      }
       const value = compactObject[key];
       const keys = key.split('.');
 

@@ -5,9 +5,10 @@ import { Renders } from "../_types/renders";
 import { useGetRenderByAuthInfo } from "../_hooks/useGetRenderByAuthInfo";
 
 export interface ProtectedComponentProps {
-  subject?: string;
-  action?: string;
-  renders?: Renders;
+  // TODO: Implement RBAC
+  // readonly subject?: string;
+  // readonly action?: string;
+  readonly renders?: Renders;
 }
 
 export const ProtectedComponent = ({ renders }: ProtectedComponentProps) => {

@@ -1,0 +1,62 @@
+{
+    "home": {
+        "public": {
+            "School Monitor": "Monitor Escolar"
+        },
+        "private": {
+            "Welcome": "Bem vindo {{name}}"
+        }
+    },
+    "branch": {
+        "autocomplete": {
+            "Branch": "Local",
+            "No Options": "Sem opções"
+        }
+    },
+    "collaborator": {
+        "autocomplete": {
+            "Person": "Pessoa",
+            "Student": "Aluno",
+            "Employee": "Funcionário",
+            "No Options": "Sem opções"
+        }
+    },
+    "company": {
+        "autocomplete": {
+            "Company": "Grupo",
+            "No Options": "Sem opções"
+        },
+        "manage": {
+            "Title": "Titulo"
+        }
+    },
+    "schoolClass": {
+        "autocomplete": {
+            "Class": "Turma",
+            "No Options": "Sem opções"
+        }
+    },
+    "schoolSection": {
+        "board": {
+            "Calendar": "Calendário",
+            "Meals": "Menu",
+            "Events": "Eventos",
+            "Notifications": "Notificações",
+            "Appraisals": "Avaliações",
+            "Projects": "Projetos",
+            "Absences": "Faltas"
+        }
+    },
+    "schoolSubject": {
+        "autocomplete": {
+            "Subject": "Matéria",
+            "No Options": "Sem opções"
+        }
+    },
+    "schoolTerm": {
+        "autocomplete": {
+            "Term": "Período",
+            "No Options": "Sem opções"
+        }
+    }
+}
