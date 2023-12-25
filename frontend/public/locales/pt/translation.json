@@ -58,5 +58,11 @@
             "Term": "Período",
             "No Options": "Sem opções"
         }
+    },
+    "sidebar": {
+        "accountSidebar": {
+            "Companies": "Empresas",
+            "Accounts": "Contas"
+        }
     }
 }

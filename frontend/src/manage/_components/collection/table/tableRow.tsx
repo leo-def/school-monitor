@@ -1,4 +1,5 @@
 import React from "react"
+import { TableRow as MuiTableRow, TableCell } from "@mui/material"
 import { useGetManageContextValue } from "../../../_hooks/useGetManageContextValue"
 import { TableColumn } from "./tableColumn"
 
@@ -8,8 +9,11 @@ export interface TableRowProps {
 export function TableRow({ item }: TableRowProps) {
     const {
         config: {
-            collection: { table: { columns } }
+            collection: { table: { columns, ActionsColumnDisplay } }
         }
     } = useGetManageContextValue<any>()
-    return (<React.Fragment>{columns.map((column) => <TableColumn key={JSON.stringify(column)} column={column} item={item} />)}</React.Fragment>)
+    return (<MuiTableRow>
+        {columns.map((column) => <TableColumn key={JSON.stringify(column)} column={column} item={item} />)}
+        <TableCell>{ActionsColumnDisplay ? <ActionsColumnDisplay item={item} /> : undefined}</TableCell>
+    </MuiTableRow>)
 }

@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { FormConfig } from "./formConfig";
 
 export type FormsConfig<T> =

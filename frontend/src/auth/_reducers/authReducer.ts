@@ -7,13 +7,12 @@ export const authReducer = (
   state: AuthState,
   action: AuthAction
 ): AuthState => {
-  const { token, loaded } = (action.payload as AuthPayload) ?? {};
   switch (action.type) {
     case AuthActionTypeEnum.AUTH:
       return {
         ...state,
-        loaded,
-        token,
+        loaded: true,
+        token: (action.payload as AuthPayload).token,
       } as AuthState;
     case AuthActionTypeEnum.LOGOUT:
       return {

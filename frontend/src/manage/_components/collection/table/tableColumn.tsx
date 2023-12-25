@@ -8,6 +8,5 @@ export interface TableColumnProps<T> {
 }
 export function TableColumn<T>({ item, column }: TableColumnProps<T>) {
     const { Display } = column
-
     return (<TableCell>{Display ? <Display item={item} column={column} /> : undefined}</TableCell>)
 }

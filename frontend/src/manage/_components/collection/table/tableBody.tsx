@@ -5,9 +5,10 @@ import { useGetManageContextValue } from "../../../_hooks/useGetManageContextVal
 
 export function TableBody() {
     const {
-        state: { fetchResult: { items } }
+        state: { fetchResult }
     } = useGetManageContextValue<any>()
+    const items = fetchResult?.items ?? []
     return (<MuiTableBody>
-        {items.map(item => <TableRow key={JSON.stringify(item)} item={item} />)}
+        {items.map((item: any) => <TableRow key={JSON.stringify(item)} item={item} />)}
     </MuiTableBody>)
 }

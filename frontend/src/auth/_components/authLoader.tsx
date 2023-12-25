@@ -1,24 +1,23 @@
 'use client'
 
-import { PropsWithChildren, useContext, useEffect } from "react";
+import { PropsWithChildren, useEffect, useContext } from "react";
 import { AuthContext } from "../_contexts/authContext";
-import { useLoadLocalStorageToken } from "../_hooks/useLoadLocalStorageToken";
-import { useSetLocalStorageToken } from "../_hooks/useSetLocalStorageToken";
-import { useAuthLoaded } from "../_hooks/useAuthLoaded";
+import { AuthStorageKeyEnum } from "../_enums/authStorageKey.enum";
+import { useAuth } from "../_hooks/useAuth";
 
 export const AuthLoader = ({ children }: PropsWithChildren) => {
 
-    const loaded = useAuthLoaded()
-    const setLocalStorageToken = useSetLocalStorageToken()
-    const loadLocalStorageToken = useLoadLocalStorageToken()
-
+    const {
+        state: { token, loaded },
+    } = useContext(AuthContext)
+    const auth = useAuth()
+    const localToken = localStorage.getItem(AuthStorageKeyEnum.AUTH_TOKEN);
     useEffect(() => {
-        if (loaded) {
-            setLocalStorageToken()
-        } else {
-            loadLocalStorageToken()
+        console.log("useLoadLocalStorageToken", { loaded, localToken, token, load: (!loaded && localToken && token !== localToken) });
+        if (!loaded && localToken && token !== localToken) {
+            auth(localToken);
         }
-    }, [loaded, setLocalStorageToken, loadLocalStorageToken])
+    }, [auth, loaded, localToken, token])
 
     return (
         <>

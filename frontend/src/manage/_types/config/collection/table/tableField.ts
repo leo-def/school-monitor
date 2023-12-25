@@ -1,4 +1,4 @@
-import { ComponentType, ReactElement } from "react";
+import { ComponentType } from "react";
 import { ColumnDisplayProps } from "@/manage/_types/props/columnDisplayProps";
 import { ColumnTitleDisplayProps } from "@/manage/_types/props/columnTitleDisplayProps";
 

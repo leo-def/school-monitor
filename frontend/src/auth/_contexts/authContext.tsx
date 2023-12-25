@@ -1,5 +1,5 @@
-import { createContext } from "react";;
-import { AppReducerContext } from "@/shared/_types/appReducerContext";
+import { createContext } from "react";
+import { AppReducerContext } from "@/commons/_types/appReducerContext";
 import { AuthState } from "../_types/authState";
 import { AuthAction } from "../_types/authAction";
 import { initialState } from "../_constants/initialState";

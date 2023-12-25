@@ -4,7 +4,8 @@ import { CardGridItem } from "./cardGridItem"
 
 export function CardGrid() {
     const {
-        state: { fetchResult: { items } }
+        state: { fetchResult }
     } = useGetManageContextValue<any>()
-    return (<Grid container>{items.map((item, index) => <CardGridItem key={JSON.stringify(item)} item={item} />)}</Grid>)
+    const items = fetchResult?.items ?? []
+    return (<Grid container>{items.map((item: any) => <CardGridItem key={JSON.stringify(item)} item={item} />)}</Grid>)
 }

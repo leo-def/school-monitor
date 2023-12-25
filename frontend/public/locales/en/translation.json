@@ -58,5 +58,11 @@
             "Term": "Term",
             "No Options": "No Options"
         }
+    },
+    "sidebar": {
+        "accountSidebar": {
+            "Companies": "Companies",
+            "Accounts": "Accounts"
+        }
     }
 }

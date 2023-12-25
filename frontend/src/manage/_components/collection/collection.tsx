@@ -1,10 +1,10 @@
-import { Table } from "@mui/material"
 import React, { useEffect } from "react"
+import { useSetManageFetchResult } from "@/manage/_hooks/useSetManageFetchResult"
 import { CollectionViewEnum } from "../../_enums/collectionView.enum"
 import { useGetManageContextValue } from "../../_hooks/useGetManageContextValue"
+import { Table } from "./table/table"
 import { CardGrid } from "./grid/cardGrid"
 import { CollectionHeader } from "./collectionHeader"
-import { useSetManageFetchResult } from "@/manage/_hooks/useSetManageFetchResult"
 
 export function Collection() {
     const {

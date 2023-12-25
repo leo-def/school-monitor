@@ -1,4 +1,4 @@
 import { AuthPayload } from "./authPayload";
-import { LoadAuthPayload } from "./loadAuthPayload";
+import { LogoutPayload } from "./logoutPayload";
 
-export type AuthActionPayload = AuthPayload | LoadAuthPayload;
+export type AuthActionPayload = AuthPayload | LogoutPayload;

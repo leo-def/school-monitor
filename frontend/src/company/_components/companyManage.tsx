@@ -20,7 +20,11 @@ import { CompanyDto } from "../_types/company.dto";
 import { DefaultColumnDisplay } from "./defaultColumnDisplay";
 import { DefaultColumnTitleDisplay } from "./defaultColumnTitleDisplay";
 
-export function CompanyGridItemDisplay({ item }: GridItemDisplayProps<CompanyDto>) {
+export interface CompanyGridItemDisplayProps extends GridItemDisplayProps<CompanyDto> {
+    readonly item: CompanyDto;
+}
+
+export function CompanyGridItemDisplay({ item }: CompanyGridItemDisplayProps) {
     return (<Typography sx={{ fontSize: 14, fontWeight: 600 }} color="text.secondary">
         {item.title}
     </Typography>)
@@ -31,13 +35,19 @@ export interface CompanyFormInputs {
     id?: string
     title: string
 }
+export interface CompanyFormDisplayProps extends FormDisplayProps<CompanyDto> {
+    readonly values?: CompanyDto;
+    readonly disabled?: boolean;
+    readonly onSubmit?: (param: CompanyDto) => Promise<CompanyDto>;
+    readonly id: string;
+}
 
 export function CompanyFormDisplay({
     values,
     disabled,
     onSubmit,
     id,
-}: FormDisplayProps<CompanyDto>) {
+}: CompanyFormDisplayProps) {
     const schema = yup.object().shape({
         id: yup.string()
             .optional(),
@@ -102,6 +112,7 @@ export function CompanyManage() {
         return apiFetch('company/fetch', { method: 'POST', body: JSON.stringify(params) })
             .then(async (response) => {
                 const data = await response.json()
+                console.log('CompanyManage.onFetch', data)
                 return ({
                     items: (data?.data ?? []) as Array<CompanyDto>,
                     params

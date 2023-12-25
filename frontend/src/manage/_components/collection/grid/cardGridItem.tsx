@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Card, CardContent, Grid } from "@mui/material";
 import React from "react";
 import { useGetManageContextValue } from "../../../_hooks/useGetManageContextValue";
 
@@ -6,14 +6,15 @@ export interface CardGridItemProps { readonly item: any }
 export function CardGridItem({ item }: CardGridItemProps) {
     const {
         config: {
-            collection: { grid: { itemDisplay } }
+            collection: { grid }
         }
     } = useGetManageContextValue()
-    const itemDisplayWithProps = React.Children.map(itemDisplay, child => {
-        if (React.isValidElement(child)) {
-            return React.cloneElement(child, { item } as any);
-        }
-        return child;
-    });
-    return (<Grid item>{itemDisplayWithProps}</Grid>)
+    const { ItemDisplay } = grid
+    return (<Grid item>
+        <Card>
+            <CardContent>
+                {ItemDisplay ? <ItemDisplay item={item} /> : undefined}
+            </CardContent>
+        </Card>
+    </Grid>)
 }

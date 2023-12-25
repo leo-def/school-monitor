@@ -26,8 +26,10 @@ export function useApiFetch(): (
       mode: "cors",
       headers,
     });
+
     if (response.status === 401) {
-      router.replace("logout");
+      console.log("router.replace(logout)");
+      router.push("logout");
     }
     return response;
   };
