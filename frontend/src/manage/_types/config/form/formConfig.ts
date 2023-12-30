@@ -6,7 +6,7 @@ export interface FormConfig<T> {
   id: string;
   map?: (param: T) => Promise<T>;
   Display: ComponentType<FormDisplayProps<T>> | undefined;
-  submit?: (item: T) => Promise<T | undefined>;
+  onSubmit?: (item: T) => Promise<T | undefined>;
   disabled?: boolean;
   actionOnSubmit?: ActionEnum;
 }

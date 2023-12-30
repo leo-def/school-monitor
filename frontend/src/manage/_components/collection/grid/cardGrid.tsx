@@ -7,5 +7,5 @@ export function CardGrid() {
         state: { fetchResult }
     } = useGetManageContextValue<any>()
     const items = fetchResult?.items ?? []
-    return (<Grid container>{items.map((item: any) => <CardGridItem key={JSON.stringify(item)} item={item} />)}</Grid>)
+    return (<Grid container spacing={2}>{items.map((item: any, index: number) => <CardGridItem key={JSON.stringify(item)} item={item} index={index} />)}</Grid>)
 }

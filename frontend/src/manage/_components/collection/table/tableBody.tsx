@@ -9,6 +9,6 @@ export function TableBody() {
     } = useGetManageContextValue<any>()
     const items = fetchResult?.items ?? []
     return (<MuiTableBody>
-        {items.map((item: any) => <TableRow key={JSON.stringify(item)} item={item} />)}
+        {items.map((item: any, index: number) => <TableRow key={JSON.stringify(item)} item={item} index={index} />)}
     </MuiTableBody>)
 }

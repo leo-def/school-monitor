@@ -38,6 +38,8 @@ export function Autocomplete<T>({
     const [items, setItems] = useState(undefined as Array<T> | undefined)
     const [fetchParam, setFetchParam] = useState(undefined as any)
     const [loading, setLoading] = useState(false as boolean)
+    const [initialFetch, setInitialFetch] = useState(false)
+
     const debounce = useDebounce()
 
     const fetch = useCallback((title?: string, params?: any) => {
@@ -49,7 +51,7 @@ export function Autocomplete<T>({
                 if (data.error) {
                     onApiFetchError(undefined, data.error)
                 } else {
-                    setItems(data.data)
+                    setItems(data.data.items)
                 }
             })
             .catch((err: Error) => {
@@ -57,6 +59,7 @@ export function Autocomplete<T>({
             })
             .finally(() => {
                 setLoading(false)
+                setInitialFetch(true)
             })
     }, [apiFetch, onApiFetchError])
 
@@ -79,10 +82,10 @@ export function Autocomplete<T>({
 
     // Initial fetch
     useEffect(() => {
-        if (!items) {
+        if (!initialFetch) {
             fetch(inputText, params)
         }
-    }, [fetch, inputText, debounce, value, params, items])
+    }, [fetch, inputText, debounce, value, params, items, initialFetch])
 
     // Fetch on input or params change
     useEffect(() => {

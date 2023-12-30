@@ -50,7 +50,7 @@ export function BranchAutocomplete({ label, size, companyBranch, companyId, opti
                 if (data.error) {
                     addMessage({ title: data.error, severity: MessageSeverityEnum.ERROR })
                 } else {
-                    setBranchs(data.data)
+                    setBranchs(data.data.items)
                 }
             })
             .catch((err) => {

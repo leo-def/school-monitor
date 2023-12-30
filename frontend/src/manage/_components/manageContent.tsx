@@ -9,12 +9,12 @@ import { FormCard } from "./form/formCard"
 
 export function ManageContent() {
     const {
-        state: { action }
+        state: { action, selected }
     } = useGetManageContextValue<any>()
     const showCollection = (action === ActionEnum.COLLECTION)
     const showForm = (action === ActionEnum.EDIT || action === ActionEnum.CREATE || action === ActionEnum.SHOW)
     return (<React.Fragment>
         {showCollection ? <Collection /> : undefined}
-        {<Modal open={showForm}><FormCard /></Modal>}
+        {<Modal open={showForm}><FormCard values={selected} /></Modal>}
     </React.Fragment>)
 }

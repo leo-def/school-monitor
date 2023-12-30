@@ -5,14 +5,16 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CompanyPaginationParamsDto } from './_types/company-pagination-params.dto';
 import { UpdateCompanyRequestDto } from './_types/update-company-request.dto';
 import { CreateCompanyRequestDto } from './_types/create-company-request.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class CompanyService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async fetch(params: CompanyPaginationParamsDto): Promise<Array<Company>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.company.findMany(query);
+  async fetch(
+    params: CompanyPaginationParamsDto,
+  ): Promise<PaginationResponse<Company, CompanyPaginationParamsDto>> {
+    return await Pagination.fetch(this.prisma, 'company', params);
   }
 
   async find(id: string): Promise<Company> {

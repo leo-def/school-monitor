@@ -4,10 +4,10 @@ import { ManageStatusActionEnum } from "../_enums/manageStatusAction.enum";
 import { FetchParams } from "../_types/status/params/fetchParams";
 
 export function useUpdateManageFetchParams(): (
-  fetchParams: FetchParams
+  fetchParams: Partial<FetchParams>
 ) => void {
   const { dispatch } = useContext(ManageContext);
-  return (fetchParams: FetchParams) => {
+  return (fetchParams: Partial<FetchParams>) => {
     if (dispatch) {
       dispatch({
         type: ManageStatusActionEnum.UPDATE_FETCH_PARAMS,

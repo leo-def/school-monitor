@@ -5,14 +5,16 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { BranchPaginationParamsDto } from './_types/branch-pagination-params.dto';
 import { UpdateBranchRequestDto } from './_types/update-branch-request.dto';
 import { CreateBranchRequestDto } from './_types/create-branch-request.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class BranchService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async fetch(params: BranchPaginationParamsDto): Promise<Array<Branch>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.branch.findMany(query);
+  async fetch(
+    params: BranchPaginationParamsDto,
+  ): Promise<PaginationResponse<Branch, BranchPaginationParamsDto>> {
+    return Pagination.fetch(this.prisma, 'branch', params);
   }
 
   async find(id: string): Promise<Branch> {

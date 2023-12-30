@@ -19,7 +19,9 @@ import { useApiFetch } from "@/commons/api/_hooks/useApiFetch";
 import { CompanyDto } from "../_types/company.dto";
 import { DefaultColumnDisplay } from "./defaultColumnDisplay";
 import { DefaultColumnTitleDisplay } from "./defaultColumnTitleDisplay";
+import { FilterDisplayProps } from "@/manage/_types/props/filterDisplayProps";
 
+// CompanyGridItemDisplay
 export interface CompanyGridItemDisplayProps extends GridItemDisplayProps<CompanyDto> {
     readonly item: CompanyDto;
 }
@@ -30,7 +32,7 @@ export function CompanyGridItemDisplay({ item }: CompanyGridItemDisplayProps) {
     </Typography>)
 }
 
-
+// CompanyFormDisplay
 export interface CompanyFormInputs {
     id?: string
     title: string
@@ -44,7 +46,7 @@ export interface CompanyFormDisplayProps extends FormDisplayProps<CompanyDto> {
 
 export function CompanyFormDisplay({
     values,
-    disabled,
+    disabled,W
     onSubmit,
     id,
 }: CompanyFormDisplayProps) {
@@ -54,12 +56,12 @@ export function CompanyFormDisplay({
         title: yup.string()
             .required("Title is required")
     })
-
     const defaultValues = useMemo(() => ({
         id: values?.id ?? '',
         title: values?.title ?? ''
     } as CompanyFormInputs), [values])
 
+    console.log('CompanyFormDisplay', { values, defaultValues })
     const { register, handleSubmit } = useForm<CompanyFormInputs>({
         defaultValues,
         resolver: yupResolver<CompanyFormInputs>(schema),
@@ -75,8 +77,9 @@ export function CompanyFormDisplay({
                 {...register('id')} />
 
             <Grid container alignItems="center" spacing={2} >
-                <Grid item xs={12} lg={4} >
+                <Grid item xs={12} >
                     <TextField
+                        fullWidth
                         label="Title"// i18n
                         variant="standard"
                         disabled={disabled}
@@ -89,11 +92,24 @@ export function CompanyFormDisplay({
 }
 
 
+export function CompanyFilterDisplay({
+    id,
+    values,
+    onChange,
+    disabled,
+}: FilterDisplayProps) {
+    return (<React.Fragment></React.Fragment>)
+}
+
+export interface CompanyManageProps {
+    readonly disabled?: boolean
+}
 export function CompanyManage() {
     const { t } = useTranslation('translation', { keyPrefix: 'company.manage' });
     const apiFetch = useApiFetch()
 
-    const submit = useCallback((item: CompanyDto) => {
+    const onSubmit = useCallback((item: CompanyDto) => {
+        console.log('CompanyManage.onSubmit', { item })
         return ((item.id) ? apiFetch(`company/${item.id}`, { method: 'PUT', body: JSON.stringify(item) }) :
             apiFetch('company', { method: 'POST', body: JSON.stringify(item) })
         ).then(async (response) => {
@@ -103,6 +119,7 @@ export function CompanyManage() {
     }, [apiFetch])
 
     const onDelete = useCallback((item: CompanyDto) => {
+        console.log('CompanyManage.onDelete', { item })
         return apiFetch(`company/${item.id}`, { method: 'DELETE' }).then(() => {
             return
         })
@@ -112,10 +129,10 @@ export function CompanyManage() {
         return apiFetch('company/fetch', { method: 'POST', body: JSON.stringify(params) })
             .then(async (response) => {
                 const data = await response.json()
-                console.log('CompanyManage.onFetch', data)
                 return ({
-                    items: (data?.data ?? []) as Array<CompanyDto>,
-                    params
+                    items: (data?.data.items ?? []) as Array<CompanyDto>,
+                    params,
+                    count: data.count
                 })
             })
     }, [apiFetch])
@@ -135,11 +152,17 @@ export function CompanyManage() {
                             Display: DefaultColumnDisplay<CompanyDto>,
                         } as TableField<CompanyDto>
                     ]
-                } as TableConfig<CompanyDto>
+                } as TableConfig<CompanyDto>,
+                filter: {
+                    id: 'company-filter-form',
+                    map?: (param: FetchParams) => param,
+                    disabled,
+                    Display: ComponentType<FilterDisplayProps> | undefined;
+                }
             } as CollectionConfig<CompanyDto>,
             form: {
                 id: 'company-form',
-                submit,
+                onSubmit,
                 Display: CompanyFormDisplay,
             } as FormConfig<CompanyDto>,
             actions: {
@@ -147,7 +170,7 @@ export function CompanyManage() {
                 onFetch
             } as Actions<CompanyDto>
         } as ManageConfig<CompanyDto>
-    }, [onDelete, onFetch, submit, t])
+    }, [onDelete, onFetch, onSubmit, t])
 
     return (<Manage config={config} />)
 }

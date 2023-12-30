@@ -43,7 +43,7 @@ export function CompanyAutocomplete({ label, size, options, disabled, onChange, 
                 if (data.error) {
                     addMessage({ title: data.error, severity: MessageSeverityEnum.ERROR })
                 } else {
-                    setCompanies(data.data)
+                    setCompanies(data.data.items)
                 }
             })
             .catch((err) => {

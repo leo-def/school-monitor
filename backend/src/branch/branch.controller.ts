@@ -16,6 +16,7 @@ import { BranchArrayResponseDto } from './_types/branch-array-response.dto';
 import { BranchResponseDto } from './_types/branch-response.dto';
 import { UpdateBranchRequestDto } from './_types/update-branch-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @ApiTags('School Monitor | Branch')
 @Controller('branch')
@@ -37,9 +38,12 @@ export class BranchController {
   @Post('fetch')
   async fetch(
     @Body() params: BranchPaginationParamsDto,
-  ): Promise<Array<BranchDto>> {
+  ): Promise<PaginationResponse<BranchDto, BranchPaginationParamsDto>> {
     const response = await this.service.fetch(params);
-    return plainToInstance(BranchDto, response);
+    return plainToInstance(
+      PaginationResponse<BranchDto, BranchPaginationParamsDto>,
+      response,
+    );
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

@@ -5,8 +5,9 @@ import { TableCell } from "@mui/material";
 export interface TableColumnProps<T> {
     readonly column: TableField<T>
     readonly item: any
+    readonly index: number
 }
-export function TableColumn<T>({ item, column }: TableColumnProps<T>) {
+export function TableColumn<T>({ item, column, index }: TableColumnProps<T>) {
     const { Display } = column
-    return (<TableCell>{Display ? <Display item={item} column={column} /> : undefined}</TableCell>)
+    return (<TableCell>{Display ? <Display index={index} item={item} column={column} /> : undefined}</TableCell>)
 }

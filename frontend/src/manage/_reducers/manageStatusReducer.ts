@@ -23,7 +23,9 @@ export function manageStatusReducer<T>(
     case ManageStatusActionEnum.SET_ACTION:
       return {
         ...state,
-        action: (action.payload as ManageStatusSetActionsPayload).action,
+        action: (action.payload as ManageStatusSetActionsPayload<T>).action,
+        selected: (action.payload as ManageStatusSetActionsPayload<T>).selected,
+        fetchParams: { ...(state.fetchParams ?? {}) },
       };
     case ManageStatusActionEnum.UPDATE_FETCH_PARAMS:
       return {

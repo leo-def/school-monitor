@@ -16,6 +16,7 @@ import { CompanyArrayResponseDto } from './_types/company-array-response.dto';
 import { UpdateCompanyRequestDto } from './_types/update-company-request.dto';
 import { CompanyResponseDto } from './_types/company-response.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @ApiTags('School Monitor | Company')
 @Controller('company')
@@ -37,9 +38,12 @@ export class CompanyController {
   @Post('fetch')
   async fetch(
     @Body() params: CompanyPaginationParamsDto,
-  ): Promise<Array<CompanyDto>> {
+  ): Promise<PaginationResponse<CompanyDto, CompanyPaginationParamsDto>> {
     const response = await this.service.fetch(params);
-    return plainToInstance(CompanyDto, response);
+    return plainToInstance(
+      PaginationResponse<CompanyDto, CompanyPaginationParamsDto>,
+      response,
+    );
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

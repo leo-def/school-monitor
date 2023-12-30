@@ -1,3 +1,4 @@
+import { PrismaClient } from '@prisma/client';
 import { PaginationParams, PaginationParamsField } from '../_types/params';
 import { PaginationQuery } from '../_types/query';
 import { PaginationResponse } from '../_types/response';
@@ -34,13 +35,34 @@ export class Pagination {
     };
   }
 
+  public static fetch<
+    TData,
+    TParams extends PaginationParams<PaginationParamsField>,
+  >(
+    prisma: PrismaClient,
+    repository: string,
+    params: TParams,
+  ): Promise<PaginationResponse<TData, TParams>> {
+    const query: PaginationQuery = Pagination.paramsToQuery(params, undefined);
+    return prisma.$transaction(async (tx) => {
+      const count = await tx[repository].count({ where: query.where });
+      const items = await tx[repository].findMany(query);
+      return Pagination.dataToResponse(items, params, count);
+    });
+  }
+
   public static dataToResponse<
     TData,
     TParams extends PaginationParams<PaginationParamsField>,
-  >(items: Array<TData>, params: TParams): PaginationResponse<TData, TParams> {
+  >(
+    items: Array<TData>,
+    params: TParams,
+    count?: number,
+  ): PaginationResponse<TData, TParams> {
     return {
       items,
       params,
+      count,
     } as PaginationResponse<TData, TParams>;
   }
 

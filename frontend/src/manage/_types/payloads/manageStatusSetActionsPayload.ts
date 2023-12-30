@@ -1,5 +1,6 @@
 import { ActionEnum } from "@/manage/_enums/action.enum";
 
-export interface ManageStatusSetActionsPayload {
+export interface ManageStatusSetActionsPayload<T> {
   action: ActionEnum;
+  selected?: T;
 }
