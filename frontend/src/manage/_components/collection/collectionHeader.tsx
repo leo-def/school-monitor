@@ -47,7 +47,7 @@ export function CollectionHeader() {
     }, [updateManageFetchParams])
 
     const pageOptions = filter.pageOptions ?? [5, 10, 20, 50, 100]
-
+    const pageInputLabel = filter.pageInputLabel ?? "Page"
     return (
         <Grid container>
             <Grid container item xs={12}>
@@ -63,13 +63,13 @@ export function CollectionHeader() {
                 </Grid>
                 <Grid item >
                     <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Page</InputLabel>
+                        <InputLabel id="demo-simple-select-label">{pageInputLabel}</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={String(limit)}
                             disabled={disabled}
-                            label="Page"
+                            label={pageInputLabel}
                             onChange={handleOnLimitChange}
                         >
                             {pageOptions.map((page: number) => <MenuItem key={page} value={page}>{page}</MenuItem>)}

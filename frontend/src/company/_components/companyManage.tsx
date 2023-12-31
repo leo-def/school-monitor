@@ -160,7 +160,8 @@ export function CompanyManage({disabled}: CompanyManageProps ) {
                     id: 'company-filter-form',
                     map: filterMap,
                     disabled,
-                    Display: CompanyFilterDisplay
+                    Display: CompanyFilterDisplay,
+                    pageInputLabel: t('Page')
                     
                 }
             } as CollectionConfig<CompanyDto>,

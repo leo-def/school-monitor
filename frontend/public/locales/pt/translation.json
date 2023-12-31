@@ -27,7 +27,8 @@
             "No Options": "Sem opções"
         },
         "manage": {
-            "Title": "Titulo"
+            "Title": "Titulo",
+            "Page": "Página"
         }
     },
     "schoolClass": {

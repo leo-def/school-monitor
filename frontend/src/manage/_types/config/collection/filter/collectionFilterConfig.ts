@@ -8,4 +8,5 @@ export interface CollectionFilterConfig {
   disabled?: boolean;
   Display: ComponentType<FilterDisplayProps> | undefined;
   pageOptions?: Array<number>;
+  pageInputLabel?: string
 }
