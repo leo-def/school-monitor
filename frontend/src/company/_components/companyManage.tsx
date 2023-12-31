@@ -46,7 +46,7 @@ export interface CompanyFormDisplayProps extends FormDisplayProps<CompanyDto> {
 
 export function CompanyFormDisplay({
     values,
-    disabled,W
+    disabled,
     onSubmit,
     id,
 }: CompanyFormDisplayProps) {
@@ -104,7 +104,7 @@ export function CompanyFilterDisplay({
 export interface CompanyManageProps {
     readonly disabled?: boolean
 }
-export function CompanyManage() {
+export function CompanyManage({disabled}: CompanyManageProps ) {
     const { t } = useTranslation('translation', { keyPrefix: 'company.manage' });
     const apiFetch = useApiFetch()
 
@@ -137,8 +137,11 @@ export function CompanyManage() {
             })
     }, [apiFetch])
 
+    const filterMap = useCallback(async (param: FetchParams) => param, [])
+
     const config = useMemo(() => {
         return {
+            disabled,
             collection: {
                 grid: {
                     ItemDisplay: CompanyGridItemDisplay,
@@ -155,22 +158,24 @@ export function CompanyManage() {
                 } as TableConfig<CompanyDto>,
                 filter: {
                     id: 'company-filter-form',
-                    map?: (param: FetchParams) => param,
+                    map: filterMap,
                     disabled,
-                    Display: ComponentType<FilterDisplayProps> | undefined;
+                    Display: CompanyFilterDisplay
+                    
                 }
             } as CollectionConfig<CompanyDto>,
             form: {
                 id: 'company-form',
                 onSubmit,
                 Display: CompanyFormDisplay,
+                disabled
             } as FormConfig<CompanyDto>,
             actions: {
                 onDelete,
                 onFetch
             } as Actions<CompanyDto>
         } as ManageConfig<CompanyDto>
-    }, [onDelete, onFetch, onSubmit, t])
+    }, [disabled, filterMap, onDelete, onFetch, onSubmit, t])
 
     return (<Manage config={config} />)
 }
