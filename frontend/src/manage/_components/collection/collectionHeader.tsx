@@ -46,7 +46,7 @@ export function CollectionHeader() {
         updateManageFetchParams({ limit } as Partial<FetchParams>)
     }, [updateManageFetchParams])
 
-    const pageOptions = [5, 10, 20, 50, 100]
+    const pageOptions = filter.pageOptions ?? [5, 10, 20, 50, 100]
 
     return (
         <Grid container>
@@ -72,7 +72,7 @@ export function CollectionHeader() {
                             label="Page"
                             onChange={handleOnLimitChange}
                         >
-                            {pageOptions.map(page => <MenuItem key={page} value={page}>page</MenuItem>)}
+                            {pageOptions.map((page: number) => <MenuItem key={page} value={page}>{page}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -105,8 +105,8 @@ export function CollectionHeader() {
                 <Grid></Grid>
             </Grid>
 
-            <Grid container item xs={12}>
-                <Accordion disabled>
+            <Grid item xs={12}>
+                <Accordion>
                     <AccordionSummary
                         expandIcon={
                             <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>

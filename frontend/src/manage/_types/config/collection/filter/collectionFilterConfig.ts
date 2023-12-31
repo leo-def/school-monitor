@@ -7,4 +7,5 @@ export interface CollectionFilterConfig {
   map?: (param: FetchParams) => Promise<any>;
   disabled?: boolean;
   Display: ComponentType<FilterDisplayProps> | undefined;
+  pageOptions?: Array<number>;
 }
