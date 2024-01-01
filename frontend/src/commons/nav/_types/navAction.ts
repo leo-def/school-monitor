@@ -1,4 +1,4 @@
-import { AppAction } from "@/shared/_types/appAction";
+import { AppAction } from "@/commons/_types/appAction";
 import { NavItem } from "./navItem";
 import { NavActionTypeEnum } from "../_enums/navActionType.enum";
 

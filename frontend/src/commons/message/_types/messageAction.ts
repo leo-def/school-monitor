@@ -1,4 +1,4 @@
-import { AppAction } from "@/shared/_types/appAction";
+import { AppAction } from "@/commons/_types/appAction";
 import { MessageActionTypeEnum } from "../_enums/messageActionType.enum";
 import { MessageActionPayload } from "./messageActionPayload";
 export interface MessageAction
