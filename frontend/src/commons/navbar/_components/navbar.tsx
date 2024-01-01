@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import React, { useCallback } from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
-import Link from 'next/link';
+import React, { useCallback } from "react";
+import { Box, IconButton, Typography } from "@mui/material";
+import Link from "next/link";
 import {
     Menu as MenuIcon
-} from '@mui/icons-material';
-import { MobileSessionMenu } from '@/session/_components/mobileSessionMenu';
-import { MobileSessionNavbar } from '@/session/_components/mobileSessionNavbar';
-import { WebSessionNavbar } from '@/session/_components/webSessionNavbar';
-import { MobileProtectedNavbarMenu } from './mobile/mobileProtectedNavbarMenu';
-import { MobileProtectedNavbarOptions } from './mobile/mobileProtectedNavbarOptions';
-import { WebProtectedNavbarOptions } from './web/webProtectedNavbarOptions';
-import { WebProfileNavbarMenu } from './web/webProfileNavbarMenu';
-import { NavbarWrapper } from './navbarWrapper';
-import { useToggleSidebarOpen } from '@/commons/sidebar/_hooks/useToggleSidebarOpen';
+} from "@mui/icons-material";
+import { useToggleSidebarOpen } from "@/commons/sidebar/_hooks/useToggleSidebarOpen";
+import { MobileSessionMenu } from "@/session/_components/mobileSessionMenu";
+import { MobileSessionNavbar } from "@/session/_components/mobileSessionNavbar";
+import { WebSessionNavbar } from "@/session/_components/webSessionNavbar";
+import { MobileProtectedNavbarMenu } from "./mobile/mobileProtectedNavbarMenu";
+import { MobileProtectedNavbarOptions } from "./mobile/mobileProtectedNavbarOptions";
+import { WebProtectedNavbarOptions } from "./web/webProtectedNavbarOptions";
+import { WebProfileNavbarMenu } from "./web/webProfileNavbarMenu";
+import { NavbarWrapper } from "./navbarWrapper";
 
 
 export function Navbar() {

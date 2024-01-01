@@ -1,6 +1,6 @@
 import React from "react";
-import { TableField } from "../../../_types/config/collection/table/tableField";
 import { TableCell } from "@mui/material";
+import { TableField } from "@/manage/_types/config/collection/table/tableField";
 
 
 export interface TableHeaderColumnProps<T> {

@@ -1,10 +1,9 @@
-'use client'
+"use client";
 
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { SchoolSubjectDto } from "../_types/schoolSubject.dto";
 import { SessionEntityAutocomplete, SessionEntityAutocompleteProps } from "@/session/_components/sessionEntityAutocomplete";
-
+import { SchoolSubjectDto } from "../_types/schoolSubject.dto";
 export interface SchoolSubjectAutocompleteProps extends Pick<
     SessionEntityAutocompleteProps<SchoolSubjectDto>,
     'disabled' |

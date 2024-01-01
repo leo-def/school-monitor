@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { PropsWithChildren, useReducer, useMemo } from "react";
 import { SchoolSectionContext } from "../_contexts/schoolSectionContext";

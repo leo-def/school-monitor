@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState } from "react"
 import * as yup from "yup";
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
-import { Button } from '@mui/base'
-import { Grid, Card, CardContent, Typography, TextField, CardActions } from '@mui/material'
-import { useApiFetch } from '@/commons/api/_hooks/useApiFetch'
-import { MessageSeverityEnum } from '@/commons/message/_enums/messageSeverity.enum'
-import { useAddMessage } from '@/commons/message/_hooks/useAddMessage'
-import { ForgotPasswordParamTypeEnum } from './_enums/forgotPasswordParamType.enum'
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useRouter } from "next/navigation"
+import { Button } from "@mui/base"
+import { Grid, Card, CardContent, Typography, TextField, CardActions } from "@mui/material"
+import { useApiFetch } from "@/commons/api/_hooks/useApiFetch"
+import { MessageSeverityEnum } from "@/commons/message/_enums/messageSeverity.enum"
+import { useAddMessage } from "@/commons/message/_hooks/useAddMessage"
+import { ForgotPasswordParamTypeEnum } from "./_enums/forgotPasswordParamType.enum"
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type ForgotPasswordFormInputs = {
     phone?: string

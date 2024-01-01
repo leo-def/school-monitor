@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Alert, AlertTitle, Snackbar } from "@mui/material"
 import { useGetMessages } from "../_hooks/useGetMessages"

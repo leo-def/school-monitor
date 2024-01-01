@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
 import { PropsWithChildren, useMemo, useReducer } from "react";
-import { CalendarModalContext, initialCalendarModalStateValue, } from "../../_context/calendarModalContext";
 import { calendarModalReducer } from "@/calendar/_reducers/calendarModalReducer";
+import { CalendarModalContext, initialCalendarModalStateValue, } from "@/calendar/_context/calendarModalContext";
 
 export const CalendarModalProvider = ({ children }: PropsWithChildren) => {
     const [state, dispatch] = useReducer(calendarModalReducer, initialCalendarModalStateValue);

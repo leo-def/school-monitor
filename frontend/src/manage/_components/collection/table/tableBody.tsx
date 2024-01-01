@@ -1,7 +1,7 @@
 import React from "react";
 import { TableBody as MuiTableBody } from "@mui/material"
+import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue";
 import { TableRow } from "./tableRow";
-import { useGetManageContextValue } from "../../../_hooks/useGetManageContextValue";
 
 export function TableBody() {
     const {

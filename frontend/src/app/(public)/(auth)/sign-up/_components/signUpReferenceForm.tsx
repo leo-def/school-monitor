@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
 import React, { useCallback } from "react";
 import { SubmitHandler, useForm, get } from "react-hook-form";
 import * as yup from "yup";
 import { TextField, Grid } from "@mui/material";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 

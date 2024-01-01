@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -6,11 +6,11 @@ import { Box, LinearProgress, Tab } from "@mui/material";
 import { useApiFetch } from "@/commons/api/_hooks/useApiFetch";
 import { MessageSeverityEnum } from "@/commons/message/_enums/messageSeverity.enum";
 import { useAddMessage } from "@/commons/message/_hooks/useAddMessage";
-import { SchoolSectionParams, compareSchoolSectionParams, isSchoolSectionParamsComplete } from "../_types/schoolSectionParams";
 import { useGetSchoolSectionParams } from "../_hooks/useGetSchoolSectionParams";
 import { useSetSchoolSections } from "../_hooks/useSetSchoolSection";
 import { TabBar } from "@/commons/_components/nav/tabBar";
 import { TabPanel } from "@/commons/_components/nav/tabPanel";
+import { SchoolSectionParams, compareSchoolSectionParams, isSchoolSectionParamsComplete } from "../_types/schoolSectionParams";
 
 
 export function SchoolSectionTabs() {

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { PropsWithChildren, useEffect, useContext } from "react";
 import { AuthContext } from "../_contexts/authContext";

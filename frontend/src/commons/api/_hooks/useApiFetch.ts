@@ -1,6 +1,8 @@
-import { useGetAuthToken } from "@/auth/_hooks/useGetAuthToken";
-import { useRouter } from "next/navigation";
+"use client";
+
 import { useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useGetAuthToken } from "@/auth/_hooks/useGetAuthToken";
 
 export function useApiFetch(): (
   input: RequestInfo | URL,

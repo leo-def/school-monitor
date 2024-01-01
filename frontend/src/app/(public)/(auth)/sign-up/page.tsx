@@ -1,6 +1,8 @@
-'use client'
+"use client";
 
 import React, { useCallback, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Card, CardContent, Typography, CardActions, Stepper, Step, StepContent, StepLabel, Button, Grid } from "@mui/material";
 import { SignUpAccountTypeForm, SignUpAccountTypeInputs } from "./_components/signUpAccountTypeForm";
 import { SignUpAuthForm, SignUpAuthInputs } from "./_components/signUpAuthForm";
@@ -8,9 +10,7 @@ import { SignUpProfileForm, SignUpProfileInputs } from "./_components/signUpProf
 import { SignUpReferenceForm, SignUpReferenceInputs } from "./_components/signUpReferenceForm";
 import { useApiFetch } from "@/commons/api/_hooks/useApiFetch";
 import { useAddMessage } from "@/commons/message/_hooks/useAddMessage";
-import { useRouter } from "next/navigation";
 import { MessageSeverityEnum } from "@/commons/message/_enums/messageSeverity.enum";
-import Link from "next/link";
 
 export interface SignUpFormInputs {
     accountType?: SignUpAccountTypeInputs

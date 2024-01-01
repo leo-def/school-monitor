@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
 import React, { useState, useCallback, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { Autocomplete, AutocompleteInputChangeReason, CircularProgress, TextField } from "@mui/material";
 import { useApiFetch } from "@/commons/api/_hooks/useApiFetch";
 import { useAddMessage } from "@/commons/message/_hooks/useAddMessage";
 import { MessageSeverityEnum } from "@/commons/message/_enums/messageSeverity.enum";
-import { Autocomplete, AutocompleteInputChangeReason, CircularProgress, TextField } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { BranchDto } from "../_types/branch.dto";
 import { useDebounce } from "@/commons/_hooks/useDebounce";
+import { BranchDto } from "../_types/branch.dto";
 
 export interface BranchAutocompleteProps {
     readonly label?: string;

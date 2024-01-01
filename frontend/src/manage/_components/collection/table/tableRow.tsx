@@ -1,6 +1,6 @@
 import React from "react"
 import { TableRow as MuiTableRow, TableCell } from "@mui/material"
-import { useGetManageContextValue } from "../../../_hooks/useGetManageContextValue"
+import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue"
 import { TableColumn } from "./tableColumn"
 import { DefaultActionsColumnDisplay } from "./defaultActionsColumnDisplay"
 

@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import { createContext } from "react";;
-import { AppReducerContext } from "@/shared/_types/appReducerContext";
+import { AppReducerContext } from "@/commons/_types/appReducerContext";
 import { NavState } from "../_types/navState";
 import { NavAction } from "../_types/navAction";
 import { initialState } from "../_constants/initialState";

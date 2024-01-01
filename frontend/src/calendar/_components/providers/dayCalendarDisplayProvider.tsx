@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { PropsWithChildren, useMemo } from "react";
 import { DayCalendarDisplayContext, DayCalendarDisplayContextValue, initialDayCalendarDisplayContextValue } from "../../_context/dayCalendarDisplayContext";

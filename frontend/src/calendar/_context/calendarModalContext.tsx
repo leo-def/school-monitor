@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Dispatch, createContext } from "react";
 import { CalendarModal } from "../_types/calendarModal";

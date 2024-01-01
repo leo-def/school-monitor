@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
-import React, { useCallback, useEffect, useState } from 'react'
-import { Grid, Card, CardContent, Typography, CardActions } from '@mui/material';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { useApiFetch } from '@/commons/api/_hooks/useApiFetch'
-import { MessageSeverityEnum } from '@/commons/message/_enums/messageSeverity.enum'
-import { useAddMessage } from '@/commons/message/_hooks/useAddMessage'
+import React, { useCallback, useEffect, useState } from "react"
+import { Grid, Card, CardContent, Typography, CardActions } from "@mui/material";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useApiFetch } from "@/commons/api/_hooks/useApiFetch"
+import { MessageSeverityEnum } from "@/commons/message/_enums/messageSeverity.enum"
+import { useAddMessage } from "@/commons/message/_hooks/useAddMessage"
 
 
 export default function ConfirmAccountPage() {

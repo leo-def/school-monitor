@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import { PropsWithChildren } from "react";
-import { CalendarDateUtilsContext, CalendarDateUtilsContextValue } from "../../_context/calendarDateUtilsContext";
+import { CalendarDateUtilsContext, CalendarDateUtilsContextValue } from "@/calendar/_context/calendarDateUtilsContext";
 
 
 export type CalendarDateUtilsContextProviderProps = { defaultValues: CalendarDateUtilsContextValue } & PropsWithChildren;

@@ -1,3 +1,4 @@
+"use client";
 
 import React, { PropsWithChildren, useCallback, useContext, useEffect, useMemo } from "react"
 import { usePathname } from 'next/navigation'
@@ -12,7 +13,7 @@ export default function NavPageLoader({ children, item }: NavPageLoaderProps) {
     const pathName = usePathname()
     const { dispatch, state } = useContext(NavContext);
     const { items, index } = state
-    const currItem = useMemo(() => Object.values(items).find(val => val.index === item.index), [items, item])
+    const currItem = useMemo(() => Object.values(items).find((val: any) => val.index === item.index) as any, [items, item])
 
     const push = useCallback(
         (item: NavItem) => {

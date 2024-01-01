@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import { createContext } from "react";
-import { AppReducerContext } from "@/shared/_types/appReducerContext";
+import { AppReducerContext } from "@/commons/_types/appReducerContext";
 import { SidebarState } from "../_types/sidebarState";
 import { SidebarAction } from "../_types/sidebarAction";
 import { initialState } from "../_constants/initialState";

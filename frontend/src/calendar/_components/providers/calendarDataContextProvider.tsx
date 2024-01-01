@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import { PropsWithChildren, useMemo } from "react";
-import { CalendarDataContext, CalendarDataContextValue, initialCalendarDataContextValue, } from "../../_context/calendarDataContext";
+import { CalendarDataContext, CalendarDataContextValue, initialCalendarDataContextValue, } from "@/calendar/_context/calendarDataContext";
 
 export type CalendarDataContextProviderProps = { defaultValues: Partial<CalendarDataContextValue> } & PropsWithChildren;
 

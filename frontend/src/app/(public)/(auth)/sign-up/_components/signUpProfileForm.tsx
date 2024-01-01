@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 
 import React, { useCallback } from "react";
 import { SubmitHandler, useForm, get } from "react-hook-form";

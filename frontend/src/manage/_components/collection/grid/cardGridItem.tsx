@@ -5,9 +5,9 @@ import {
     Delete as DeleteIcon,
     OpenInFull as OpenInFullIcon,
 } from '@mui/icons-material';
-import { useGetManageContextValue } from "../../../_hooks/useGetManageContextValue";
 import { ActionEnum } from "@/manage/_enums/action.enum";
 import { useSetManageAction } from "@/manage/_hooks/useSetManageAction";
+import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue";
 
 export interface CardGridItemProps {
     readonly item: any;

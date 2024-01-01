@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import { Renders } from "../_types/renders";

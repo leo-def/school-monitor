@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import React, { useCallback } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation';
-import { Grid, Card, CardContent, Typography, CardActions, TextField, Button } from '@mui/material';
-import * as yup from "yup"; import { yupResolver } from '@hookform/resolvers/yup';
-import { SubmitHandler, get, useForm } from 'react-hook-form';
-import { useApiFetch } from '@/commons/api/_hooks/useApiFetch'
-import { MessageSeverityEnum } from '@/commons/message/_enums/messageSeverity.enum'
-import { useAddMessage } from '@/commons/message/_hooks/useAddMessage'
+import React, { useCallback } from "react"
+import { useSearchParams, useRouter } from "next/navigation";
+import { Grid, Card, CardContent, Typography, CardActions, TextField, Button } from "@mui/material";
+import * as yup from "yup"; import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, get, useForm } from "react-hook-form";
+import { useApiFetch } from "@/commons/api/_hooks/useApiFetch"
+import { MessageSeverityEnum } from "@/commons/message/_enums/messageSeverity.enum"
+import { useAddMessage } from "@/commons/message/_hooks/useAddMessage"
 
 
 export interface ResetPasswordInputs {

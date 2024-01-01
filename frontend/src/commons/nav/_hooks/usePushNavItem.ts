@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext } from "react";
 import { usePathname } from "next/navigation";
 import { NavActionTypeEnum } from "../_enums/navActionType.enum";

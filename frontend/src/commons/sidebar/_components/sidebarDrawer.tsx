@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import React, { PropsWithChildren, ReactNode, useCallback } from 'react';
-import { IconButton, Box, Drawer } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
-import { useSetSidebarOpen } from '@/commons/sidebar/_hooks/useSetSidebarOpen';
-import { useIsSidebarOpen } from '../_hooks/useIsSidebarOpen';
+import React, { PropsWithChildren, ReactNode, useCallback } from "react";
+import { IconButton, Box, Drawer } from "@mui/material";
+import { Menu as MenuIcon } from "@mui/icons-material";
+import { useSetSidebarOpen } from "@/commons/sidebar/_hooks/useSetSidebarOpen";
+import { useIsSidebarOpen } from "../_hooks/useIsSidebarOpen";
 
 export interface SidebarDrawer extends PropsWithChildren {
     readonly children: ReactNode | undefined

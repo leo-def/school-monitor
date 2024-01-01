@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import { Breadcrumbs, Typography } from "@mui/material";

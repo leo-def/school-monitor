@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { CalendarViewTypeEnum } from "../_enums/calendarViewType.enum";
 import { MonthCalendar } from "./monthCalendar";

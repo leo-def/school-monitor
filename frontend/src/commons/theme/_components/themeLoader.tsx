@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { PropsWithChildren, useContext, useEffect } from "react";
 import { ThemeStorageKeyEnum } from "../_enums/themeStorageKey.enum";
