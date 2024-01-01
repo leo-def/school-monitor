@@ -18,6 +18,11 @@ type SignInFormInputs = {
 }
 
 export default function SignInPage() {
+    const router = useRouter()
+    const apiFetch = useApiFetch()
+    const setAuth = useAuth()
+    const addMessage = useAddMessage()
+
     const defaultValues = {
         username: '',
         password: '',
@@ -32,11 +37,6 @@ export default function SignInPage() {
             .max(12, "Password cannot exceed more than 12 characters")
     });
 
-    const router = useRouter()
-    const apiFetch = useApiFetch()
-    const setAuth = useAuth()
-    const addMessage = useAddMessage()
-
     const signIn = useCallback((data: SignInFormInputs) => {
         apiFetch('auth/sign-in', { method: 'POST', body: JSON.stringify(data) })
             .then(async (response) => {
@@ -46,7 +46,7 @@ export default function SignInPage() {
                 } else {
                     setAuth(responseBody?.data?.token)
                     addMessage({ title: 'SignIn Success', severity: MessageSeverityEnum.SUCCESS })
-                    router.replace('/')
+                    router.push('/')
                 }
             })
     }, [apiFetch, addMessage, setAuth, router])

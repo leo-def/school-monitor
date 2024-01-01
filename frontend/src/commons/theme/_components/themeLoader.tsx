@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, useContext, useEffect } from "react";
+import { PropsWithChildren, useContext, useEffect, useState } from "react";
 import { ThemeStorageKeyEnum } from "../_enums/themeStorageKey.enum";
 import { ThemeContext } from "../_contexts/themeContext";
 import { ThemeActionTypeEnum } from "../_enums/themeActionType.enum";
@@ -9,10 +9,9 @@ import { LoadThemePayload } from "../_types/payloads/LoadThemePayload";
 export const ThemeLoader = ({ children }: PropsWithChildren) => {
     const { dispatch, state } = useContext(ThemeContext);
 
-
+    const [localTheme, setLocalTheme] = useState(null as string | null)
     // Load context value
     useEffect(() => {
-        const localTheme = localStorage.getItem(ThemeStorageKeyEnum.THEME);
         if (!state || !dispatch) {
             return;
         }
@@ -23,7 +22,7 @@ export const ThemeLoader = ({ children }: PropsWithChildren) => {
                 payload: { theme: localTheme } as LoadThemePayload,
             });
         }
-    }, [dispatch, state])
+    }, [dispatch, localTheme, state])
 
     // Load local storage value
     useEffect(() => {
@@ -31,12 +30,14 @@ export const ThemeLoader = ({ children }: PropsWithChildren) => {
             return;
         }
         const { loaded, theme } = state;
-        const localTheme = localStorage.getItem(ThemeStorageKeyEnum.THEME);
         if (loaded && theme && localTheme !== theme) {
             localStorage.setItem(ThemeStorageKeyEnum.THEME, JSON.stringify(theme));
         }
-    }, [dispatch, state])
+    }, [dispatch, localTheme, state])
 
+    useEffect(() => {
+        setLocalTheme(localStorage.getItem(ThemeStorageKeyEnum.THEME))
+    }, [setLocalTheme])
     return (
         <>
             {children}
