@@ -1,14 +1,14 @@
-import React, { useMemo, useCallback } from "react"
+import React, { useMemo, useCallback } from "react";
 import {
     Send as SendIcon,
     Delete as DeleteIcon,
     Close as CloseIcon,
 } from '@mui/icons-material';
-import { Box, Card, CardActions, CardContent, CardHeader, IconButton } from "@mui/material"
-import { useSetManageAction } from "@/manage/_hooks/useSetManageAction"
-import { FormConfig } from "@/manage/_types/config/form/formConfig"
-import { ActionEnum } from "../../_enums/action.enum"
-import { useGetManageContextValue } from "../../_hooks/useGetManageContextValue"
+import { Box, Card, CardActions, CardContent, CardHeader, IconButton } from "@mui/material";
+import { useSetManageAction } from "@/manage/_hooks/useSetManageAction";
+import { FormConfig } from "@/manage/_types/config/form/formConfig";
+import { ActionEnum } from "@/manage/_enums/action.enum";
+import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue";
 
 
 const style = {

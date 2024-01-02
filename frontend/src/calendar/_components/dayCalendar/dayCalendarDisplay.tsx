@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react'
-import { useGetCalendarDateUtils } from '@/calendar/_hooks/useGetCalendarDateUtils'
-import { HeaderDay } from '../../_types/headerDay'
-import { useGetCalendarData } from '../../_hooks/useGetCalendarData'
-import { DayCalendarDisplayContextProvider } from '../providers/dayCalendarDisplayProvider'
-import { Header } from './header'
-import { DayView } from './dayView'
-import { TimeView } from './timeView'
-import '../../_styles/dayCalendar.css'
-import { CalendarModalContainer } from '../modal/calendarModalContainer'
-import { CalendarModalProvider } from '../providers/calendarModalProvider'
+import React, { useMemo } from "react";
+import { useGetCalendarDateUtils } from "@/calendar/_hooks/useGetCalendarDateUtils";
+import { HeaderDay } from "@/calendar/_types/headerDay";
+import { useGetCalendarData } from "@/calendar/_hooks/useGetCalendarData";
+import { DayCalendarDisplayContextProvider } from "../providers/dayCalendarDisplayProvider";
+import { CalendarModalContainer } from "../modal/calendarModalContainer";
+import { CalendarModalProvider } from "../providers/calendarModalProvider";
+import { Header } from "./header";
+import { DayView } from "./dayView";
+import { TimeView } from "./timeView";
+import "@/calendar/_styles/dayCalendar.css";
 
 
 export function DayCalendarDisplay() {

@@ -1,8 +1,8 @@
-import React from 'react'
-import { backgroundBorderLeft, backgroundBorderTop } from '@/calendar/_commons/styles'
-import { DAY_HOURS } from '@/calendar/_commons/constants'
-import { useGetDayCalendarDisplay } from '@/calendar/_hooks/useGetDayCalendarDisplay'
-import '../../_styles/dayCalendar.css'
+import React from "react";
+import { backgroundBorderLeft, backgroundBorderTop } from "@/calendar/_commons/styles";
+import { DAY_HOURS } from "@/calendar/_commons/constants";
+import { useGetDayCalendarDisplay } from "@/calendar/_hooks/useGetDayCalendarDisplay";
+import "@/calendar/_styles/dayCalendar.css";
 
 
 export function TimeViewBackground() {

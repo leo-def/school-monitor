@@ -1,11 +1,11 @@
 
-import { PropsWithChildren } from "react"
-import { MessageContextProvider } from "@/commons/message/_components/messageContextProvider"
-import { SidebarContextProvider } from "@/commons/sidebar/_components/sidebarContextProvider"
-import { AuthContextProvider } from "../../auth/_components/authContextProvider"
-import { ThemeContextProvider } from "@/commons/theme/_components/themeContextProvider"
-import { WaitingContextProvider } from "@/commons/waiting/_components/waitingContextProvider"
-import { SessionContextProvider } from "@/session/_components/sessionContextProvider"
+import { PropsWithChildren } from "react";
+import { MessageContextProvider } from "@/commons/message/_components/messageContextProvider";
+import { SidebarContextProvider } from "@/commons/sidebar/_components/sidebarContextProvider";
+import { ThemeContextProvider } from "@/commons/theme/_components/themeContextProvider";
+import { WaitingContextProvider } from "@/commons/waiting/_components/waitingContextProvider";
+import { SessionContextProvider } from "@/session/_components/sessionContextProvider";
+import { AuthContextProvider } from "@/auth/_components/authContextProvider";
 
 
 export const AppProvider = ({ children }: PropsWithChildren) => {

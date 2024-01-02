@@ -1,8 +1,8 @@
-import React from "react"
-import { Card, CardContent, Typography, CardActions, Button } from "@mui/material"
-import { NavItemLink } from "@/commons/nav/_components/navItemLink"
-import { useGetNavByType } from "@/commons/nav/_hooks/useGetNavByType"
-import { SchoolClassDto } from "../_types/schoolClass.dto"
+import React from "react";
+import { Card, CardContent, Typography, CardActions, Button } from "@mui/material";
+import { NavItemLink } from "@/commons/nav/_components/navItemLink";
+import { useGetNavByType } from "@/commons/nav/_hooks/useGetNavByType";
+import { SchoolClassDto } from "../_types/schoolClass.dto";
 
 
 export function SchoolClassCard({ item }: { item: SchoolClassDto }) {

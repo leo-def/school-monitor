@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactNode } from 'react'
+import React, { PropsWithChildren, ReactNode } from "react";
 
 export interface PublicLayoutProps extends PropsWithChildren {
     readonly children: ReactNode | undefined

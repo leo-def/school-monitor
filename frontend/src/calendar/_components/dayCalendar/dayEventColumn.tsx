@@ -2,8 +2,8 @@ import React, { useMemo } from "react";
 import { useGetEventSlots } from "@/calendar/_hooks/useGetEventSlots";
 import { useGetCalendarDateUtils } from "@/calendar/_hooks/useGetCalendarDateUtils";
 import { useGetCalendarEvents } from "@/calendar/_hooks/useGetCalendarEvents";
-import { DayEvent } from "./dayEvent"
-import "../../_styles/dayCalendar.css"
+import { DayEvent } from "./dayEvent";
+import "@/calendar/_styles/dayCalendar.css";
 
 export interface DayEventColumnProps {
     readonly date: Date

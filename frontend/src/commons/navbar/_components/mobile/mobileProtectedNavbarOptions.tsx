@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { MouseEventHandler } from 'react';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import MoreIcon from '@mui/icons-material/MoreVert';
+import React, { MouseEventHandler } from "react";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import MoreIcon from "@mui/icons-material/MoreVert";
 
 export interface MobileProtectedNavbarOptionsProps {
   readonly menuId: string

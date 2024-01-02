@@ -1,10 +1,9 @@
-
 "use client";
 
-import React from 'react'
-import { Button, Typography } from '@mui/material'
-import Link from 'next/link'
-import { Trans, useTranslation } from 'react-i18next';
+import React from "react";
+import { Button, Typography } from "@mui/material";
+import Link from "next/link";
+import { Trans, useTranslation } from "react-i18next";
 
 export function PublicHome() {
     const { t } = useTranslation('translation', { keyPrefix: 'home.public' });

@@ -1,12 +1,12 @@
-import React, { useMemo } from "react"
+import React, { useMemo } from "react";
 import { Interval } from "@/calendar/_types/interval";
 import { useGetCalendarEvents } from "@/calendar/_hooks/useGetCalendarEvents";
-import { useGetCalendarData } from "@/calendar/_hooks/useGetCalendarData"
-import { useGetCalendarDateUtils } from "@/calendar/_hooks/useGetCalendarDateUtils"
-import { isOverlapInterval } from "@/calendar/_hooks/useGetOverlaps"
-import { DayViewBackground } from "./dayViewBackground"
-import { DayViewContent } from "./dayViewContent"
-import "../../_styles/dayCalendar.css"
+import { useGetCalendarData } from "@/calendar/_hooks/useGetCalendarData";
+import { useGetCalendarDateUtils } from "@/calendar/_hooks/useGetCalendarDateUtils";
+import { isOverlapInterval } from "@/calendar/_hooks/useGetOverlaps";
+import { DayViewBackground } from "./dayViewBackground";
+import { DayViewContent } from "./dayViewContent";
+import "@/calendar/_styles/dayCalendar.css";
 
 export function DayView() {
     const { initDate, endDate } = useGetCalendarData()

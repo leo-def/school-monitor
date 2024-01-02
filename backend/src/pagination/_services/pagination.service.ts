@@ -1,11 +1,12 @@
 import { PrismaClient } from '@prisma/client';
-import { PaginationParams, PaginationParamsField } from '../_types/params';
-import { PaginationQuery } from '../_types/query';
 import { PaginationResponse } from '../_types/response';
+import { PaginationParams } from '../_types/dto/params';
+import { PaginationField } from '../_types/field';
+import { PaginationQuery } from '../_types/query/query';
 
 export class Pagination {
   public static paramsToQuery<
-    T extends PaginationParams<PaginationParamsField>,
+    T extends PaginationParams<PaginationField>,
     Extra = object,
   >(params: T, extra: Extra): PaginationQuery & Extra {
     const { skip, take, select, orderBy, filter } = params;
@@ -35,10 +36,7 @@ export class Pagination {
     };
   }
 
-  public static fetch<
-    TData,
-    TParams extends PaginationParams<PaginationParamsField>,
-  >(
+  public static fetch<TData, TParams extends PaginationParams<PaginationField>>(
     prisma: PrismaClient,
     repository: string,
     params: TParams,
@@ -53,7 +51,7 @@ export class Pagination {
 
   public static dataToResponse<
     TData,
-    TParams extends PaginationParams<PaginationParamsField>,
+    TParams extends PaginationParams<PaginationField>,
   >(
     items: Array<TData>,
     params: TParams,

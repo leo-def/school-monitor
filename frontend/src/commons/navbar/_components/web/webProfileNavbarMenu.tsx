@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { MouseEventHandler } from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import { PopoverProps } from '@mui/material';
-import Link from 'next/link';
+import React, { MouseEventHandler } from "react";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import { PopoverProps } from "@mui/material";
+import Link from "next/link";
 
 export interface WebProfileNavbarMenuProps {
     readonly anchorEl: PopoverProps['anchorEl']

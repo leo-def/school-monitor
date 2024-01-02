@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
-import { WeekEventRow } from './weekEventRow'
-import { CalendarEvent } from '@/calendar/_types/calendarEvent'
-import '../../_styles/dayCalendar.css'
+import React from "react";
+import { CalendarEvent } from "@/calendar/_types/calendarEvent";
+import "@/calendar/_styles/dayCalendar.css";
+import { WeekEventRow } from "./weekEventRow";
 
 export interface DayViewContentProps {
     fullDayEvents: Array<CalendarEvent>

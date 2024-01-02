@@ -1,7 +1,7 @@
 
-import React from "react"
-import { Card, CardContent, Grid, Typography } from "@mui/material"
-import { SchoolSubjectDto } from "../_types/schoolSubject.dto"
+import React from "react";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { SchoolSubjectDto } from "../_types/schoolSubject.dto";
 
 export function SubjectCard({ item }: { item: SchoolSubjectDto }) {
     return (<Card sx={{ width: 260, minHeight: 150 }}>

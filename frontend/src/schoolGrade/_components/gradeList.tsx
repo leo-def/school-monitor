@@ -1,8 +1,8 @@
-import React from "react"
-import apiFetch from "@/commons/api"
-import { GradeDetails } from "./gradeDetails"
-import { SchoolGradeDto } from "../_types/schoolGrade.dto"
-import { ItemList } from "@/commons/_components/list/itemList"
+import React from "react";
+import apiFetch from "@/commons/api";
+import { ItemList } from "@/commons/_components/list/itemList";
+import { SchoolGradeDto } from "../_types/schoolGrade.dto";
+import { GradeDetails } from "./gradeDetails";
 
 export function GradeList() {
     const grades = apiFetch('/grade') as Array<SchoolGradeDto>

@@ -1,15 +1,16 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import React from 'react'
-import { AppProps } from 'next/app'
-import { AppMessage } from '@/commons/message/_components/appMessage'
-import { AppLoader } from './_components/appLoader'
-import { AppProvider } from './_components/appProvider'
-import { ProtectedComponent } from '@/auth/_components/protectedComponent'
-import { PrivateLayoutProps, PrivateLayout } from './_layouts/privateLayout'
-import { PublicLayoutProps, PublicLayout } from './_layouts/publicLayout'
-import './globals.css'
-import { I18nWrapper } from '@/commons/i18n/_components/i18nWrapper'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import React from "react";
+import { AppProps } from "next/app";
+import { I18nWrapper } from "@/commons/i18n/_components/i18nWrapper";
+import { AppMessage } from "@/commons/message/_components/appMessage";
+import { ProtectedComponent } from "@/auth/_components/protectedComponent";
+import { AppLoader } from "./_components/appLoader";
+import { AppProvider } from "./_components/appProvider";
+import { PrivateLayoutProps, PrivateLayout } from "./_layouts/privateLayout";
+import { PublicLayoutProps, PublicLayout } from "./_layouts/publicLayout";
+import "./globals.css";
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {

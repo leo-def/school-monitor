@@ -20,6 +20,7 @@ import { CompanyDto } from "../_types/company.dto";
 import { DefaultColumnDisplay } from "./defaultColumnDisplay";
 import { DefaultColumnTitleDisplay } from "./defaultColumnTitleDisplay";
 import { FilterDisplayProps } from "@/manage/_types/props/filterDisplayProps";
+import { ApiPaginationService } from "@/commons/api/_services/pagination/apiPaginationService";
 
 // CompanyGridItemDisplay
 export interface CompanyGridItemDisplayProps extends GridItemDisplayProps<CompanyDto> {
@@ -60,8 +61,6 @@ export function CompanyFormDisplay({
         id: values?.id ?? '',
         title: values?.title ?? ''
     } as CompanyFormInputs), [values])
-
-    console.log('CompanyFormDisplay', { values, defaultValues })
     const { register, handleSubmit } = useForm<CompanyFormInputs>({
         defaultValues,
         resolver: yupResolver<CompanyFormInputs>(schema),
@@ -126,7 +125,8 @@ export function CompanyManage({disabled}: CompanyManageProps ) {
     }, [apiFetch])
 
     const onFetch = useCallback((params: FetchParams) => {
-        return apiFetch('company/fetch', { method: 'POST', body: JSON.stringify(params) })
+        return apiFetch('company/fetch', { method: 'POST', body: JSON.stringify(
+            ApiPaginationService.fromFetchParams<'title'>(params)) })
             .then(async (response) => {
                 const data = await response.json()
                 return ({
@@ -161,7 +161,7 @@ export function CompanyManage({disabled}: CompanyManageProps ) {
                     map: filterMap,
                     disabled,
                     Display: CompanyFilterDisplay,
-                    pageInputLabel: t('Page')
+                    limitInputLabel: t('Rows per page')
                     
                 }
             } as CollectionConfig<CompanyDto>,

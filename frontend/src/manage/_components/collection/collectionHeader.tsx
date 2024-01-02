@@ -1,11 +1,12 @@
+import { useMemo, useCallback, ChangeEvent } from "react";
 import { Accordion, AccordionSummary, FormControl, Grid, IconButton, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent } from "@mui/material";
 import { GridView as GridViewIcon, TableRows as TableRowsIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue";
 import { CollectionViewEnum } from "@/manage/_enums/collectionView.enum";
 import { useSetManageCollectionView } from "@/manage/_hooks/useSetManageCollectionView";
-import { useMemo, useCallback, ChangeEvent } from "react";
 import { useUpdateManageFetchParams } from "@/manage/_hooks/useUpdateManageFetchParams";
 import { FetchParams } from "@/manage/_types/status/params/fetchParams";
+
 export function CollectionHeader() {
     const {
         state: { fetchParams, fetchResult, collectionView },
@@ -47,11 +48,11 @@ export function CollectionHeader() {
     }, [updateManageFetchParams])
 
     const pageOptions = filter.pageOptions ?? [5, 10, 20, 50, 100]
-    const pageInputLabel = filter.pageInputLabel ?? "Page"
+    const limitInputLabel = filter.limitInputLabel ?? "Rows per page"
     return (
         <Grid container>
-            <Grid container item xs={12}>
-                <Grid item>
+            <Grid container item xs={12} alignItems="center">
+                <Grid item xs={6} lg={5}>
                     <Pagination
                         showFirstButton
                         showLastButton
@@ -61,22 +62,23 @@ export function CollectionHeader() {
                         count={pages}
                         onChange={handleOnPageChange} />
                 </Grid>
-                <Grid item >
+                <Grid item xs={6} lg={2}>
                     <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">{pageInputLabel}</InputLabel>
+                        <InputLabel id="demo-simple-select-label">{limitInputLabel}</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={String(limit)}
+                            size="small"
                             disabled={disabled}
-                            label={pageInputLabel}
+                            label={limitInputLabel}
                             onChange={handleOnLimitChange}
                         >
                             {pageOptions.map((page: number) => <MenuItem key={page} value={page}>{page}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item>
+                <Grid item xs={6} lg={2}>
 
                     <IconButton
                         size="small"
@@ -102,7 +104,9 @@ export function CollectionHeader() {
                         <TableRowsIcon />
                     </IconButton>
                 </Grid>
-                <Grid></Grid>
+                <Grid item xs={6} lg={3}>
+                    
+                </Grid>
             </Grid>
 
             <Grid item xs={12}>

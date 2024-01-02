@@ -1,15 +1,15 @@
-import React from "react"
-import { Typography, Slider, Paper, styled } from "@mui/material"
+import React from "react";
+import { Typography, Slider, Paper, styled } from "@mui/material";
 import { SchoolGradeDto } from "../_types/schoolGrade.dto";
 
-export function GradeDetails({ item }: { item?: SchoolGradeDto }) {
+export function GradeDetails({ item }: { item?: any }) {
     return (
         <Paper elevation={3} sx={{ fontSize: 12, minWidth: 200, width: '100%', padding: 1, margin: 0 }}>
             {item ? <GradeContent item={item} /> : "Nota não informada."}
         </Paper>)
 }
 
-function GradeContent({ item }: { item: SchoolGradeDto }) {
+function GradeContent({ item }: { item: any }) {
     const AppSlider = styled(Slider)(({ theme }) => ({
         marginBottom: 0,
         '& .MuiSlider-mark': {

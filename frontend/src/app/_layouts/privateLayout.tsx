@@ -1,6 +1,5 @@
-
-import { Sidebar } from '@/commons/sidebar/_components/sidebar'
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from "react";
+import { Sidebar } from "@/commons/sidebar/_components/sidebar";
 
 export interface PrivateLayoutProps extends PropsWithChildren {
     readonly children?: React.ReactNode

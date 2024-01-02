@@ -1,6 +1,7 @@
-import React, { PropsWithChildren } from "react"
-import { Grid } from "@mui/material"
-import { ListHeader } from "@/app/_components/list/listHeader"
+import React, { PropsWithChildren } from "react";
+import { Grid } from "@mui/material";
+import { ListHeader } from "./listHeader";
+
 export interface ItemListProps {
     readonly items: Array<{ key: string } & PropsWithChildren>
 }

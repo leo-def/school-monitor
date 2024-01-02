@@ -1,8 +1,8 @@
 "use client";
 
-import { Alert, AlertTitle, Snackbar } from "@mui/material"
-import { useGetMessages } from "../_hooks/useGetMessages"
-import { useRemoveMessage } from "../_hooks/useRemoveMessage"
+import { Alert, AlertTitle, Snackbar } from "@mui/material";
+import { useGetMessages } from "../_hooks/useGetMessages";
+import { useRemoveMessage } from "../_hooks/useRemoveMessage";
 import { Message } from "../_types/message";
 
 

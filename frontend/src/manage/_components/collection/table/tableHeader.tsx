@@ -1,8 +1,8 @@
-import React from "react"
-import { TableCell, TableHead, TableRow } from "@mui/material"
-import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue"
-import { DefaultActionsHeaderColumnDisplay } from "./defaultActionsHeaderColumnDisplay"
-import { TableHeaderColumn } from "./tableHeaderColumn"
+import React from "react";
+import { TableCell, TableHead, TableRow } from "@mui/material";
+import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue";
+import { DefaultActionsHeaderColumnDisplay } from "./defaultActionsHeaderColumnDisplay";
+import { TableHeaderColumn } from "./tableHeaderColumn";
 
 export function TableHeader() {
     const {

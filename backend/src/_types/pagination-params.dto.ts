@@ -1,13 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsInt, IsObject, IsOptional } from 'class-validator';
-import {
-  PaginationParams,
-  PaginationParamsField,
-  PaginationParamsFilter,
-  PaginationParamsOrderBy,
-} from 'src/pagination/_types/params';
+import { PaginationParamsFilter } from 'src/pagination/_types/dto/filter';
+import { PaginationParamsOrderBy } from 'src/pagination/_types/dto/order-by';
+import { PaginationParams } from 'src/pagination/_types/dto/params';
+import { PaginationField } from 'src/pagination/_types/field';
 
-export class PaginationParamsDto<TField extends PaginationParamsField>
+export class PaginationParamsDto<TField extends PaginationField>
   implements PaginationParams<TField>
 {
   @ApiProperty({

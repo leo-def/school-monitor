@@ -34,10 +34,7 @@ export function CollaboratorAutocomplete({
     const { t } = useTranslation('translation', { keyPrefix: 'collaborator.autocomplete' })
     const fetchPayload = {
         filter: {
-            ...(roles
-                ? { role: { in: roles } }
-                : {}
-            )
+            ...(roles ? { role: { in: roles } } : {})
         }
     }
     return (<SessionEntityAutocomplete

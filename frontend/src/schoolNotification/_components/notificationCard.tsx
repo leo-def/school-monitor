@@ -1,8 +1,8 @@
-import React from "react"
-import { Card, CardContent, Grid, Typography } from "@mui/material"
-import { format } from "date-fns"
+import React from "react";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { format } from "date-fns";
 
-export function NotificationCard({ item }: { item: SchoolNotificationDto }) {
+export function NotificationCard({ item }: { item: any }) {
     return (<Card sx={{ width: 260, minHeight: 150 }}>
         <CardContent>
             <Grid container rowSpacing={0.5}>

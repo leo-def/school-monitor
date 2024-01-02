@@ -1,10 +1,10 @@
 
-import React from "react"
-import { Card, CardContent, Chip, Grid, Paper, Typography } from "@mui/material"
-import { Absence } from "../_types/absence"
+import React from "react";
 import { format } from "date-fns";
+import { Card, CardContent, Chip, Grid, Paper, Typography } from "@mui/material";
 
-export function AbsenceCard({ item }: { item: Absence }) {
+
+export function AbsenceCard({ item }: { item: any }) {
 
     const startDateStr = item.start ? format(item.start, 'dd/MM/yyyy') : '';
     const startTimeStr = item.end ? format(item.end, 'HH:mm') : '';

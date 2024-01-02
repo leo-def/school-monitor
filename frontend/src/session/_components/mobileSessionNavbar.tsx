@@ -1,5 +1,6 @@
-import { Box, IconButton } from "@mui/material"
-import { MouseEventHandler } from "react"
+
+import { MouseEventHandler } from "react";
+import { Box, IconButton } from "@mui/material";
 import { Domain as DomainIcon } from '@mui/icons-material';
 
 export interface MobileSessionNavbarProps {

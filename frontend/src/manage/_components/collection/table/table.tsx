@@ -1,7 +1,7 @@
-import React from "react"
-import { TableContainer, Paper, Table as MuiTable } from "@mui/material"
-import { TableHeader } from "./tableHeader"
-import { TableBody } from "./tableBody"
+import React from "react";
+import { TableContainer, Paper, Table as MuiTable } from "@mui/material";
+import { TableHeader } from "./tableHeader";
+import { TableBody } from "./tableBody";
 
 export function Table() {
     return (<TableContainer component={Paper} style={{

@@ -1,9 +1,9 @@
-import { Modal } from "@mui/material"
-import React from "react"
-import { ActionEnum } from "../_enums/action.enum"
-import { useGetManageContextValue } from "../_hooks/useGetManageContextValue"
-import { Collection } from "./collection/collection"
-import { FormCard } from "./form/formCard"
+import React from "react";
+import { Modal } from "@mui/material";
+import { ActionEnum } from "../_enums/action.enum";
+import { useGetManageContextValue } from "../_hooks/useGetManageContextValue";
+import { Collection } from "./collection/collection";
+import { FormCard } from "./form/formCard";
 
 
 

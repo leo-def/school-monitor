@@ -4,8 +4,8 @@ import { ManageStatusState } from "../_types/status/manageStatusState";
 export const initialState = {
   selected: undefined,
   action: ActionEnum.COLLECTION,
+collectionView: CollectionViewEnum.TABLE,
   fetchParams: {
-    pages: 0,
     page: 0,
     limit: 10,
     sort: [],
@@ -13,3 +13,6 @@ export const initialState = {
   },
   fetchResult: undefined,
 } as ManageStatusState<unknown>;
+
+
+fetchParams: FetchParams;

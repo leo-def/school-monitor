@@ -1,6 +1,6 @@
-import { PopoverProps, Popover, Grid, IconButton } from "@mui/material"
+import { PopoverProps, Popover, Grid, IconButton } from "@mui/material";
 import { Close as CloseIcon } from '@mui/icons-material';
-import { SessionForm } from "./sessionForm"
+import { SessionForm } from "./sessionForm";
 
 export interface MobileSessionMenuProps {
     readonly anchorEl: PopoverProps['anchorEl']

@@ -1,11 +1,11 @@
-import React, { useEffect } from "react"
-import { useSetManageFetchResult } from "@/manage/_hooks/useSetManageFetchResult"
-import { CollectionViewEnum } from "../../_enums/collectionView.enum"
-import { useGetManageContextValue } from "../../_hooks/useGetManageContextValue"
-import { Table } from "./table/table"
-import { CardGrid } from "./grid/cardGrid"
-import { CollectionHeader } from "./collectionHeader"
-import { ActionEnum } from "@/manage/_enums/action.enum"
+import React, { useEffect } from "react";
+import { useSetManageFetchResult } from "@/manage/_hooks/useSetManageFetchResult";
+import { ActionEnum } from "@/manage/_enums/action.enum";
+import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue";
+import { CollectionViewEnum } from "@/manage/_enums/collectionView.enum";
+import { Table } from "./table/table";
+import { CardGrid } from "./grid/cardGrid";
+import { CollectionHeader } from "./collectionHeader";
 
 export function Collection() {
     const {

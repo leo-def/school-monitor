@@ -1,8 +1,8 @@
-import React from "react"
-import { format } from "date-fns"
-import { Card, CardContent, Typography, Chip, Grid } from "@mui/material"
+import React from "react";
+import { format } from "date-fns";
+import { Card, CardContent, Typography, Chip, Grid } from "@mui/material";
 
-export function EventCard({ item }: { item: SchoolEventDto }) {
+export function EventCard({ item }: { item: any }) {
     const startDateStr = item.start ? format(item.start, 'dd/MM/yyyy') : '';
     const startTimeStr = item.end ? format(item.end, 'HH:mm') : '';
     const endTimeStr = item.end ? format(item.end, 'HH:mm') : '';

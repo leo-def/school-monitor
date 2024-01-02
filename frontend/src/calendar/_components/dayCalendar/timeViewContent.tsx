@@ -1,7 +1,7 @@
-import React from 'react'
-import { useGetDayCalendarDisplay } from '@/calendar/_hooks/useGetDayCalendarDisplay';
-import { DayEventColumn } from './dayEventColumn'
-import '../../_styles/dayCalendar.css'
+import React from "react";
+import { useGetDayCalendarDisplay } from "@/calendar/_hooks/useGetDayCalendarDisplay";
+import "@/calendar/_styles/dayCalendar.css";
+import { DayEventColumn } from "./dayEventColumn";
 
 export function TimeViewContent() {
   const { numberOfCols, days } = useGetDayCalendarDisplay()

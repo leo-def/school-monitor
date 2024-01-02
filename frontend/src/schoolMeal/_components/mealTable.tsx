@@ -1,8 +1,7 @@
-import React from "react"
-import apiFetch from "@/commons/api"
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from "@mui/material"
-import { Meal } from "../_types/meal"
-import { MealDetails } from "./mealDetails"
+import React from "react";
+import apiFetch from "@/commons/api";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from "@mui/material";
+import { MealDetails } from "./mealDetails";
 
 export function MealTable() {
 
@@ -26,7 +25,7 @@ export function MealTable() {
         },
     }));
 
-    const meals = apiFetch('/meal') as Array<Meal>
+    const meals = apiFetch('/meal') as Array<any>
     const types = [
         { type: "BREAKFAST", label: "Café da manhã" },
         { type: "LUNCH", label: "Almoço" },

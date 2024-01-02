@@ -1,11 +1,10 @@
-import * as React from 'react';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import { AccountCircle as AccountCircleIcon, Notifications as NotificationsIcon, Logout as LogoutIcon } from '@mui/icons-material';
-import { MouseEventHandler } from 'react';
-import { Link, PopoverProps } from '@mui/material';
+import React, { MouseEventHandler } from "react";
+import {IconButton, Badge, MenuItem, Menu, Link, PopoverProps} from "@mui/material";
+import {
+    AccountCircle as AccountCircleIcon,
+    Notifications as NotificationsIcon,
+    Logout as LogoutIcon
+} from "@mui/icons-material";
 
 export interface MobileProtectedNavbarMenuProps {
     readonly anchorEl: PopoverProps['anchorEl']

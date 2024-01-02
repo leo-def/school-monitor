@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
-import { backgroundHeaderLeft } from '@/calendar/_commons/styles'
-import { useGetDayCalendarDisplay } from '@/calendar/_hooks/useGetDayCalendarDisplay'
-import { CalendarEvent } from '@/calendar/_types/calendarEvent'
-import '../../_styles/dayCalendar.css'
+import React from "react";
+import { backgroundHeaderLeft } from "@/calendar/_commons/styles";
+import { useGetDayCalendarDisplay } from "@/calendar/_hooks/useGetDayCalendarDisplay";
+import { CalendarEvent } from "@/calendar/_types/calendarEvent";
+import "@/calendar/_styles/dayCalendar.css";
 
 export interface DayViewBackgroundProps {
     fullDayEvents: Array<CalendarEvent>

@@ -1,11 +1,10 @@
 
-import React from "react"
-import apiFetch from "@/commons/api"
-import { Subject } from "../_types/subject"
-import { SubjectCard } from "./subjectCard"
-import { ItemList } from "@/app/_components/list/itemList"
+import React from "react";
+import apiFetch from "@/commons/api";
+import { ItemList } from "@/commons/_components/list/itemList";
+import { SubjectCard } from "./subjectCard";
 
 export function SubjectList() {
-    const subjects = apiFetch('/subject') as Array<Subject>
+    const subjects = apiFetch('/subject') as Array<any>
     return (<ItemList items={subjects.map((item) => ({ key: item.id, children: (<SubjectCard item={item} />) }))} />)
 }

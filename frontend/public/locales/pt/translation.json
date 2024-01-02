@@ -28,7 +28,7 @@
         },
         "manage": {
             "Title": "Titulo",
-            "Page": "Página"
+            "Rows per page": "Itens por linha"
         }
     },
     "schoolClass": {

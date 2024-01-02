@@ -1,10 +1,10 @@
-import React from "react"
-import { format } from "date-fns"
-import { Card, CardContent, Grid, Typography } from "@mui/material"
-import { Appraisal } from "../_types/appraisal"
-import { GradeDetails } from "@/grade/_components/gradeDetails"
+import React from "react";
+import { format } from "date-fns";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { GradeDetails } from "@/schoolGrade/_components/gradeDetails";
 
-export function AppraisalCard({ item }: { item: Appraisal }) {
+
+export function AppraisalCard({ item }: { item: any }) {
     return (<Card sx={{ maxWidth: 345, minHeight: 200 }}>
         <CardContent>
             <Grid container rowSpacing={0.5}>

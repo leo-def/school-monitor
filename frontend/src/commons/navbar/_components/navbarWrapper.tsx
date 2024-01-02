@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react'
-import { AppBar, ThemeProvider, Toolbar, createTheme } from '@mui/material'
+import React from "react";
+import { AppBar, ThemeProvider, Toolbar, createTheme } from "@mui/material";
 
 export function NavbarWrapper({
     children,

@@ -1,7 +1,7 @@
-import { BranchAutocomplete } from "@/branch/_components/branchAutocomplete"
-import { CompanyAutocomplete } from "@/company/_components/companyAutocomplete"
-import { Grid } from "@mui/material"
-import { useGetSessionForm } from "../_hooks/useGetSessionForm"
+import { Grid } from "@mui/material";
+import { BranchAutocomplete } from "@/branch/_components/branchAutocomplete";
+import { CompanyAutocomplete } from "@/company/_components/companyAutocomplete";
+import { useGetSessionForm } from "../_hooks/useGetSessionForm";
 
 export function SessionForm() {
     const sessionForm = useGetSessionForm()

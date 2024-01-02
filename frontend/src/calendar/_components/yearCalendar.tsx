@@ -1,8 +1,8 @@
 
-import { useMemo } from "react"
-import { useGetCalendarDateUtils } from "../_hooks/useGetCalendarDateUtils"
-import { CalendarModalContainer } from "./modal/calendarModalContainer"
-import { CalendarModalProvider } from "./providers/calendarModalProvider"
+import { useMemo } from "react";
+import { useGetCalendarDateUtils } from "../_hooks/useGetCalendarDateUtils";
+import { CalendarModalContainer } from "./modal/calendarModalContainer";
+import { CalendarModalProvider } from "./providers/calendarModalProvider";
 
 const NUMBER_OF_WEEk_DAYS = 7
 const NUMBER_OF_MONTHS = 12

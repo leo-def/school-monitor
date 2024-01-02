@@ -1,5 +1,5 @@
 import React from "react";
-import { TableBody as MuiTableBody } from "@mui/material"
+import { TableBody as MuiTableBody } from "@mui/material";
 import { useGetManageContextValue } from "@/manage/_hooks/useGetManageContextValue";
 import { TableRow } from "./tableRow";
 

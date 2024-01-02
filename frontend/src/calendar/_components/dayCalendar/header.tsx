@@ -1,8 +1,8 @@
-import React from 'react'
-import { backgroundBorderTop, backgroundHeaderLeft } from '@/calendar/_commons/styles'
-import { useGetDayCalendarDisplay } from '@/calendar/_hooks/useGetDayCalendarDisplay'
-import { useGetCalendarDateUtils } from '@/calendar/_hooks/useGetCalendarDateUtils'
-import '../../_styles/dayCalendar.css'
+import React from "react";
+import { backgroundBorderTop, backgroundHeaderLeft } from "@/calendar/_commons/styles";
+import { useGetDayCalendarDisplay } from "@/calendar/_hooks/useGetDayCalendarDisplay";
+import { useGetCalendarDateUtils } from "@/calendar/_hooks/useGetCalendarDateUtils";
+import "@/calendar/_styles/dayCalendar.css";
 
 export function Header() {
     const { format } = useGetCalendarDateUtils()

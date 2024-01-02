@@ -1,10 +1,9 @@
-import React from "react"
-import apiFetch from "@/commons/api"
-import { Event } from "../_types/event"
-import { EventCard } from "./eventCard"
-import { ItemList } from "@/app/_components/list/itemList"
+import React from "react";
+import apiFetch from "@/commons/api";
+import { ItemList } from "@/commons/_components/list/itemList";
+import { EventCard } from "./eventCard";
 
 export function EventList() {
-    const events = apiFetch('/event') as Array<Event>
+    const events = apiFetch('/event') as Array<any>
     return (<ItemList items={events.map((item) => ({ key: item.id, children: (<EventCard item={item} />) }))} />)
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { PropsWithChildren, useCallback, useContext, useEffect, useMemo } from "react"
-import { usePathname } from 'next/navigation'
-import { NavItem } from "../_types/navItem"
-import { NavContext } from "../_contexts/navContext"
-import { NavActionTypeEnum } from "../_enums/navActionType.enum"
+import React, { PropsWithChildren, useCallback, useContext, useEffect, useMemo } from "react";
+import { usePathname } from "next/navigation";
+import { NavItem } from "../_types/navItem";
+import { NavContext } from "../_contexts/navContext";
+import { NavActionTypeEnum } from "../_enums/navActionType.enum";
 
 export interface NavPageLoaderProps extends PropsWithChildren {
     readonly item: NavItem

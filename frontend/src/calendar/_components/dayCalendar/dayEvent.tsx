@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useRef } from 'react'
-import { CalendarEvent } from '@/calendar/_types/calendarEvent'
-import { useGetCalendarDateUtils } from '@/calendar/_hooks/useGetCalendarDateUtils'
-import '../../_styles/dayCalendar.css'
-import { useGetCalendarEvents } from '@/calendar/_hooks/useGetCalendarEvents'
-import { useOpenCalendarModal } from '@/calendar/_hooks/useOpenCalendarModal'
+import { useCallback, useMemo, useRef } from "react";
+import { CalendarEvent } from "@/calendar/_types/calendarEvent";
+import { useGetCalendarDateUtils } from "@/calendar/_hooks/useGetCalendarDateUtils";
+import { useGetCalendarEvents } from "@/calendar/_hooks/useGetCalendarEvents";
+import { useOpenCalendarModal } from "@/calendar/_hooks/useOpenCalendarModal";
+import "@/calendar/_styles/dayCalendar.css";
 
 export interface DayEventProps {
     date: Date,
