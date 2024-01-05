@@ -1,129 +1,99 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { AutocompleteInputChangeReason, Autocomplete as MuiAutocomplete, TextField, CircularProgress } from "@mui/material";
 import { useDebounce } from "@/commons/_hooks/useDebounce";
-
+import { AutocompleteFetchResult } from "@/commons/_types/autocompleteFetchResult";
+import { AutocompleteItem } from "@/commons/_types/autocompleteItem";
+export interface AutocompleteFetchRequest {
+    value?: string;
+    inputValue?: string;
+    params?: any;
+    payload?: any
+}
 export interface AutocompleteProps<T> {
-    readonly apiFetch: (inputValue?: string, payload?: any) => Promise<Response>;
-    readonly getLabel: (param?: T) => string | undefined;
-    readonly getValue: (param?: T) => string | undefined;
-    readonly onApiFetchError: (err?: Error, response?: any) => void
+    readonly onFetch: (request: AutocompleteFetchRequest) => Promise<AutocompleteFetchResult<T> | undefined>;
+    readonly value?: string;
+    readonly onChange?: (value?: AutocompleteItem<T>) => void;
+    readonly disabled?: boolean;
+    readonly params?: any;
     readonly label: string;
     readonly noOptionText?: string;
-    readonly disabled?: boolean;
-    readonly value?: string;
-    readonly onChange?: (value?: string) => void;
-    readonly onObjectChange?: (value?: T) => void;
-    readonly size?: 'small' | 'medium'
-    readonly debounce?: number
-    readonly params?: any
+    readonly size?: 'small' | 'medium';
+    readonly debounce?: number;
 
 }
 
 export function Autocomplete<T>({
-    apiFetch,
-    getLabel,
-    getValue,
-    onApiFetchError,
+    onFetch,
+    onChange,
+    disabled,
+    params,
     label,
     noOptionText,
-    disabled,
-    value,
-    onChange,
-    onObjectChange,
     size,
-    params
+    debounce,
+    ...props
 }: AutocompleteProps<T>) {
-    const [inputText, setInputText] = useState(undefined as string | undefined)
-    const [id, setId] = useState(undefined as string | undefined)
-    const [items, setItems] = useState(undefined as Array<T> | undefined)
-    const [fetchParam, setFetchParam] = useState(undefined as any)
+    const [inputValue, setInputValue] = useState(undefined as string | undefined)
+    const [value, setValue] = useState(undefined as AutocompleteItem<T> | undefined)
+    const [fetchResult, setFetchResult] = useState(undefined as AutocompleteFetchResult<T> | undefined)
     const [loading, setLoading] = useState(false as boolean)
-    const [initialFetch, setInitialFetch] = useState(false)
 
-    const debounce = useDebounce()
+    const debounceFunc = useDebounce()
 
-    const fetch = useCallback((title?: string, params?: any) => {
+    const fetch = useCallback(() => {
         setLoading(true)
-        setFetchParam(params)
-        apiFetch(title, params)
-            .then(async (response: Response) => {
-                const data = await response.json()
-                if (data.error) {
-                    onApiFetchError(undefined, data.error)
-                } else {
-                    setItems(data.data.items)
-                }
-            })
-            .catch((err: Error) => {
-                onApiFetchError(err, null)
+        onFetch({
+            value,
+            inputValue,
+            params,
+            payload: undefined,
+        } as AutocompleteFetchRequest)
+            .then((result: AutocompleteFetchResult<T> | undefined) => {
+                setFetchResult(result)
             })
             .finally(() => {
                 setLoading(false)
-                setInitialFetch(true)
             })
-    }, [apiFetch, onApiFetchError])
+    }, [inputValue, onFetch, params, value])
+    
 
-    const triggerChange = useCallback(
-        (newValue?: T) => {
-            const value = getValue(newValue);
-            setId(value)
-            setInputText(getLabel(newValue))
-            if (onChange) {
-                onChange(value)
-            }
-            if (onObjectChange) {
-                onObjectChange(newValue)
-            }
-        }, [getLabel, getValue, onChange, onObjectChange])
-
-    const getObjectValue = useCallback((id?: string) => items && id ? items.find(item => getValue(item) === id) ?? undefined : undefined, [items, getValue])
-    const objectValue = useMemo(() => id ? getObjectValue(id) : undefined, [getObjectValue, id])
-    const objectLabel = useMemo(() => getLabel(objectValue), [getLabel, objectValue])
-
+    const updateValue  = useCallback((newValue?: AutocompleteItem<T>) => {
+        setValue(newValue)
+        if(onChange){
+            onChange(newValue)
+        }
+    }, [onChange])
+ 
     // Initial fetch
     useEffect(() => {
-        if (!initialFetch) {
-            fetch(inputText, params)
+        if (!fetchResult) {
+            fetch()
         }
-    }, [fetch, inputText, debounce, value, params, items, initialFetch])
+    }, [fetch, fetchResult])
 
-    // Fetch on input or params change
-    useEffect(() => {
-        if (fetchParam !== params) {
-            fetch(undefined, params)
+
+    const handleInputChange = useCallback((_event: React.SyntheticEvent<Element, Event>, newInputValue: string, reason: AutocompleteInputChangeReason) => {
+        if (inputValue !== newInputValue) {
+            updateValue(undefined)
         }
-    }, [fetch, debounce, params, triggerChange, fetchParam])
+        setInputValue(inputValue)
+        debounceFunc(() => fetch(), debounce ?? 400)
+    }, [debounce, debounceFunc, fetch, inputValue, updateValue])
 
-    // Trigger change for default value
-    useEffect(() => {
-        if (value && !id) {
-            triggerChange(getObjectValue(value))
-        } else if (!value && id) {
-            triggerChange()
-        }
-    }, [value, id, getObjectValue, objectValue, triggerChange])
-
-
-    const handleInputChange = useCallback((_event: React.SyntheticEvent<Element, Event>, value: string, reason: AutocompleteInputChangeReason) => {
-        if (value !== objectLabel) {
-            triggerChange()
-        }
-        debounce(() => fetch(undefined, params), 400)
-    }, [debounce, fetch, objectLabel, params, triggerChange])
-
-    const handleOnChange = useCallback((_event: any, newValue: T | null) => triggerChange(newValue ?? undefined), [triggerChange])
+    const handleOnChange = useCallback((_event: any, newValue?: AutocompleteItem<T> | null) => {
+        updateValue(newValue ?? undefined)
+    }, [updateValue])
 
     return (
         <MuiAutocomplete
-            isOptionEqualToValue={(item: T, value: T) => getLabel(item) === getLabel(value)}
-            getOptionLabel={(item: T) => getLabel(item) ?? ''}
-            options={items ?? []}
+            isOptionEqualToValue={(item: AutocompleteItem<T>, value: AutocompleteItem<T>) => item.label === value.label}
+            getOptionLabel={(item: AutocompleteItem<T>) => item.label ?? ''}
+            options={fetchResult?.items ?? []}
             loading={loading}
-            value={objectValue ?? null}
+            value={value ?? null}
             size={size}
             noOptionsText={noOptionText}
             onChange={handleOnChange}
-
             onInputChange={handleInputChange}
             disabled={disabled}
             fullWidth

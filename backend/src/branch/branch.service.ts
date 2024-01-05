@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Branch } from '@prisma/client';
-import { Pagination } from 'src/pagination/_services/pagination.service';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Pagination } from 'src/pagination/_services/pagination.service';
+import { PaginationResponse } from 'src/pagination/_types/response';
 import { BranchPaginationParamsDto } from './_types/branch-pagination-params.dto';
 import { UpdateBranchRequestDto } from './_types/update-branch-request.dto';
 import { CreateBranchRequestDto } from './_types/create-branch-request.dto';
-import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class BranchService {

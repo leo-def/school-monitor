@@ -13,7 +13,6 @@ export function useAuth(): (token: string) => void {
   const setUserInfo = useSetSessionUserInfo();
   const func = useCallback(
     (token: string) => {
-      console.log("useAuth", token);
       if (dispatch) {
         const userInfo = JWTUtils.resolveJWTToken<UserInfoDto>(token)?.payload;
         if (userInfo) {

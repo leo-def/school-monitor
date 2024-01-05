@@ -10,6 +10,7 @@ export const sessionReducer = (
   state: SessionState,
   action: SessionAction
 ): SessionState => {
+  console.log('sessionReducer', { action })
   switch (action.type) {
     case SessionActionTypeEnum.SET_USER_INFO:
       return SessionStateUtils.setUserInfo(

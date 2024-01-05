@@ -108,7 +108,6 @@ export function CompanyManage({disabled}: CompanyManageProps ) {
     const apiFetch = useApiFetch()
 
     const onSubmit = useCallback((item: CompanyDto) => {
-        console.log('CompanyManage.onSubmit', { item })
         return ((item.id) ? apiFetch(`company/${item.id}`, { method: 'PUT', body: JSON.stringify(item) }) :
             apiFetch('company', { method: 'POST', body: JSON.stringify(item) })
         ).then(async (response) => {
@@ -118,7 +117,6 @@ export function CompanyManage({disabled}: CompanyManageProps ) {
     }, [apiFetch])
 
     const onDelete = useCallback((item: CompanyDto) => {
-        console.log('CompanyManage.onDelete', { item })
         return apiFetch(`company/${item.id}`, { method: 'DELETE' }).then(() => {
             return
         })

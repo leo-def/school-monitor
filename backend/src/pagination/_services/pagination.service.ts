@@ -45,7 +45,15 @@ export class Pagination {
     return prisma.$transaction(async (tx) => {
       const count = await tx[repository].count({ where: query.where });
       const items = await tx[repository].findMany(query);
-      return Pagination.dataToResponse(items, params, count);
+      let extra = undefined;
+      if (params.extra) {
+        extra = await tx[repository].findMany({
+          where: params.extra,
+          select: params.select,
+          orderBy: params.orderBy,
+        });
+      }
+      return Pagination.dataToResponse(items, params, count, extra);
     });
   }
 
@@ -56,11 +64,13 @@ export class Pagination {
     items: Array<TData>,
     params: TParams,
     count?: number,
+    extra?: Array<TData>,
   ): PaginationResponse<TData, TParams> {
     return {
       items,
       params,
       count,
+      extra,
     } as PaginationResponse<TData, TParams>;
   }
 

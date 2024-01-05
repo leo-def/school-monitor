@@ -3,7 +3,7 @@ export interface AutocompleteFieldData<T = string> {
   options?: Array<string>;
   disabled?: boolean;
   hidden?: boolean;
-  onChange?: (value?: string) => void;
+  onChange?: (value?: string) => Promise<void>;
   object?: T;
-  onObjectChange?: (value?: T) => void;
+  onObjectChange?: (value?: T) => Promise<void>;
 }

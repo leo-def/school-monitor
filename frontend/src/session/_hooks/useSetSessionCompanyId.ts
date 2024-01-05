@@ -9,6 +9,7 @@ export function useSetSessionCompanyId(): (id?: string) => void {
 
   const func = useCallback(
     (id?: string) => {
+      console.log('useSetSessionCompanyId')
       if (dispatch) {
         dispatch({
           type: SessionActionTypeEnum.SET_COMPANY_ID,

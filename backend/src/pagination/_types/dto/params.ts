@@ -8,4 +8,5 @@ export interface PaginationParams<TField extends PaginationField> {
   select?: Array<TField>;
   orderBy?: PaginationParamsOrderBy<TField>;
   filter?: PaginationParamsFilter<TField>;
+  extra?: Array<PaginationParamsFilter<TField>>;
 }
