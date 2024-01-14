@@ -6,28 +6,41 @@ import { SessionEntityAutocomplete, SessionEntityAutocompleteProps } from "@/ses
 import { useApiFetch } from "@/commons/api/_hooks/useApiFetch";
 import { AutocompleteFetchResult } from "@/commons/_types/autocompleteFetchResult";
 import { SchoolSubjectDto } from "../_types/schoolSubject.dto";
+import { AutocompleteFetchRequest } from "@/commons/_components/autocomplete/autocomplete";
 
 export interface SchoolSubjectAutocompleteProps extends Omit<
     SessionEntityAutocompleteProps<SchoolSubjectDto>,
     'onFetch' |
-    'label'|
+    'label' |
     'noOptionText'> { }
 
 export function SchoolSubjectAutocomplete(props: SchoolSubjectAutocompleteProps) {
     const { t } = useTranslation('translation', { keyPrefix: 'schoolSubject.autocomplete' })
     const apiFetch = useApiFetch()
 
-    const onFetch = useCallback((value?: string, inputValue?: string, params?: any, payload?: any) => {
-        return apiFetch('school-subject/fetch', { method: 'POST', body: JSON.stringify(payload) })
-            .then(async(response: Response) => {
-                const { data, error} = await response.json();
-                return ({items: data.items, error}) as AutocompleteFetchResult<SchoolSubjectDto>
+    const fetch = useCallback((request: AutocompleteFetchRequest<SchoolSubjectDto>) => {
+        const map = (arr: Array<SchoolSubjectDto>, visible: boolean) => arr.map((object: SchoolSubjectDto) => ({
+            value: object.id,
+            label: object.title,
+            visible,
+            object,
+        }))
+        return apiFetch('school-subject/fetch', { method: 'POST', body: JSON.stringify(request.payload) })
+            .then(async (response?: Response) => {
+                if (!response) { return undefined; }
+                const { data, error } = await response.json();
+                return ({
+                    items: [
+                        ...map(data.items ?? [], true),
+                        ...map(data.extra ?? [], false)
+                    ], error, request
+                }) as AutocompleteFetchResult<SchoolSubjectDto>
             })
     }, [apiFetch])
-    
+
     return (<SessionEntityAutocomplete
         {...props}
-        onFetch={onFetch}
+        onFetch={fetch}
         label={t('Subject')}
         noOptionText={t('No Options')}
     />)
