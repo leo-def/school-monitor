@@ -2,10 +2,7 @@ import { Account, Branch, Collaborator, Company } from '@prisma/client';
 
 export type BranchInfo = Pick<Branch, 'id' | 'title'>;
 
-export type CompanyInfo = Pick<
-  Company & { branchs: Array<BranchInfo> },
-  'id' | 'title' | 'branchs'
->;
+export type CompanyInfo = Pick<Company, 'id' | 'title'>;
 
 export type CollaboratorInfo = Pick<
   Collaborator & {

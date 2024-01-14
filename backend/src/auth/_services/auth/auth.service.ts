@@ -78,10 +78,6 @@ export class AuthService {
           ? {
               id: collaborator.company.id,
               title: collaborator.company.title,
-              branchs: collaborator.company.branchs.map((branch) => ({
-                id: branch.id,
-                title: branch.title,
-              })),
             }
           : undefined,
         role: collaborator.role,
