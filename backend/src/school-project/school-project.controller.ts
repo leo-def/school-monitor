@@ -17,36 +17,31 @@ import { SchoolProjectArrayResponseDto } from './_types/school-project-array-res
 import { SchoolProjectResponseDto } from './_types/school-project-response.dto';
 import { UpdateSchoolProjectRequestDto } from './_types/update-school-project-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { SchoolProjectPaginationResponseDto } from './_types/school-project-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolProject')
 @Controller('school-project')
 export class SchoolProjectController {
   constructor(private readonly service: SchoolProjectService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolProjectArrayResponseDto,
+    type: SchoolProjectPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({
-    description: 'Params',
-    type: SchoolProjectPaginationParamsDto,
-  })
+  @ApiBody({ description: 'Params', type: SchoolProjectPaginationParamsDto })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolProjectPaginationParamsDto,
-  ): Promise<Array<SchoolProjectDto>> {
+  ): Promise<SchoolProjectPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolProjectDto, response);
+    return plainToInstance(SchoolProjectPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })

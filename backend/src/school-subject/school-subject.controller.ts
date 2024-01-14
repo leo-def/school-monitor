@@ -12,41 +12,35 @@ import { plainToInstance } from 'class-transformer';
 import { SchoolSubjectPaginationParamsDto } from './_types/school-subject-pagination-params.dto';
 import { SchoolSubjectService } from './school-subject.service';
 import { SchoolSubjectDto } from './_types/school-subject.dto';
-import { SchoolSubjectArrayResponseDto } from './_types/school-subject-array-response.dto';
 import { SchoolSubjectResponseDto } from './_types/school-subject-response.dto';
 import { UpdateSchoolSubjectRequestDto } from './_types/update-school-subject-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
 import { CreateSchoolSubjectRequestDto } from './_types/create-school-subject-request.dto';
+import { SchoolSubjectPaginationResponseDto } from './_types/school-subject-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolSubject')
 @Controller('school-subject')
 export class SchoolSubjectController {
   constructor(private readonly service: SchoolSubjectService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolSubjectArrayResponseDto,
+    type: SchoolSubjectPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({
-    description: 'Params',
-    type: SchoolSubjectPaginationParamsDto,
-  })
+  @ApiBody({ description: 'Params', type: SchoolSubjectPaginationParamsDto })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolSubjectPaginationParamsDto,
-  ): Promise<Array<SchoolSubjectDto>> {
+  ): Promise<SchoolSubjectPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolSubjectDto, response);
+    return plainToInstance(SchoolSubjectPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

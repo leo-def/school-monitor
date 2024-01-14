@@ -6,6 +6,7 @@ import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/scho
 import { SchoolEventPaginationParamsDto } from './_types/school-event-pagination-params.dto';
 import { UpdateSchoolEventRequestDto } from './_types/update-school-event-request.dto';
 import { CreateSchoolEventRequestDto } from './_types/create-school-event-request.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class SchoolEventService {
@@ -13,9 +14,8 @@ export class SchoolEventService {
 
   async fetch(
     params: SchoolEventPaginationParamsDto,
-  ): Promise<Array<SchoolEvent>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.schoolEvent.findMany(query);
+  ): Promise<PaginationResponse<SchoolEvent, SchoolEventPaginationParamsDto>> {
+    return await Pagination.fetch(this.prisma, 'schoolEvent', params);
   }
 
   async find(id: string): Promise<SchoolEvent> {

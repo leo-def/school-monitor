@@ -12,41 +12,35 @@ import { plainToInstance } from 'class-transformer';
 import { SchoolTermService } from './school-term.service';
 import { SchoolTermDto } from './_types/school-term.dto';
 import { SchoolTermPaginationParamsDto } from './_types/school-term-pagination-params.dto';
-import { SchoolTermArrayResponseDto } from './_types/school-term-array-response.dto';
 import { UpdateSchoolTermRequestDto } from './_types/update-school-term-request.dto';
 import { SchoolTermResponseDto } from './_types/school-term-response.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
 import { CreateSchoolTermRequestDto } from './_types/create-school-term-request.dto';
+import { SchoolTermPaginationResponseDto } from './_types/school-term-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolTerm')
 @Controller('school-term')
 export class SchoolTermController {
   constructor(private readonly service: SchoolTermService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolTermArrayResponseDto,
+    type: SchoolTermPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({
-    description: 'Params',
-    type: SchoolTermPaginationParamsDto,
-  })
+  @ApiBody({ description: 'Params', type: SchoolTermPaginationParamsDto })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolTermPaginationParamsDto,
-  ): Promise<Array<SchoolTermDto>> {
+  ): Promise<SchoolTermPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolTermDto, response);
+    return plainToInstance(SchoolTermPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

@@ -6,6 +6,7 @@ import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/scho
 import { SchoolMealPaginationParamsDto } from './_types/school-meal-pagination-params.dto';
 import { UpdateSchoolMealRequestDto } from './_types/update-school-meal-request.dto';
 import { CreateSchoolMealRequestDto } from './_types/create-school-meal-request.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class SchoolMealService {
@@ -13,9 +14,8 @@ export class SchoolMealService {
 
   async fetch(
     params: SchoolMealPaginationParamsDto,
-  ): Promise<Array<SchoolMeal>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.schoolMeal.findMany(query);
+  ): Promise<PaginationResponse<SchoolMeal, SchoolMealPaginationParamsDto>> {
+    return await Pagination.fetch(this.prisma, 'schoolMeal', params);
   }
 
   async find(id: string): Promise<SchoolMeal> {

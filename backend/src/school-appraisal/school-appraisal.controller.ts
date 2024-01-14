@@ -17,33 +17,34 @@ import { SchoolAppraisalArrayResponseDto } from './_types/school-appraisal-array
 import { SchoolAppraisalResponseDto } from './_types/school-appraisal-response.dto';
 import { UpdateSchoolAppraisalRequestDto } from './_types/update-school-appraisal-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { SchoolAppraisalPaginationResponseDto } from './_types/school-appraisal-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolAppraisal')
 @Controller('school-appraisal')
 export class SchoolAppraisalController {
   constructor(private readonly service: SchoolAppraisalService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolAppraisalArrayResponseDto,
+    type: SchoolAppraisalPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Params', type: SchoolAppraisalPaginationParamsDto })
+  @ApiBody({
+    description: 'Params',
+    type: SchoolAppraisalPaginationParamsDto,
+  })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolAppraisalPaginationParamsDto,
-  ): Promise<Array<SchoolAppraisalDto>> {
+  ): Promise<SchoolAppraisalPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolAppraisalDto, response);
+    return plainToInstance(SchoolAppraisalPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })

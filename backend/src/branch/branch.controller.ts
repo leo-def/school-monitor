@@ -12,11 +12,10 @@ import { plainToInstance } from 'class-transformer';
 import { BranchService } from './branch.service';
 import { BranchDto } from './_types/branch.dto';
 import { BranchPaginationParamsDto } from './_types/branch-pagination-params.dto';
-import { BranchArrayResponseDto } from './_types/branch-array-response.dto';
 import { BranchResponseDto } from './_types/branch-response.dto';
 import { UpdateBranchRequestDto } from './_types/update-branch-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
-import { PaginationResponse } from 'src/pagination/_types/response';
+import { BranchPaginationResponseDto } from './_types/branch-pagination-response.dto';
 
 @ApiTags('School Monitor | Branch')
 @Controller('branch')
@@ -26,7 +25,7 @@ export class BranchController {
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: BranchArrayResponseDto,
+    type: BranchPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
@@ -38,12 +37,9 @@ export class BranchController {
   @Post('fetch')
   async fetch(
     @Body() params: BranchPaginationParamsDto,
-  ): Promise<PaginationResponse<BranchDto, BranchPaginationParamsDto>> {
+  ): Promise<BranchPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(
-      PaginationResponse<BranchDto, BranchPaginationParamsDto>,
-      response,
-    );
+    return plainToInstance(BranchPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

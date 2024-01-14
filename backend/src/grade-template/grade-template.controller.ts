@@ -10,37 +10,37 @@ import {
 import { plainToInstance } from 'class-transformer';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
 import { GradeTemplateService } from './grade-template.service';
-import { GradeTemplateArrayResponseDto } from './_types/grade-template-array-response.dto';
 import { GradeTemplatePaginationParamsDto } from './_types/grade-template-pagination-params.dto';
 import { GradeTemplateResponseDto } from './_types/grade-template-response.dto';
 import { GradeTemplateDto } from './_types/grade-template.dto';
 import { UpdateGradeTemplateRequestDto } from './_types/update-grade-template-request.dto';
+import { GradeTemplatePaginationResponseDto } from './_types/grade-template-pagination-response.dto';
 
 @Controller('grade-template')
 export class GradeTemplateController {
   constructor(private readonly service: GradeTemplateService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: GradeTemplateArrayResponseDto,
+    type: GradeTemplatePaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Params', type: GradeTemplatePaginationParamsDto })
+  @ApiBody({
+    description: 'Params',
+    type: GradeTemplatePaginationParamsDto,
+  })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: GradeTemplatePaginationParamsDto,
-  ): Promise<Array<GradeTemplateDto>> {
+  ): Promise<GradeTemplatePaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(GradeTemplateDto, response);
+    return plainToInstance(GradeTemplatePaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

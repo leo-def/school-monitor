@@ -17,33 +17,34 @@ import { SchoolEventArrayResponseDto } from './_types/school-event-array-respons
 import { SchoolEventResponseDto } from './_types/school-event-response.dto';
 import { UpdateSchoolEventRequestDto } from './_types/update-school-event-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { SchoolEventPaginationResponseDto } from './_types/school-event-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolEvent')
 @Controller('school-event')
 export class SchoolEventController {
   constructor(private readonly service: SchoolEventService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolEventArrayResponseDto,
+    type: SchoolEventPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Params', type: SchoolEventPaginationParamsDto })
+  @ApiBody({
+    description: 'Params',
+    type: SchoolEventPaginationParamsDto,
+  })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolEventPaginationParamsDto,
-  ): Promise<Array<SchoolEventDto>> {
+  ): Promise<SchoolEventPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolEventDto, response);
+    return plainToInstance(SchoolEventPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })

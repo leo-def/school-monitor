@@ -17,19 +17,17 @@ import { SchoolNotificationArrayResponseDto } from './_types/school-notification
 import { SchoolNotificationResponseDto } from './_types/school-notification-response.dto';
 import { UpdateSchoolNotificationRequestDto } from './_types/update-school-notification-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { SchoolNotificationPaginationResponseDto } from './_types/school-notification-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolNotification')
 @Controller('school-notification')
 export class SchoolNotificationController {
   constructor(private readonly service: SchoolNotificationService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolNotificationArrayResponseDto,
+    type: SchoolNotificationPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
@@ -44,9 +42,9 @@ export class SchoolNotificationController {
   @Post('fetch')
   async fetch(
     @Body() params: SchoolNotificationPaginationParamsDto,
-  ): Promise<Array<SchoolNotificationDto>> {
+  ): Promise<SchoolNotificationPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolNotificationDto, response);
+    return plainToInstance(SchoolNotificationPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })

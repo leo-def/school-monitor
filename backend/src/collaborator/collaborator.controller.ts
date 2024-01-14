@@ -12,11 +12,11 @@ import { plainToInstance } from 'class-transformer';
 import { CollaboratorService } from './collaborator.service';
 import { CollaboratorDto } from './_types/collaborator.dto';
 import { CollaboratorPaginationParamsDto } from './_types/collaborator-pagination-params.dto';
-import { CollaboratorArrayResponseDto } from './_types/collaborator-array-response.dto';
 import { CollaboratorResponseDto } from './_types/collaborator-response.dto';
 import { UpdateCollaboratorRequestDto } from './_types/update-collaborator-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
 import { CreateCollaboratorRequestDto } from './_types/create-collaborator-request.dto';
+import { CollaboratorPaginationResponseDto } from './_types/collaborator-pagination-response.dto';
 
 @ApiTags('School Monitor | Collaborator')
 @Controller('collaborator')
@@ -26,21 +26,24 @@ export class CollaboratorController {
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: CollaboratorArrayResponseDto,
+    type: CollaboratorPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Params', type: CollaboratorPaginationParamsDto })
+  @ApiBody({
+    description: 'Params',
+    type: CollaboratorPaginationParamsDto,
+  })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: CollaboratorPaginationParamsDto,
-  ): Promise<Array<CollaboratorDto>> {
+  ): Promise<CollaboratorPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(CollaboratorDto, response);
+    return plainToInstance(CollaboratorPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

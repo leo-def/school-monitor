@@ -12,12 +12,12 @@ import { plainToInstance } from 'class-transformer';
 import { SchoolSectionPaginationParamsDto } from './_types/school-section-pagination-params.dto';
 import { SchoolSectionDto } from './_types/school-section.dto';
 import { SchoolSectionService } from './school-section.service';
-import { SchoolSectionArrayResponseDto } from './_types/school-section-array-response.dto';
 import { SchoolSectionResponseDto } from './_types/school-section-response.dto';
 import { UpdateSchoolSectionRequestDto } from './_types/update-school-section-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
 import { CreateSchoolSectionRequestDto } from './_types/create-school-section-request.dto';
 import { SchoolSectionGetOrCreateParamsDto } from './_types/school-section-get-or-create-params.dto';
+import { SchoolSectionPaginationResponseDto } from './_types/school-section-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolSection')
 @Controller('school-section')
@@ -50,13 +50,10 @@ export class SchoolSectionController {
     return plainToInstance(SchoolSectionDto, response);
   }
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolSectionArrayResponseDto,
+    type: SchoolSectionPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
@@ -71,9 +68,9 @@ export class SchoolSectionController {
   @Post('fetch')
   async fetch(
     @Body() params: SchoolSectionPaginationParamsDto,
-  ): Promise<Array<SchoolSectionDto>> {
+  ): Promise<SchoolSectionPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolSectionDto, response);
+    return plainToInstance(SchoolSectionPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

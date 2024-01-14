@@ -12,11 +12,10 @@ import { plainToInstance } from 'class-transformer';
 import { CompanyService } from './company.service';
 import { CompanyDto } from './_types/company.dto';
 import { CompanyPaginationParamsDto } from './_types/company-pagination-params.dto';
-import { CompanyArrayResponseDto } from './_types/company-array-response.dto';
 import { UpdateCompanyRequestDto } from './_types/update-company-request.dto';
 import { CompanyResponseDto } from './_types/company-response.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
-import { PaginationResponse } from 'src/pagination/_types/response';
+import { CompanyPaginationResponseDto } from './_types/company-pagination-response.dto';
 
 @ApiTags('School Monitor | Company')
 @Controller('company')
@@ -26,7 +25,7 @@ export class CompanyController {
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: CompanyArrayResponseDto,
+    type: CompanyPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
@@ -38,12 +37,9 @@ export class CompanyController {
   @Post('fetch')
   async fetch(
     @Body() params: CompanyPaginationParamsDto,
-  ): Promise<PaginationResponse<CompanyDto, CompanyPaginationParamsDto>> {
+  ): Promise<CompanyPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(
-      PaginationResponse<CompanyDto, CompanyPaginationParamsDto>,
-      response,
-    );
+    return plainToInstance(CompanyPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

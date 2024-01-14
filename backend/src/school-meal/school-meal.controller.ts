@@ -17,33 +17,34 @@ import { SchoolMealArrayResponseDto } from './_types/school-meal-array-response.
 import { SchoolMealResponseDto } from './_types/school-meal-response.dto';
 import { UpdateSchoolMealRequestDto } from './_types/update-school-meal-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { SchoolMealPaginationResponseDto } from './_types/school-meal-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolMeal')
 @Controller('school-meal')
 export class SchoolMealController {
   constructor(private readonly service: SchoolMealService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolMealArrayResponseDto,
+    type: SchoolMealPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Params', type: SchoolMealPaginationParamsDto })
+  @ApiBody({
+    description: 'Params',
+    type: SchoolMealPaginationParamsDto,
+  })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolMealPaginationParamsDto,
-  ): Promise<Array<SchoolMealDto>> {
+  ): Promise<SchoolMealPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolMealDto, response);
+    return plainToInstance(SchoolMealPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })

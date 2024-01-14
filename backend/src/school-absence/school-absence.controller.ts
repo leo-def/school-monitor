@@ -13,37 +13,37 @@ import { SchoolAbsenceService } from './school-absence.service';
 import { SchoolAbsenceDto } from './_types/school-absence.dto';
 import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/school-section-pagination-params.dto';
 import { SchoolAbsencePaginationParamsDto } from './_types/school-absence-pagination-params.dto';
-import { SchoolAbsenceArrayResponseDto } from './_types/school-absence-array-response.dto';
 import { SchoolAbsenceResponseDto } from './_types/school-absence-response.dto';
 import { UpdateSchoolAbsenceRequestDto } from './_types/update-school-absence-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { SchoolAbsencePaginationResponseDto } from './_types/school-absence-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolAbsence')
 @Controller('school-absence')
 export class SchoolAbsenceController {
   constructor(private readonly service: SchoolAbsenceService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolAbsenceArrayResponseDto,
+    type: SchoolAbsencePaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Params', type: SchoolAbsencePaginationParamsDto })
+  @ApiBody({
+    description: 'Params',
+    type: SchoolAbsencePaginationParamsDto,
+  })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolAbsencePaginationParamsDto,
-  ): Promise<Array<SchoolAbsenceDto>> {
+  ): Promise<SchoolAbsencePaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolAbsenceDto, response);
+    return plainToInstance(SchoolAbsencePaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })

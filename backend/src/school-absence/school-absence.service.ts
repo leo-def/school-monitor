@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/school-section-pagination-params.dto';
 import { SchoolAbsencePaginationParamsDto } from './_types/school-absence-pagination-params.dto';
 import { CreateSchoolAbsenceRequestDto } from './_types/create-school-absence-request.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class SchoolAbsenceService {
@@ -12,9 +13,10 @@ export class SchoolAbsenceService {
 
   async fetch(
     params: SchoolAbsencePaginationParamsDto,
-  ): Promise<Array<SchoolAbsence>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.schoolAbsence.findMany(query);
+  ): Promise<
+    PaginationResponse<SchoolAbsence, SchoolAbsencePaginationParamsDto>
+  > {
+    return await Pagination.fetch(this.prisma, 'schoolAbsence', params);
   }
 
   async find(id: string): Promise<SchoolAbsence> {

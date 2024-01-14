@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolSubjectPaginationParamsDto } from './_types/school-subject-pagination-params.dto';
 import { CreateSchoolSubjectRequestDto } from './_types/create-school-subject-request.dto';
 import { UpdateSchoolSubjectRequestDto } from './_types/update-school-subject-request.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class SchoolSubjectService {
@@ -12,9 +13,10 @@ export class SchoolSubjectService {
 
   async fetch(
     params: SchoolSubjectPaginationParamsDto,
-  ): Promise<Array<SchoolSubject>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.schoolSubject.findMany(query);
+  ): Promise<
+    PaginationResponse<SchoolSubject, SchoolSubjectPaginationParamsDto>
+  > {
+    return await Pagination.fetch(this.prisma, 'schoolSubject', params);
   }
 
   async find(id: string): Promise<SchoolSubject> {

@@ -12,37 +12,37 @@ import { plainToInstance } from 'class-transformer';
 import { SchoolClassService } from './school-class.service';
 import { SchoolClassDto } from './_types/school-class.dto';
 import { SchoolClassPaginationParamsDto } from './_types/school-class-pagination-params.dto';
-import { SchoolClassArrayResponseDto } from './_types/school-class-array-response.dto';
 import { SchoolClassResponseDto } from './_types/school-class-response.dto';
 import { UpdateSchoolClassRequestDto } from './_types/update-school-class-request.dto';
 import { ApiErrorResponseDto } from 'src/api/_dos/api-error-response.dto';
+import { SchoolClassPaginationResponseDto } from './_types/school-class-pagination-response.dto';
 
 @ApiTags('School Monitor | SchoolClass')
 @Controller('school-class')
 export class SchoolClassController {
   constructor(private readonly service: SchoolClassService) {}
 
-  @ApiOperation({
-    description: 'Fetch by section.',
-    summary: 'Fetch by section.',
-  })
+  @ApiOperation({ description: 'Fetch.', summary: 'Fetch.' })
   @ApiOkResponse({
     description: 'OK.',
-    type: SchoolClassArrayResponseDto,
+    type: SchoolClassPaginationResponseDto,
   })
   @ApiInternalServerErrorResponse({
     status: 500,
     description: 'Internal server error',
     type: ApiErrorResponseDto,
   })
-  @ApiBody({ description: 'Params', type: SchoolClassPaginationParamsDto })
+  @ApiBody({
+    description: 'Params',
+    type: SchoolClassPaginationParamsDto,
+  })
   @ApiBearerAuth()
   @Post('fetch')
   async fetch(
     @Body() params: SchoolClassPaginationParamsDto,
-  ): Promise<Array<SchoolClassDto>> {
+  ): Promise<SchoolClassPaginationResponseDto> {
     const response = await this.service.fetch(params);
-    return plainToInstance(SchoolClassDto, response);
+    return plainToInstance(SchoolClassPaginationResponseDto, response);
   }
 
   @ApiOperation({ description: 'Create.', summary: 'Create.' })

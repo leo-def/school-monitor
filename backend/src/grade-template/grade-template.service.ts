@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGradeTemplateRequestDto } from './_types/create-grade-template-request.dto';
 import { GradeTemplatePaginationParamsDto } from './_types/grade-template-pagination-params.dto';
 import { UpdateGradeTemplateRequestDto } from './_types/update-grade-template-request.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class GradeTemplateService {
@@ -12,9 +13,10 @@ export class GradeTemplateService {
 
   async fetch(
     params: GradeTemplatePaginationParamsDto,
-  ): Promise<Array<GradeTemplate>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.gradeTemplate.findMany(query);
+  ): Promise<
+    PaginationResponse<GradeTemplate, GradeTemplatePaginationParamsDto>
+  > {
+    return await Pagination.fetch(this.prisma, 'gradeTemplate', params);
   }
 
   async find(id: string): Promise<GradeTemplate> {

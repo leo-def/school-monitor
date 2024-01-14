@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolSectionPaginationParamsDto } from 'src/school-section/_types/school-section-pagination-params.dto';
 import { SchoolAppraisalPaginationParamsDto } from './_types/school-appraisal-pagination-params.dto';
 import { CreateSchoolAppraisalRequestDto } from './_types/create-school-appraisal-request.dto';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class SchoolAppraisalService {
@@ -12,9 +13,10 @@ export class SchoolAppraisalService {
 
   async fetch(
     params: SchoolAppraisalPaginationParamsDto,
-  ): Promise<Array<SchoolAppraisal>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.schoolAppraisal.findMany(query);
+  ): Promise<
+    PaginationResponse<SchoolAppraisal, SchoolAppraisalPaginationParamsDto>
+  > {
+    return await Pagination.fetch(this.prisma, 'schoolAppraisal', params);
   }
 
   async find(id: string): Promise<SchoolAppraisal> {

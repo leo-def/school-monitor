@@ -6,6 +6,7 @@ import { CollaboratorPaginationParamsDto } from './_types/collaborator-paginatio
 import { UpdateCollaboratorRequestDto } from './_types/update-collaborator-request.dto';
 import { CreateCollaboratorRequestDto } from './_types/create-collaborator-request.dto';
 import { AccountService } from 'src/account/_services/account/account.service';
+import { PaginationResponse } from 'src/pagination/_types/response';
 
 @Injectable()
 export class CollaboratorService {
@@ -16,9 +17,10 @@ export class CollaboratorService {
 
   async fetch(
     params: CollaboratorPaginationParamsDto,
-  ): Promise<Array<Collaborator>> {
-    const query = Pagination.paramsToQuery(params, undefined);
-    return await this.prisma.collaborator.findMany(query);
+  ): Promise<
+    PaginationResponse<Collaborator, CollaboratorPaginationParamsDto>
+  > {
+    return await Pagination.fetch(this.prisma, 'collaborator', params);
   }
 
   async find(id: string): Promise<Collaborator> {
