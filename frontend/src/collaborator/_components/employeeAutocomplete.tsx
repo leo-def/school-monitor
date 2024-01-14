@@ -3,8 +3,11 @@ import { useTranslation } from "react-i18next";
 import { CollaboratorAutocomplete, CollaboratorAutocompleteProps } from "./collaboratorAutocomplete";
 import { CollaboratorRole } from "../_enums/collaboratorRole";
 
-export interface EmployeeAutocompleteProps extends Omit<CollaboratorAutocompleteProps, 'roles' | 'label'> {
-    readonly label?: string
+export interface EmployeeAutocompleteProps extends Omit<CollaboratorAutocompleteProps,
+    'roles' |
+    'onFetch' |
+    'label' |
+    'noOptionText'> {
 }
 
 export function EmployeeAutocomplete(props: EmployeeAutocompleteProps) {
@@ -12,5 +15,6 @@ export function EmployeeAutocomplete(props: EmployeeAutocompleteProps) {
     return (<CollaboratorAutocomplete
         {...props}
         roles={[CollaboratorRole.PROFESSOR, CollaboratorRole.MANAGER]}
-        label={props.label ?? t('Employee')} />)
+        label={t('Employee')}
+        noOptionText={t('No Options')} />)
 }

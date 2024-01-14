@@ -16,21 +16,21 @@ export function EntityAutocomplete<T extends EntityDto>({
     ...props
 }: EntityAutocompleteProps<T>) {
     const addMessage = useAddMessage()
-
     const onFetch = useCallback(({
         value,
         inputValue,
         params,
         payload,
-    }: AutocompleteFetchRequest) => {
+    }: AutocompleteFetchRequest<T>) => {
+        const titleField = params.titleField ?? 'title'
         const newPayload = {
             ...(payload ?? {}),
             filter: {
                 ...(payload?.filter ?? {}),
                 ...(params?.options ? { id: { in: params.options } } : {}),
-                ...(inputValue ? { [params.titleField]: { contains: inputValue } } : {}),
+                ...(inputValue ? { [titleField]: { contains: inputValue } } : {}),
             },
-            ...(value ? {extra: { id: value }} : {})
+            ...(value?.value ? { extra: { id: value?.value } } : {})
         }
         return props.onFetch({
             value,
@@ -39,7 +39,7 @@ export function EntityAutocomplete<T extends EntityDto>({
             payload: newPayload,
         })
             .then((response: AutocompleteFetchResult<T> | undefined) => {
-                if(response?.error) {
+                if (response?.error) {
                     throw response?.error
                 }
                 return response
@@ -53,7 +53,8 @@ export function EntityAutocomplete<T extends EntityDto>({
     const params = useMemo(() => ({
         ...(props.params ?? {}),
         options,
-    }), [options, props.params])
+        titleField
+    }), [options, titleField, props.params])
     return (<Autocomplete
         {...props}
         onFetch={onFetch}

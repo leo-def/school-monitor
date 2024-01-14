@@ -8,7 +8,7 @@ import { AutocompleteFetchResult } from "@/commons/_types/autocompleteFetchResul
 import { CollaboratorRole } from "../_enums/collaboratorRole";
 import { CollaboratorDto } from "../_types/collaborator.dto";
 import { AutocompleteFetchRequest } from "@/commons/_components/autocomplete/autocomplete";
-export interface CollaboratorAutocompleteProps extends SessionEntityAutocompleteProps<CollaboratorDto>{
+export interface CollaboratorAutocompleteProps extends Omit<SessionEntityAutocompleteProps<CollaboratorDto>, 'onFetch'> {
     readonly roles?: Array<CollaboratorRole>
 }
 
@@ -21,37 +21,60 @@ export function CollaboratorAutocomplete({
     const { t } = useTranslation('translation', { keyPrefix: 'collaborator.autocomplete' })
     const apiFetch = useApiFetch()
 
-    const onFetch = useCallback((request: AutocompleteFetchRequest) => {
-        const map = (arr: Array<BranchDto>, visible: boolean) => arr.map((object: BranchDto) => ({
+
+    const fetch = useCallback((request: AutocompleteFetchRequest<CollaboratorDto>) => {
+        const map = (arr: Array<CollaboratorDto>, visible: boolean) => arr.map((object: CollaboratorDto) => ({
             value: object.id,
             label: object.title,
             visible,
             object,
         }))
-        const payload = {
-            ...(request.payload ?? {}),
+        return apiFetch('collaborator/fetch', { method: 'POST', body: JSON.stringify(request.payload) })
+            .then(async (response?: Response) => {
+                if (!response) { return undefined; }
+                const { data, error } = await response.json();
+                return ({
+                    items: [
+                        ...map(data.items ?? [], true),
+                        ...map(data.extra ?? [], false)
+                    ], error, request
+                }) as AutocompleteFetchResult<CollaboratorDto>
+            })
+    }, [apiFetch])
+
+    const onFetch = useCallback(({
+        value,
+        inputValue,
+        params,
+        payload,
+    }: AutocompleteFetchRequest<CollaboratorDto>) => {
+        if (!params?.companyId && params?.companyBranch) {
+            return Promise.resolve(undefined)
+        }
+        const newPayload = {
+            ...(payload ?? {}),
             filter: {
-                ...(request.payload?.filter ?? {}),
+                ...(payload?.filter ?? {}),
                 ...(params?.roles ? { role: { in: params?.roles } } : {})
             }
         }
-        return apiFetch('branch/fetch', { method: 'POST', body: JSON.stringify(payload) })
-        .then(async(response: Response) => {
-            const { data, error} = await response.json();
-            return ({items: [
-                ...map(data.items ?? [], true),
-                ...map(data.extra ?? [], false)
-            ] , error, request}) as AutocompleteFetchResult<BranchDto>
-        })
-    }, [apiFetch])
 
-    const params = useMemo(() =>({ ...(props.params ?? {}), roles }), [roles, props.params])
+        return fetch({
+            value,
+            inputValue,
+            params,
+            payload: newPayload,
+        })
+    }, [fetch])
+
+
+    const params = useMemo(() => ({ ...(props.params ?? {}), roles }), [roles, props.params])
 
     return (<SessionEntityAutocomplete
         {...props}
         onFetch={onFetch}
         label={label ?? t('Collaborator')}
-        noOptionText={ noOptionText ?? t('No Options')}
+        noOptionText={noOptionText ?? t('No Options')}
         params={params}
     />)
 }
