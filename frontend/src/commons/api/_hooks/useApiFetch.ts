@@ -7,11 +7,12 @@ import { useGetAuthToken } from "@/auth/_hooks/useGetAuthToken";
 export function useApiFetch(): (
   input: RequestInfo | URL,
   init?: RequestInit
-) => Promise<Response> {
+) => Promise<Response | undefined> {
   const token = useGetAuthToken();
   const router = useRouter();
+
   const func = useCallback(
-    (input: RequestInfo | URL, init?: RequestInit) => {
+    async (input: RequestInfo | URL, init?: RequestInit) => {
       const headers = {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -32,7 +33,7 @@ export function useApiFetch(): (
           headers,
         });
         if (response.status === 401) {
-          router.replace("/logout");
+          return Promise.resolve(router.push("/logout")).then(() => undefined);
         }
         return response;
       };
