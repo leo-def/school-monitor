@@ -1,18 +1,13 @@
 import { ActionEnum } from "../_enums/action.enum";
+import { CollectionViewEnum } from "../_enums/collectionView.enum";
 import { ManageStatusState } from "../_types/status/manageStatusState";
 
 export const initialState = {
   selected: undefined,
   action: ActionEnum.COLLECTION,
-collectionView: CollectionViewEnum.TABLE,
+  collectionView: CollectionViewEnum.TABLE,
   fetchParams: {
     page: 0,
-    limit: 10,
-    sort: [],
-    filter: [],
   },
   fetchResult: undefined,
-} as ManageStatusState<unknown>;
-
-
-fetchParams: FetchParams;
+} as ManageStatusState<any>;
