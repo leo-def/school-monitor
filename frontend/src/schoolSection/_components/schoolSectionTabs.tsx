@@ -29,6 +29,7 @@ export function SchoolSectionTabs() {
         setLoading(true)
         apiFetch('school-section/get-or-create', { method: 'POST', body: JSON.stringify(params) })
             .then(async (response) => {
+                if (!response) { return undefined }
                 const data = await response.json()
                 if (data.error) {
                     addMessage({ title: data.error, severity: MessageSeverityEnum.ERROR })

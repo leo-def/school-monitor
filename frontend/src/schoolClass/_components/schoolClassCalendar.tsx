@@ -5,7 +5,6 @@ import { CalendarDateFnsUtilsProvider } from "@/calendar/_components/providers/c
 import { CalendarEventsContextProvider } from "@/calendar/_components/providers/calendarEventsContextProvider";
 import { CalendarEvent } from "@/calendar/_types/calendarEvent";
 import { getMockEvents } from "@/calendar/_mocks/getMockEvents";
-//import { CalendarTypeProps, CalendarTypeSelect } from "./calendarTypeSelect";
 
 export function SchoolClassCalendar() {
     const [initialDate, setInitialDate] = useState(null as null | Date)

@@ -24,32 +24,23 @@ export function SchoolSectionFilterForm({
     schoolSubject,
     schoolTerm
 }: SchoolSectionFilterFormProps) {
-    const sessionForm = useGetSessionForm()
-
-    const companyId = useMemo(() => sessionForm?.company.value, [sessionForm?.company.value])
-    const branchId = useMemo(() => sessionForm?.branch.value, [sessionForm?.branch.value])
-
     return (<Grid container spacing={2}>
         <Grid item xs={12} md={6} lg={4} display={schoolClass.hidden ? "none" : undefined} >
             <SchoolClassAutocomplete
                 size="small"
                 disabled={schoolClass.disabled}
-                value={schoolClass.value}
-                onChange={schoolClass.onChange}
-                onObjectChange={schoolClass.onObjectChange}
-                companyId={companyId}
-                branchId={branchId} />
+                value={schoolClass.value?.id}
+                onChange={(value) => schoolClass.onChange ? schoolClass.onChange(value?.object) : undefined}
+            />
         </Grid>
 
         <Grid item xs={12} md={6} lg={4} display={schoolSubject.hidden ? "none" : undefined} >
             <SchoolSubjectAutocomplete
                 size="small"
                 disabled={schoolSubject.disabled}
-                value={schoolSubject.value}
-                onChange={schoolSubject.onChange}
-                onObjectChange={schoolSubject.onObjectChange}
-                companyId={companyId}
-                branchId={branchId} />
+                value={schoolSubject.value?.id}
+                onChange={(value) => schoolSubject.onChange ? schoolSubject.onChange(value?.object) : undefined}
+            />
         </Grid>
 
 
@@ -57,11 +48,9 @@ export function SchoolSectionFilterForm({
             <SchoolTermAutocomplete
                 size="small"
                 disabled={schoolTerm.disabled}
-                value={schoolTerm.value}
-                onChange={schoolTerm.onChange}
-                onObjectChange={schoolTerm.onObjectChange}
-                companyId={companyId}
-                branchId={branchId}
+                value={schoolTerm.value?.id}
+                onChange={(value) => schoolTerm.onChange ? schoolTerm.onChange(value?.object) : undefined}
+
             />
         </Grid>
 
@@ -70,11 +59,9 @@ export function SchoolSectionFilterForm({
             <EmployeeAutocomplete
                 size="small"
                 disabled={professor.disabled}
-                value={professor.value}
-                onChange={professor.onChange}
-                onObjectChange={professor.onObjectChange}
-                companyId={companyId}
-                branchId={branchId} />
+                value={professor.value?.id}
+                onChange={(value) => professor.onChange ? professor.onChange(value?.object) : undefined}
+            />
         </Grid>
     </Grid>)
 }
