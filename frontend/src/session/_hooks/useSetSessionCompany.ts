@@ -1,19 +1,19 @@
 "use client";
 
 import { useCallback, useContext } from "react";
+import { CompanyInfoDto } from "@/auth/_types/userInfo/companyInfo.dto";
 import { SessionContext } from "../_contexts/sessionContext";
 import { SessionActionTypeEnum } from "../_enums/sessionActionType.enum";
 
-export function useSetSessionCompanyId(): (id?: string) => void {
+export function useSetSessionCompany(): (company?: CompanyInfoDto) => void {
   const { dispatch } = useContext(SessionContext);
 
   const func = useCallback(
-    (id?: string) => {
-      console.log('useSetSessionCompanyId')
+    (company?: CompanyInfoDto) => {
       if (dispatch) {
         dispatch({
-          type: SessionActionTypeEnum.SET_COMPANY_ID,
-          payload: { id },
+          type: SessionActionTypeEnum.SET_COMPANY,
+          payload: { company },
         });
       }
     },

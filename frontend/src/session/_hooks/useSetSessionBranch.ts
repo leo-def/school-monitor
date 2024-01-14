@@ -1,19 +1,19 @@
 "use client";
 
 import { useCallback, useContext } from "react";
+import { BranchInfoDto } from "@/auth/_types/userInfo/branchInfo.dto";
 import { SessionContext } from "../_contexts/sessionContext";
 import { SessionActionTypeEnum } from "../_enums/sessionActionType.enum";
 
-export function useSetSessionBranchId(): (id?: string) => void {
+export function useSetSessionBranch(): (branch?: BranchInfoDto) => void {
   const { dispatch } = useContext(SessionContext);
 
   const func = useCallback(
-    (id?: string) => {
-      console.log('useSetSessionBranchId')
+    (branch?: BranchInfoDto) => {
       if (dispatch) {
         dispatch({
-          type: SessionActionTypeEnum.SET_BRANCH_ID,
-          payload: { id },
+          type: SessionActionTypeEnum.SET_BRANCH,
+          payload: { branch },
         });
       }
     },

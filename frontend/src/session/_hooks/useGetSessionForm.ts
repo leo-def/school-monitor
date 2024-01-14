@@ -3,18 +3,18 @@
 import { SessionStateUtils } from "../_services/sessionStateUtils";
 import { SessionForm } from "../_types/form/sessionForm";
 import { useGetSession } from "./useGetSession";
-import { useSetSessionBranchId } from "./useSetSessionBranchId";
-import { useSetSessionCompanyId } from "./useSetSessionCompanyId";
+import { useSetSessionBranch } from "./useSetSessionBranch";
+import { useSetSessionCompany } from "./useSetSessionCompany";
 
 export function useGetSessionForm(): SessionForm | undefined {
   const sessionState = useGetSession();
-  const setBranchId = useSetSessionBranchId();
-  const setCompanyId = useSetSessionCompanyId();
+  const setBranch = useSetSessionBranch();
+  const setCompany = useSetSessionCompany();
   if (!sessionState) {
     return undefined;
   }
   return SessionStateUtils.toSectionForm(sessionState, {
-    branch: setBranchId,
-    company: setCompanyId,
+    branch: setBranch,
+    company: setCompany,
   });
 }

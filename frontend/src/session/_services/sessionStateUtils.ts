@@ -7,57 +7,90 @@ import { AutocompleteFieldData } from "../../commons/api/_types/form/autocomplet
 import { CompanyDto } from "@/company/_types/company.dto";
 import { BranchDto } from "@/branch/_types/branch.dto";
 import { RoleEnum } from "@/auth/_enums/role.enum";
+import { CompanyInfoDto } from "@/auth/_types/userInfo/companyInfo.dto";
 
 export class SessionStateUtils {
   static toSectionForm(
     sessionState: SessionState,
     onChange?: {
-      branch: (id: string) => void;
-      company: (id: string) => void;
+      branch: (id: BranchInfoDto) => void;
+      company: (id: CompanyInfoDto) => void;
     }
   ) {
-    const { role, collaborator, branch  } = sessionState;
-    const collaboratorsList = role === RoleEnum.CUSTOMER && sessionState.collaboratorsList ? sessionState.collaboratorsList : undefined
-    const branchList = role === RoleEnum.CUSTOMER && collaborator?.company?.branchs ? collaborator?.company.branchs : undefined;
+    const { role, collaborator, branch, company } = sessionState;
+
+    const collaboratorsList =
+      role === RoleEnum.CUSTOMER && sessionState.collaboratorsList
+        ? sessionState.collaboratorsList
+        : undefined;
+
+    const companyOptions = collaboratorsList
+      ? collaboratorsList.map((collaborator) => collaborator.company.id)
+      : undefined;
+    const companyDisabled = collaboratorsList && collaboratorsList.length <= 1;
+
+    const defaultBranch = collaborator?.branch;
+    const branchDisabled = !!defaultBranch;
+
     const sectionForm = {
       company: {
-        options:  collaboratorsList ? collaboratorsList.map( (collaborator) => collaborator.company.id) : undefined,
-        disabled: collaboratorsList && collaboratorsList.length <= 1,
+        value: company,
+        options: companyOptions,
+        disabled: companyDisabled,
         onChange: onChange?.company,
       } as AutocompleteFieldData<CompanyDto>,
       branch: {
-        value: branch?.id,
-        options: branchList ? branchList.map((branch) => branch.id) : undefined,
-        disabled: !!collaborator?.branch || (branchList && branchList.length <= 1),
+        value: branch,
+        disabled: branchDisabled,
         onChange: onChange?.branch,
       } as AutocompleteFieldData<BranchDto>,
     } as SessionForm;
-    return sectionForm
+    return sectionForm;
   }
 
   static setUserInfo(userInfo: UserInfoDto) {
     const { collaboratorsList, role } = userInfo;
     const collaborator = collaboratorsList ? collaboratorsList[0] : undefined;
     const state = {
-      role, 
+      role,
       collaboratorsList,
     } as SessionState;
-    return SessionStateUtils.setCollaborator(collaborator, state);
+    return SessionStateUtils.setCollaboratorInfo(collaborator, state);
   }
 
-  static setCollaborator(
+  static setCollaboratorInfo(
     collaborator: CollaboratorInfoDto | undefined,
     sessionState: SessionState
   ) {
-    const branch = collaborator?.branch ?? collaborator?.company.branchs[0];
-    const state = {
+    const company = collaborator?.company;
+    const branch = collaborator?.branch;
+    return {
       ...sessionState,
       collaborator,
+      company,
+      branch,
     } as SessionState;
-    return SessionStateUtils.setBranch(branch, state);
   }
 
-  static setBranch(
+  static setCompanyInfo(
+    company: CompanyInfoDto | undefined,
+    sessionState: SessionState
+  ) {
+    const collaborator =
+      company?.id && sessionState.collaboratorsList
+        ? sessionState.collaboratorsList?.find(
+            (collaborator) => collaborator.company.id === company?.id
+          )
+        : undefined;
+    return {
+      ...sessionState,
+      company,
+      branch: undefined,
+      collaborator,
+    } as SessionState;
+  }
+
+  static setBranchInfo(
     branch: BranchInfoDto | undefined,
     sessionState: SessionState
   ) {
@@ -65,26 +98,5 @@ export class SessionStateUtils {
       ...sessionState,
       branch,
     };
-  }
-
-  static setCompanyId(
-    companyId: string | undefined,
-    sessionState: SessionState
-  ) {
-    const collaborator = companyId && sessionState.collaboratorsList
-      ? sessionState.collaboratorsList.find(
-          (collaborator) => collaborator.company.id === companyId
-        )
-      : undefined;
-    return SessionStateUtils.setCollaborator(collaborator, sessionState);
-  }
-
-  static setBranchId(branchId: string | undefined, sessionState: SessionState) {
-    const branch = branchId
-      ? (sessionState.collaborator?.company?.branchs ?? []).find(
-          (branch) => branch.id === branchId
-        )
-      : undefined;
-    return SessionStateUtils.setBranch(branch, sessionState);
   }
 }

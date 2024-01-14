@@ -16,21 +16,19 @@ export function SessionForm() {
                     size="small"
                     disabled={company.disabled}
                     options={company.options}
-                    value={company.value}
-                    onChange={company.onChange}
-                    onObjectChange={company.onObjectChange} />
+                    value={company.value?.id}
+                    onChange={(value) => company.onChange ? company.onChange(value?.object) : undefined} />
             </Grid>
 
             <Grid item xs={12} md={6}>
                 <BranchAutocomplete
                     size="small"
-                    companyBranch
+                    isForCompany
                     disabled={branch.disabled}
                     options={branch.options}
-                    companyId={company.value}
-                    value={branch.value}
-                    onChange={branch.onChange}
-                    onObjectChange={branch.onObjectChange} />
+                    companyId={company.value?.id}
+                    value={branch.value?.id}
+                    onChange={(value) => branch.onChange ? branch.onChange(value?.object) : undefined} />
             </Grid>
         </Grid>
     )
