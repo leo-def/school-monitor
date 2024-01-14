@@ -1,41 +1,21 @@
 INSERT INTO public."Branch" (id,title,"companyId","createdAt","createdBy","updatedAt","updatedBy") VALUES
-	 ('alAsk3A1p1401wkl0aS4cgAnE','Dom Bosco - Centro','alAsk3t7p1001wkl0ay4cgAna','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('alAsk3B2p1501wkl0aR4cgAnF','Dom Bosco - Merces','alAsk3t7p1001wkl0ay4cgAna','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('blCGk3t3p1602wkl0Qy4cgCnG','Bom Jesus - Boa Vista','blCsk3t7p1002wkl0by4cgCnB','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('blCHk3t4p1702wkl0Py4cgCnH','Bom Jesus - Juveve','blCsk3t7p1002wkl0by4cgCnB','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('blCAk3t5p1712wkl0Oy8cgCnH','Pequeno Urso','clDsk3t7p1003wkl0cy4cgDnc','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('blCBk3t6p1702wkl0Ny4cgCnH','Cristo Rei','dlqEk3t7p1004wkl0dy4cgEnD','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('blCCk3t7p1702wkl0My4cgCnH','Top Gun','elCsk3t7t1002wkl0Fy4cgbnB','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('blCDk3t8p1702wkl0Ly4cgCnH','Novo Espaco','flDsk3t7r1003wkl0gy4cgcnc','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('blCEk3t9p1702wkl0Ky4cgCnH','Novo Mundo','GlqEk3t7s1004wkl0Hy4cgdnD','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL),
-	 ('blC2wkl0eyEk3t9p1704cgana','Opet - Centro','clAsk3t7q1001wkl0ey4cgana','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna
-alAsk3t7p1001wkl0ay4cgAna',NULL,NULL);
+	('alAsk3A1p1401wkl0aS4cgAnE','Dom Bosco - Centro'     ,'alAsk3t7p1001wkl0ay4cgAna','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('alAsk3B2p1501wkl0aR4cgAnF','Dom Bosco - Merces'     ,'alAsk3t7p1001wkl0ay4cgAna','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('blCGk3t3p1602wkl0Qy4cgCnG','Bom Jesus - Boa Vista'  ,'blCsk3t7p1002wkl0by4cgCnB','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('blCHk3t4p1702wkl0Py4cgCnH','Bom Jesus - Juveve'     ,'blCsk3t7p1002wkl0by4cgCnB','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('blCAk3t5p1712wkl0Oy8cgCnH','Pequeno Urso'           ,'clDsk3t7p1003wkl0cy4cgDnc','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('blCBk3t6p1702wkl0Ny4cgCnH','Cristo Rei'             ,'dlqEk3t7p1004wkl0dy4cgEnD','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('blCCk3t7p1702wkl0My4cgCnH','Top Gun'                ,'elCsk3t7t1002wkl0Fy4cgbnB','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('blCDk3t8p1702wkl0Ly4cgCnH','Novo Espaco'            ,'flDsk3t7r1003wkl0gy4cgcnc','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('blCEk3t9p1702wkl0Ky4cgCnH','Novo Mundo'             ,'GlqEk3t7s1004wkl0Hy4cgdnD','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('blC2wkl0eyEk3t9p1704cgana','Opet - Centro'          ,'clAsk3t7q1001wkl0ey4cgana','2023-12-30 21:10:09.866','alAsk3t7p1001wkl0ay4cgAna',NULL                     ,NULL),
+	('clpnzppu50007vifoa4111gif','Madre Cecilia Cros'     ,'clpnz0u950001vifotar667md','2023-12-02 11:48:32.909',NULL                       ,'2023-12-02 11:48:32.909',NULL),
+	('clpnzqrxz000dvifoswc1re6z','Adventista - Mêrces'    ,'clpnz1buo0003vifo8yy82q63','2023-12-02 11:49:22.296',NULL                       ,'2023-12-02 11:49:22.296',NULL),
+	('clpnzr0ig000fvifojlyc2yu5','Adventista - Boa Vista' ,'clpnz1buo0003vifo8yy82q63','2023-12-02 11:49:33.400',NULL                       ,'2023-12-02 11:49:33.400',NULL),
+	('clpsvby8c0005viak1ghcwncp','Marista - SJP'          ,'clpnzp5oz0005vifodbtjd0lx','2023-12-05 21:44:43.019',NULL                       ,'2023-12-05 21:44:43.019',NULL),
+	('clpsvcheq0007viakqjm8jcro','Marista - Bigorrilho'   ,'clpnzp5oz0005vifodbtjd0lx','2023-12-05 21:45:07.873',NULL                       ,'2023-12-05 21:45:07.873',NULL),
+	('clpsvcojj0009viakjhe0uuhi','Marista - Batel'        ,'clpnzp5oz0005vifodbtjd0lx','2023-12-05 21:45:17.119',NULL                       ,'2023-12-05 21:45:17.119',NULL),
+	('clpnzq12v0009vifo8k5kbxcr','Positivo - Boa Vista'   ,'clpnz16070002vifotnrfpw29','2023-12-02 11:48:47.479',NULL                       ,'2023-12-02 11:48:47.479',NULL),
+	('clpnzqj7c000bvifoe893itli','Positivo - Mêrces'      ,'clpnz16070002vifotnrfpw29','2023-12-02 11:49:10.967',NULL                       ,'2023-12-02 11:49:10.967',NULL),
+	('clpsvbapj0003viakzqmose32','Positivo - Centro'      ,'clpnz16070002vifotnrfpw29','2023-12-05 21:44:12.534',NULL                       ,'2023-12-05 21:44:12.534',NULL),
+	('clpnzp5oz0005vifodbtjd0lx','Marista - Boa Vista'    ,'clpnz02te0000vifo0hiigrpj','2023-12-02 11:48:06.802',NULL                       ,'2023-12-02 11:48:06.802',NULL);
